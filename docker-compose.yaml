@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  cq-frontend:
+    build: .
+    image: cq-frontend:v1

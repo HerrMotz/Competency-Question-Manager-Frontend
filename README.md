@@ -2,9 +2,30 @@
 
 The main repository containing the backend can be found here: https://git.uni-jena.de/fusion/teaching/project/2023wise/swep/competency-questions-management-for-ontology-development/cq-manager
 
+## Recommended Environment Setup
+
+### Building
+- The application can be built using the Docker compose file. The built static website is exported to the host's `dist` 
+   directory and can be deployed to a webserver directly.
+
+```shell
+docker-compose up
+```
+
+### Development
+- For development, we recommend a Linux machine (or WSL for Windows Hosts)
+- We do not recommend the usage of a Docker container for development purposes (because of overhead and resulting 
+   reduction of performance, but also because of difficult handling)
+
+To run the application in development mode (hot reloads)
+```shell
+npm run dev
+```
+
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- [JetBrains Webstorm](https://www.jetbrains.com/webstorm/) with configuration as described [here](https://vuejs.org/guide/typescript/overview.html).
 
 ## Type Support For `.vue` Imports in TS
 
@@ -16,3 +37,33 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+
+## Coding Guidelines
+
+### General Usage Notes
+These notices are an excerpt (with additions) of the Vue.js documentation.
+
+To let TypeScript properly infer types inside component options, we need to define components with `defineComponent()`:
+
+```typescript
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  // type inference enabled
+  props: {
+    name: String,
+    msg: { type: String, required: true }
+  },
+  data() {
+    return {
+      count: 1
+    }
+  },
+  mounted() {
+    this.name // type: string | undefined
+    this.msg // type: string
+    this.count // type: number
+  }
+})
+```
