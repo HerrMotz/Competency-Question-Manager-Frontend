@@ -1,6 +1,6 @@
-# Vue 3 + TypeScript + Vite
+# CQ-Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The main repository containing the backend can be found here: https://git.uni-jena.de/fusion/teaching/project/2023wise/swep/competency-questions-management-for-ontology-development/cq-manager
 
 ## Recommended IDE Setup
 
