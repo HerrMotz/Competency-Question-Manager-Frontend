@@ -9,6 +9,7 @@ const cqs = [
 </script>
 
 <template>
+  <h1 class="text-2xl">Competency Question: Overview</h1>
   <CompetencyQuestionListItem v-for="cq in cqs" :text="cq.text" :creator="cq.creator" :identifier="cq.identifier" :rating="cq.rating" />
 
 </template>
