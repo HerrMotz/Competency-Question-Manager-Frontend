@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  asd
+  LandingView
 </template>
 
 <style scoped>
