@@ -10,14 +10,16 @@ const { getUser, isLoggedIn } = storeToRefs(useStore1)
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen">
 
 
     <Navbar :user="getUser" :is-logged-in="isLoggedIn" class="mb-10" />
 
-    <main class="py-10 lg:pl-72">
+    <main class="lg:pl-72 pb-10 pt-7 min-h-screen dark:bg-gray-800 dark:text-gray-100">
       <div class="px-4 sm:px-6 lg:px-8">
-        <RouterView />
+        <Suspense>
+          <RouterView />
+        </Suspense>
       </div>
     </main>
   </div>

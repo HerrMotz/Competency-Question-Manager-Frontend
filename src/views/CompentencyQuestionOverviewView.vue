@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import CompetencyQuestionListItem from "../components/CompetencyQuestionListItem.vue";
 
-const cqs = [
-  { text: "What is the topping of a Hawaii pizza?", creator: "Daniel", identifier: 3, rating: 2 },
-  { text: "What is the topping of a Diavolo pizza?", creator: "Daniel", identifier: 43, rating: 5 },
-  { text: "Whatasdasd", creator: "asdasd", identifier: 123, rating: 3 }
-]
+const cqs = {data: [
+  { question: "What is the topping of a Hawaii pizza?", creator: "Daniel", id: "pizza-hawaii", rating: 2 },
+  { question: "What is the topping of a Diavolo pizza?", creator: "Daniel", id: "pizza-diavolo", rating: 5 },
+  { question: "What is the topping of a random pizza?", creator: "Daniel", id: "pizza-random", rating: 3 }
+]}
+
+// const cqs = await CompetencyQuestionDataService.getAll()
+// console.log(cqs.data)
+
 </script>
 
 <template>
   <h1 class="text-2xl">Competency Question: Overview</h1>
-  <CompetencyQuestionListItem v-for="cq in cqs" :text="cq.text" :creator="cq.creator" :identifier="cq.identifier" :rating="cq.rating" />
+
+  <CompetencyQuestionListItem v-for="cq in cqs.data" :text="cq.question" :creator="cq.creator" :identifier="cq.id" :rating="cq.rating" />
 
 </template>
 

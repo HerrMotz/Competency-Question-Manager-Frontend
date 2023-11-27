@@ -8,6 +8,7 @@ export const useStore = defineStore('customers', {
             username: "",
             loggedInAt: null,
             sessionValidUntil: null,
+            accessToken: ""
         },
     }),
 

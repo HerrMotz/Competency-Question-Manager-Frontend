@@ -7,8 +7,8 @@ const routes =  [
         component: () => import("./views/LandingView.vue")
     },
     {
-        path: "/cq/",
-        name: "cq",
+        path: "/questions",
+        name: "questions",
         component: () => import("./views/CompentencyQuestionOverviewView.vue")
     },
 ];
