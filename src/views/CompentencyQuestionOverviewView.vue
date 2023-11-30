@@ -3,7 +3,6 @@ import CompetencyQuestionListItem from "../components/CompetencyQuestionListItem
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
 import {ref} from "vue";
-import {AxiosResponse} from "axios/index";
 
 // const cqs = {
 //   data: [
@@ -14,23 +13,27 @@ import {AxiosResponse} from "axios/index";
 
 const messagePopupData = ref({
   title: "",
-  messageType: {messageType: "warning"},
+  messageType: "",
   text: "",
   detail: "",
   open: false
 })
 
-let cqs : AxiosResponse<any, CompetencyQuestionT[]> = undefined;
+const cqs = ref();
 
 try {
-  cqs = await CompetencyQuestionDataService.getAll()
-  console.log(cqs.data)
-} catch (e) {
-  messagePopupData.value.title = "Oops! An error occurred...";
-  messagePopupData.value.messageType.messageType = "error";
-  messagePopupData.value.text = "An error occurred while retrieving competency questions.";
-  messagePopupData.value.detail = ""+e;
-  messagePopupData.value.open = true;
+  const response = await CompetencyQuestionDataService.getAll();
+  if ("messageType" in response) {
+    messagePopupData.value = {
+      ...messagePopupData.value,
+      ...response
+    };
+    messagePopupData.value.open = true;
+
+  } else {
+    cqs.value = response;
+    console.log(cqs.value.data)
+  }
 }
 </script>
 
