@@ -21,19 +21,17 @@ const messagePopupData = ref({
 
 const cqs = ref();
 
-try {
-  const response = await CompetencyQuestionDataService.getAll();
-  if ("messageType" in response) {
-    messagePopupData.value = {
-      ...messagePopupData.value,
-      ...response
-    };
-    messagePopupData.value.open = true;
+const response = await CompetencyQuestionDataService.getAll();
+if ("messageType" in response) {
+  messagePopupData.value = {
+    ...messagePopupData.value,
+    ...response
+  };
+  messagePopupData.value.open = true;
 
-  } else {
-    cqs.value = response;
-    console.log(cqs.value.data)
-  }
+} else {
+  cqs.value = response;
+  console.log(cqs.value.data)
 }
 </script>
 
