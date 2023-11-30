@@ -5,6 +5,8 @@ import LoginDataService from "./services/LoginDataService.ts";
 import {UXResponse} from "./interfaces/UXResponse.ts";
 
 export const useStore = defineStore('customers', {
+    persist: true,
+
     state: (): StateT => ({
         user: {
             email: "",
