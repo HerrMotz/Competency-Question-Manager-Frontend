@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent, PropType} from 'vue'
 import {UserT} from "../interfaces/User.ts";
+import {useStore} from "../store.ts";
 
 import {
   Dialog, DialogPanel, TransitionChild, TransitionRoot
@@ -53,6 +54,8 @@ export default defineComponent({
   data() {
     return {
       sidebarOpen: false,
+
+      store: useStore(),
 
       teams: [
         { id: 1, name: 'Group 1', href: '#', initial: 'H', current: false },
@@ -135,6 +138,8 @@ export default defineComponent({
           <Logo/>
         </span>
       </div>
+      {{user}}
+
       <nav class="flex flex-1 flex-col">
         <ul role="list" class="flex flex-1 flex-col gap-y-7">
           <li>
@@ -159,11 +164,11 @@ export default defineComponent({
             </ul>
           </li>
           <li class="-mx-6 mt-auto">
-            <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700">
+            <button @click="store.logout(); $router.push('/login');" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700">
               <img class="h-8 w-8 rounded-full bg-indigo-700" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
               <span class="sr-only">Your profile</span>
-              <span aria-hidden="true">J.-M. Keil</span>
-            </a>
+              <span aria-hidden="true">{{ user.name }}</span>
+            </button>
           </li>
         </ul>
       </nav>
