@@ -1,10 +1,16 @@
 import { createWebHistory, createRouter } from "vue-router";
+import { useStore } from "./store.ts";
 
 const routes =  [
     {
         path: "/",
         name: "landing-page",
         component: () => import("./views/LandingView.vue")
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: () => import("./views/LoginView.vue")
     },
     {
         path: "/questions",
@@ -34,7 +40,12 @@ const router = createRouter({
 });
 
 router.beforeEach((_to, _from, next) => {
-    // const publicPages = ['/', '/login', '/contact'];
+    const useStore1 = useStore()
+    const publicPages = ['/', '/login'];
+    
+    if (!useStore1.isLoggedIn && !publicPages.includes(_to.path)) {
+        next('/login');
+    }
     next();
 });
 

@@ -13,9 +13,9 @@ const { getUser, isLoggedIn } = storeToRefs(useStore1)
   <div class="min-h-screen">
 
 
-    <Navbar :user="getUser" :is-logged-in="isLoggedIn" class="mb-10" />
+    <Navbar v-if="isLoggedIn" :user="getUser" :is-logged-in="isLoggedIn" class="mb-10" />
 
-    <main class="lg:pl-72 pb-10 pt-7 min-h-screen dark:bg-gray-800 dark:text-gray-100">
+    <main class="pb-10 pt-7 min-h-screen dark:bg-gray-800 dark:text-gray-100" :class="[isLoggedIn ? 'lg:pl-72' : '']">
       <div class="px-4 sm:px-6 lg:px-8">
         <Suspense>
           <RouterView />

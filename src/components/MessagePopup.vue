@@ -1,7 +1,7 @@
 <script lang="ts">
 import {defineComponent, PropType} from 'vue'
 
-import {MessageTypeT} from "../interfaces/MessageType.ts"
+import {UXResponse} from "../interfaces/UXResponse.ts"
 
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from '@headlessui/vue'
 import {CheckIcon, XMarkIcon, ExclamationTriangleIcon, InformationCircleIcon} from '@heroicons/vue/24/outline'
@@ -26,21 +26,10 @@ export default defineComponent({
       type: Boolean,
       required: true
     },
-    text: {
-      type: String,
+    uxresponse : {
+      type: Object as PropType<UXResponse>,
       required: true
-    },
-    detail: {
-      type: String,
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    messageType: {
-      type: Object as PropType<MessageTypeT>,
-      required: true
-    },
+    }
   },
 
   emits: ["close"],
@@ -68,29 +57,30 @@ export default defineComponent({
               <div>
                 <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
                      :class="[
-                       messageType.messageType === 'success' ? 'bg-green-100 text-green-600' : '',
-                       messageType.messageType === 'warning' ? 'bg-orange-100 text-orange-600' : '',
-                       messageType.messageType === 'error' ? 'bg-red-100 text-red-600' : '',
-                       messageType.messageType === 'notice' ? 'bg-gray-100 text-gray-600' : '',
+                       uxresponse.messageType === 'success' ? 'bg-green-100 text-green-600' : '',
+                       uxresponse.messageType === 'warning' ? 'bg-orange-100 text-orange-600' : '',
+                       uxresponse.messageType === 'error' ? 'bg-red-100 text-red-600' : '',
+                       uxresponse.messageType === 'notice' ? 'bg-gray-100 text-gray-600' : '',
                      ]"
                 >
-                  <CheckIcon v-if="messageType.messageType === 'success'" class="h-6 w-6" aria-hidden="true"/>
-                  <ExclamationTriangleIcon v-if="messageType.messageType === 'warning'" class="h-6 w-6"
+                  <CheckIcon v-if="uxresponse.messageType === 'success'" class="h-6 w-6" aria-hidden="true"/>
+                  <ExclamationTriangleIcon v-if="uxresponse.messageType === 'warning'" class="h-6 w-6"
                                            aria-hidden="true"/>
-                  <XMarkIcon v-if="messageType.messageType === 'error'" class="h-6 w-6" aria-hidden="true"/>
-                  <InformationCircleIcon v-if="messageType.messageType === 'notice'" class="h-6 w-6" aria-hidden="true"/>
+                  <XMarkIcon v-if="uxresponse.messageType === 'error'" class="h-6 w-6" aria-hidden="true"/>
+                  <InformationCircleIcon v-if="uxresponse.messageType === 'notice'" class="h-6 w-6" aria-hidden="true"/>
                 </div>
                 <div class="mt-3 text-center sm:mt-5">
                   <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">
-                    {{ title }}
+                    {{ uxresponse.title }}
                   </DialogTitle>
                   <div class="mt-2">
-                    <p class="text-sm text-gray-500">
-                      {{ text }}
+                    <p class="text-sm text-gray-600">
+                      {{ uxresponse.text }}
                     </p>
-                    <pre>
-                      {{ detail !== undefined ? detail.trim : '' }}
-                    </pre>
+                    <br>
+                    <p class="text-sm text-gray-500">
+                      {{ uxresponse.detail !== undefined ? uxresponse.detail.trim() : '' }}
+                    </p>
                   </div>
                 </div>
               </div>
