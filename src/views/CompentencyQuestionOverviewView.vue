@@ -12,10 +12,12 @@ import {ref} from "vue";
 // ]}
 
 const messagePopupData = ref({
-  title: "",
-  messageType: "",
-  text: "",
-  detail: "",
+  uxresponse: {
+    title: "",
+    messageType: "",
+    text: "",
+    detail: "",
+  },
   open: false
 })
 
@@ -23,8 +25,8 @@ const cqs = ref();
 
 const response = await CompetencyQuestionDataService.getAll();
 if ("messageType" in response) {
-  messagePopupData.value = {
-    ...messagePopupData.value,
+  messagePopupData.value.uxresponse = {
+    ...messagePopupData.value.uxresponse,
     ...response
   };
   messagePopupData.value.open = true;
@@ -36,16 +38,36 @@ if ("messageType" in response) {
 </script>
 
 <template>
-  <MessagePopup :title="messagePopupData.title"
-                :message-type="messagePopupData.messageType"
-                :text="messagePopupData.text"
-                :detail="messagePopupData.detail"
+  <MessagePopup :uxresponse="messagePopupData.uxresponse"
                 :open="messagePopupData.open"
                 @close="messagePopupData.open = false;"/>
-  <div v-if="cqs" class="w-2/3 m-auto">
-    <h1 class="text-2xl">Competency Question: Overview</h1>
-    <CompetencyQuestionListItem v-for="cq in cqs.data" :text="cq.question" :creator="cq.creator" :identifier="cq.id"
-                                :rating="cq.rating"/>
+  <div class="m-auto w-1/2">
+    <h1 class="text-2xl">Competency Question: Overview ({{ cqs.value ? cqs.value.length : 0 }})</h1>
+    <div v-if="cqs">
+      <CompetencyQuestionListItem v-for="cq in cqs.data"
+                                  class="max-w-xl"
+                                  :text="cq.question"
+                                  :creator="cq.creator"
+                                  :identifier="cq.id"
+                                  :rating="cq.rating"/>
+    </div>
+    <div v-else>
+      <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700
+          dark:text-gray-200 bg-gray-100 mt-10">
+        <div class="animate-pulse flex space-x-4">
+          <div class="flex-1 space-y-6 py-1">
+            <div class="h-2 bg-slate-500 rounded"></div>
+            <div class="space-y-3">
+              <div class="grid grid-cols-3 gap-4">
+                <div class="h-2 bg-slate-500 rounded col-span-2"></div>
+                <div class="h-2 bg-slate-500 rounded col-span-1"></div>
+              </div>
+              <div class="h-2 bg-slate-500 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </template>
