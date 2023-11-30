@@ -11,6 +11,21 @@ const routes =  [
         name: "questions",
         component: () => import("./views/CompentencyQuestionOverviewView.vue")
     },
+    {
+        path: "/team",
+        name: "team",
+        component: () => import("./views/TeamOverviewView.vue")
+    },
+    {
+        path: "/projects",
+        name: "projects",
+        component: () => import("./views/ProjectsOverviewView.vue")
+    },
+    {
+        path: "/reports",
+        name: "reports",
+        component: () => import("./views/ReportsView.vue")
+    },
 ];
 
 const router = createRouter({
