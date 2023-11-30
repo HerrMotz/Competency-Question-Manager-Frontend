@@ -35,12 +35,20 @@ export const useStore = defineStore('customers', {
             }).catch(reason => {
                 console.log("Debug info for error:");
                 console.log(reason);
-
-                return {
-                    title: "Oops! An error occurred...",
-                    text: "... logging in. Debugging info can be found in the console.",
-                    detail: reason,
-                    messageType: "error"
+                if (reason.response.status === 401) {
+                    return {
+                        title: "Oops! These credentials seem to be invalid...",
+                        text: "You may contact your system administrator for a password reset.",
+                        detail: reason,
+                        messageType: "warning"
+                    }
+                } else {
+                    return {
+                        title: "Oops! An error occurred...",
+                        text: "... logging in. Debugging info can be found in the console.",
+                        detail: reason,
+                        messageType: "error"
+                    }
                 }
             })
         }

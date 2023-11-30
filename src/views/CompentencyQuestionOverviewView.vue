@@ -43,7 +43,7 @@ try {
                 :text="messagePopupData.text"
                 :detail="messagePopupData.detail"
                 :open="messagePopupData.open"
-                @close="messagePopupData.open = false; console.log(messagePopupData)"/>
+                @close="messagePopupData.open = false;"/>
   <div v-if="cqs" class="w-2/3 m-auto">
     <h1 class="text-2xl">Competency Question: Overview</h1>
     <CompetencyQuestionListItem v-for="cq in cqs.data" :text="cq.question" :creator="cq.creator" :identifier="cq.id"
