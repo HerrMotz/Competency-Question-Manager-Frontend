@@ -36,7 +36,6 @@ export const useStore = defineStore('customers', {
                     accessToken: response.data.token,
                     sessionValidUntil: new Date(new Date().getDate() + 1)
                 }
-                console.log(response)
                 return true
             }).catch(reason => {
                 console.log("Debug info for error:");
