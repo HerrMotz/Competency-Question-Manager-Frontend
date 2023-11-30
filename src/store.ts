@@ -24,15 +24,19 @@ export const useStore = defineStore('customers', {
     },
 
     actions: {
+        logout() {
+            this.user.loggedInAt = null;
+        },
         login(email: string, password: string): Promise<boolean | UXResponse> {
             return LoginDataService.login(email, password).then(response => {
                 this.user = {
                     email: response.data.email,
                     name: response.data.name,
                     loggedInAt: new Date(),
-                    accessToken: response.data.accessToken,
+                    accessToken: response.data.token,
                     sessionValidUntil: new Date(new Date().getDate() + 1)
                 }
+                console.log(response)
                 return true
             }).catch(reason => {
                 console.log("Debug info for error:");
