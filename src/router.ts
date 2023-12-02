@@ -15,22 +15,22 @@ const routes =  [
     {
         path: "/questions",
         name: "questions",
-        component: () => import("./views/CompentencyQuestionOverviewView.vue")
+        component: () => import("./views/CompentencyQuestionDashboardView.vue")
     },
     {
         path: "/team",
         name: "team",
-        component: () => import("./views/TeamOverviewView.vue")
+        component: () => import("./views/TeamDashboardView.vue")
     },
     {
         path: "/projects",
         name: "projects",
-        component: () => import("./views/ProjectsOverviewView.vue")
+        component: () => import("./views/ProjectsDashboardView.vue")
     },
     {
         path: "/reports",
         name: "reports",
-        component: () => import("./views/ReportsView.vue")
+        component: () => import("./views/ReportsDashboardView.vue")
     },
 ];
 
