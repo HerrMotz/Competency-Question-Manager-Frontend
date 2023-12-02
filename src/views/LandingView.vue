@@ -14,8 +14,7 @@ import Logo from "../components/Logo.vue";
 const navigation = [
   {name: 'Product', href: '#'},
   {name: 'Features', href: '#'},
-  {name: 'Marketplace', href: '#'},
-  {name: 'Company', href: '#'},
+  {name: 'Meet the Makers', href: '#'},
 ]
 
 const features = [
