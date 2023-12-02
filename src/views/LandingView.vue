@@ -20,15 +20,15 @@ const navigation = [
 
 const features = [
   {
-    name: 'Collaboration with Ontology Users',
+    name: 'Collaboration with Customers',
     description:
-        'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
+        'Using our annotation tools, versioning and rating even big projects are lucid!',
     icon: CloudArrowUpIcon,
   },
   {
-    name: 'Consolidation suggestions',
+    name: 'Consolidation Suggestions',
     description:
-        'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
+        'Our system finds occurrences of words in CQs and suggests them for consolidation.',
     icon: LockClosedIcon,
   },
   {
@@ -176,9 +176,9 @@ const mobileMenuOpen = ref(false)
       <!-- Feature section -->
       <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
         <div class="mx-auto max-w-2xl lg:text-center">
-          <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Deploy faster</h2>
+          <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Focus on what's important</h2>
           <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">Everything you
-            need to develop ontologies in teams</p>
+            need to develop ontologies in big teams</p>
           <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Quis tellus eget adipiscing convallis sit
             sit eget aliquet quis. Suspendisse eget egestas a elementum pulvinar et feugiat blandit at. In mi viverra
             elit nunc.</p>
