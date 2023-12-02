@@ -39,6 +39,9 @@ const router = createRouter({
     routes,
 });
 
+
+// TODO check for token validity
+//  if invalid, show a popup and ask the user to login again.
 router.beforeEach((_to, _from, next) => {
     const useStore1 = useStore()
     const publicPages = ['/', '/login'];
