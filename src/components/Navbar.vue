@@ -1,6 +1,5 @@
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
-import {UserT} from "../interfaces/User.ts";
+import {defineComponent} from 'vue'
 import {useStore} from "../store.ts";
 
 import {
@@ -9,9 +8,7 @@ import {
 
 import {
   Bars3Icon,
-  CalendarIcon,
   ChartPieIcon,
-  DocumentDuplicateIcon,
   FolderIcon,
   UsersIcon,
   XMarkIcon,
@@ -21,17 +18,6 @@ import Logo from "./Logo.vue";
 
 export default defineComponent({
   name: "Navbar",
-
-  props: {
-    user: {
-      type: Object as PropType<UserT>,
-      required: true
-    },
-    isLoggedIn: {
-      type: Boolean,
-      required: true
-    }
-  },
 
   components: {
     Logo,
@@ -166,7 +152,7 @@ export default defineComponent({
             <button @click="store.logout(); $router.push('/login');" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700 w-full">
               <img class="h-8 w-8 rounded-full bg-indigo-700" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
               <span class="sr-only">Your profile</span>
-              <span aria-hidden="true">{{ user.name }}</span>
+              <span aria-hidden="true">{{ store.getUser.name }}</span>
             </button>
           </li>
         </ul>
