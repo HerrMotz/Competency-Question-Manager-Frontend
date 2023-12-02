@@ -27,8 +27,6 @@ export default defineComponent({
 
   methods: {
     login() {
-      console.log("login");
-
       this.store.login(this.email, this.password).then(response => {
         if (typeof response !== "boolean") {
           this.messagePopupData.uxresponse = {
