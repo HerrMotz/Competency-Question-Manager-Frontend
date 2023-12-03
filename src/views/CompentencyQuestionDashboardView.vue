@@ -42,7 +42,7 @@ if ("messageType" in response) {
                 :open="messagePopupData.open"
                 @close="messagePopupData.open = false;"/>
   <div class="m-auto w-1/2">
-    <h1 class="text-2xl">Competency Question: Overview ({{ cqs.value ? cqs.value.length : 0 }})</h1>
+    <h1 class="text-2xl">Competency Question: Overview</h1>
     <div v-if="cqs">
       <CompetencyQuestionListItem v-for="cq in cqs.data"
                                   class="max-w-xl"
