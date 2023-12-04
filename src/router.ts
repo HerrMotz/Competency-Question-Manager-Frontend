@@ -32,6 +32,11 @@ const routes =  [
         name: "reports",
         component: () => import("./views/ReportsDashboardView.vue")
     },
+    {
+        path: "/questions/:id",
+        name: "question-detail",
+        component: () => import("./views/CompetencyQuestionDetailView.vue")
+    }
 ];
 
 const router = createRouter({
