@@ -35,7 +35,8 @@ const routes =  [
     {
         path: "/questions/:id",
         name: "question-detail",
-        component: () => import("./views/CompetencyQuestionDetailView.vue")
+        component: () => import("./views/CompetencyQuestionDetailView.vue"),
+        props: true
     }
 ];
 
