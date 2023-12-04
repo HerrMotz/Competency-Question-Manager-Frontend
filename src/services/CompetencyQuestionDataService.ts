@@ -16,6 +16,19 @@ class CompetencyQuestionDataService {
             }
         });
     }
+
+    async getOne(uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT> | UXResponse> {
+        return http.get<CompetencyQuestionT[]>(`/questions/${uuid}`, { headers: authHeader() }).then(response => {
+            return response
+        }).catch(reason => {
+            return {
+                title: "Oops! An error occurred...",
+                text: "... while retrieving the competency questions. Debugging info can be found in the console.",
+                detail: reason,
+                messageType: "error"
+            }
+        });
+    }
 }
 
 export default new CompetencyQuestionDataService();
