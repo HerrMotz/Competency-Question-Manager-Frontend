@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import TopicService from '../services/TopicService.ts'; // Import the Topic Service
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps } from "vue";
 import {StarIcon} from "@heroicons/vue/24/solid";
 
 const props = defineProps(['id'])
-
-const topic = ref('');
 
 const messagePopupData = ref({
   uxresponse: {
@@ -20,12 +17,6 @@ const messagePopupData = ref({
 })
 
 const cq = ref();
-
-onMounted(async () => {
-  try {
-    const fetchedTopic = await TopicService.getTopic();
-    topic.value = fetchedTopic;
-    
     
 const response = await CompetencyQuestionDataService.getOne(props.id);
 
@@ -43,9 +34,8 @@ if ("messageType" in response) {
 </script>
 
 <template>
-  <!-- Here is the newly added section for the topic -->
   <div>
-    <p>Topic: {{ topic }}</p>
+    <p>Topic: {{ cq.data.topic }}</p>
   </div>
 
   <MessagePopup :uxresponse="messagePopupData.uxresponse"

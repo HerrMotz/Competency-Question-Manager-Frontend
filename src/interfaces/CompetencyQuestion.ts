@@ -4,4 +4,5 @@ type CompetencyQuestionT = {
     version: Number
     creator: String
     rating: Number
+    topic: String
 }
