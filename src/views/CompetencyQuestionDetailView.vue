@@ -49,8 +49,6 @@ if ("messageType" in response) {
     </span>
   </h1>
   <pre class="text-sm">{{cq.data.id}}</pre>
-
-  Machst irgendwas krasses hier drin.
 </template>
 
 <style scoped>
