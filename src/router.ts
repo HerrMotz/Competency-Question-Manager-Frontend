@@ -18,6 +18,11 @@ const routes =  [
         component: () => import("./views/CompentencyQuestionDashboardView.vue")
     },
     {
+        path: "/questions/add",
+        name: "questions-add",
+        component: () => import("./views/CompetencyQuestionCreateView.vue")
+    },
+    {
         path: "/team",
         name: "team",
         component: () => import("./views/TeamDashboardView.vue")

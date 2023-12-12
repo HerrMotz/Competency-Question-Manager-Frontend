@@ -30,6 +30,19 @@ class CompetencyQuestionDataService {
         });
     }
 
+    async add(cq: { question: string; topic: string }): Promise<AxiosResponse<any, CompetencyQuestionT> | UXResponse> {
+        return http.post<CompetencyQuestionT[]>(`/questions/`, cq, { headers: authHeader() }).then(response => {
+            return response
+        }).catch(reason => {
+            return {
+                title: "Oops! An error occurred...",
+                text: "... while adding the competency questions. Debugging info can be found in the console.",
+                detail: reason,
+                messageType: "error"
+            }
+        });
+    }
+
     async delete(uuid: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
         return http.delete<DeleteResponse>(`/questions/${uuid}`, { headers: authHeader() }).then(response => {
             return response
