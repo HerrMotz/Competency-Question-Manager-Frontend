@@ -2,14 +2,14 @@
 import {defineComponent} from 'vue'
 import MessagePopup from "../components/MessagePopup.vue";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
-import {CheckIcon, ChevronDownIcon} from "@heroicons/vue/20/solid"
+import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid"
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 
 export default defineComponent({
   name: "CompetencyQuestionCreateView",
-  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon},
+  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
 
   data() {
     return {
