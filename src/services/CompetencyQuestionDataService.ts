@@ -31,7 +31,12 @@ class CompetencyQuestionDataService {
     }
 
     async add(cq: { question: string; topic: string }): Promise<AxiosResponse<any, CompetencyQuestionT> | UXResponse> {
-        return http.post<CompetencyQuestionT[]>(`/questions/`, cq, { headers: authHeader() }).then(response => {
+        return http.post<CompetencyQuestionT[]>(`/questions/`, {
+            // TODO change this when the backend is ready
+            question: cq.question,
+            version: 0,
+            rating: 5,
+        }, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
             return {
