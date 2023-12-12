@@ -1,13 +1,12 @@
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import {defineComponent} from 'vue'
 import {PlusIcon, CheckIcon} from "@heroicons/vue/20/solid";
 import {ArrowDownOnSquareIcon, QuestionMarkCircleIcon} from "@heroicons/vue/24/solid";
-import {UXResponse} from "../interfaces/UXResponse.ts";
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import {ExclamationTriangleIcon, InformationCircleIcon, XMarkIcon} from "@heroicons/vue/24/outline";
 
 export default defineComponent({
-  name: "SaveButtonWithCallback",
+  name: "SubmitButtonWithCallback",
   components: {XMarkIcon, ExclamationTriangleIcon, InformationCircleIcon, Dialog, DialogTitle, DialogPanel, TransitionChild, TransitionRoot, ArrowDownOnSquareIcon, PlusIcon, CheckIcon, QuestionMarkCircleIcon},
   emits: ['savebutton', 'modalsuccessclose'],
   props: {
