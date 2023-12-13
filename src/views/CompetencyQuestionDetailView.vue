@@ -7,6 +7,7 @@ import {StarIcon, TrashIcon, ArrowDownOnSquareIcon, PaperAirplaneIcon} from "@he
 import {DialogPanel, Popover, PopoverButton, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import StarComponent from "../components/StarComponent.vue";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
+import RatingDataService from "../services/RatingDataService.ts";
 
 const props = defineProps(['id'])
 
@@ -24,8 +25,8 @@ const timeoutDuration = 1000
 const starsAreHovered = ref(false);
 const timeout = ref();
 const open = ref(false);
-
 const cq = ref();
+const ratings = ref();
 
 watch(starsAreHovered, (newValue, _) => {
   if (newValue) {
@@ -38,23 +39,44 @@ watch(starsAreHovered, (newValue, _) => {
   }
 })
 
-const response = await CompetencyQuestionDataService.getOne(props.id);
+fetchCompetencyQuestion();
+async function fetchCompetencyQuestion() {
+  const response = await CompetencyQuestionDataService.getOne(props.id);
 
-if ("messageType" in response) {
-  messagePopupData.value.uxresponse = {
-    ...messagePopupData.value.uxresponse,
-    ...response
-  };
-  messagePopupData.value.open = true;
+  if ("messageType" in response) {
+    messagePopupData.value.uxresponse = {
+      ...messagePopupData.value.uxresponse,
+      ...response
+    };
+    messagePopupData.value.open = true;
 
-} else {
-  cq.value = response;
-  console.log(cq.value.data)
+  } else {
+    cq.value = response;
+    console.log(cq.value.data)
+  }
+}
+
+fetchRating();
+async function fetchRating() {
+
+  const ratingResponse = await RatingDataService.getAllForOneQuestion(props.id);
+  if ("messageType" in ratingResponse) {
+    messagePopupData.value.uxresponse = {
+      ...messagePopupData.value.uxresponse,
+      ...ratingResponse
+    };
+    messagePopupData.value.open = true;
+
+  } else {
+    ratings.value = ratingResponse;
+    console.log(ratings.value.data)
+  }
 }
 </script>
 
 <template>
-  <div class="w-1/2 mx-auto">
+  <div v-if="cq"
+       class="w-1/2 mx-auto">
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
                   :open="messagePopupData.open"
                   @close="messagePopupData.open = false;"/>
@@ -68,8 +90,12 @@ if ("messageType" in response) {
           Topic: <span class="underline decoration-sky-500 mr-5">Topping</span>
           <span class="inline-block text-right ml-2"
                 @mouseover="starsAreHovered = true"
-                @mouseleave="starsAreHovered = false">
-                <StarComponent :rating="cq.data.rating"/>
+                @mouseleave="starsAreHovered = false"> <!-- this hovering mechanism is WIP -->
+                <StarComponent v-if="cq"
+                               :rating="cq.data.rating"
+                               :question_id="cq.data.id"
+                               :question_version="cq.data.version"
+                               @afterRating="fetchCompetencyQuestion(); fetchRating();"/>
             <br>
             <Popover class="relative inline-block ml-6" v-slot="{open}">
               <PopoverButton>Show Ratings</PopoverButton>
@@ -86,12 +112,12 @@ if ("messageType" in response) {
                         class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                       <div class="p-4">
                         <div
-                            v-for="item in [{name: 'Chiara Tunc', rating: 4}, {name: 'Malte Weber', rating: 1}]"
+                            v-for="item in ratings.data"
                             :key="item.name"
                             class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                           <div>
-                            <span class="mr-5 text-gray-600">{{ item.name }} </span>
-                            <div class="-mt-1 inline">
+                            <span class="mr-5 w-1/2 text-ellipsis text-gray-600">{{ item.user_id }}</span>
+                            <div class="-mt-1 inline w-1/2">
                               <StarComponent :rating="item.rating"/>
                             </div>
                           </div>
@@ -153,6 +179,13 @@ if ("messageType" in response) {
         <Comment text="Removed message." user="Daniel Motz" :timestamp="Date.now()" :system-message="true"/>
       </div>
     </div>
+  </div>
+  <div v-else class="w-1/2 mx-auto">
+    <div class="h-8 border-1 shadow rounded-md p-4 w-1/2 dark:bg-gray-700
+                dark:text-gray-200 bg-gray-100"></div>
+    <div class="h-80
+                border-1 shadow rounded-md p-4 max-w-xl dark:bg-gray-700
+                dark:text-gray-200 bg-gray-100 mt-10"></div>
   </div>
 </template>
 
