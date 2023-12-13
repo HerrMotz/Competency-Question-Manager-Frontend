@@ -1,0 +1,35 @@
+POST {{host}}/users/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": {{$username}},
+  "password": {{$password}}
+}
+
+> {% client.global.set("token", response.body.token) %}
+
+####
+POST {{host}}/questions
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI1MzU3NzUsInN1YiI6ImUwY2EwYjg1Mjk2MDRmNDc4YTFjMWFjZGE2ZDEzYjg3IiwiaWF0IjoxNzAyNDQ5Mzc1LCJleHRyYXMiOnsiZW1haWwiOiJkYW5pZWxAdW5pLWplbmEuZGUifX0.j8IMXBynCvpwbkKOMzp_7nfGWzlJU_Cw0wmYWx9lnqw
+
+{
+  "id": null,
+  "question": "What is the topping of a Hawaii pizza?",
+  "version": 0,
+  "rating": 4
+}
+
+####
+POST {{host}}/questions
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI1MzU3NzUsInN1YiI6ImUwY2EwYjg1Mjk2MDRmNDc4YTFjMWFjZGE2ZDEzYjg3IiwiaWF0IjoxNzAyNDQ5Mzc1LCJleHRyYXMiOnsiZW1haWwiOiJkYW5pZWxAdW5pLWplbmEuZGUifX0.j8IMXBynCvpwbkKOMzp_7nfGWzlJU_Cw0wmYWx9lnqw
+
+{
+  "id": null,
+  "rating": 0,
+  "question_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "user_id": null,
+  "version": 0
+}
