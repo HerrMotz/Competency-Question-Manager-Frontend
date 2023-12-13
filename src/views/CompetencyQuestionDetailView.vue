@@ -55,27 +55,10 @@ async function fetchCompetencyQuestion() {
     console.log(cq.value.data)
   }
 }
-
-fetchRating();
-async function fetchRating() {
-
-  const ratingResponse = await RatingDataService.getAllForOneQuestion(props.id);
-  if ("messageType" in ratingResponse) {
-    messagePopupData.value.uxresponse = {
-      ...messagePopupData.value.uxresponse,
-      ...ratingResponse
-    };
-    messagePopupData.value.open = true;
-
-  } else {
-    ratings.value = ratingResponse;
-    console.log(ratings.value.data)
-  }
-}
 </script>
 
 <template>
-  <div v-if="cq"
+  <div v-if="cq && messagePopupData.open===false"
        class="w-1/2 mx-auto">
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
                   :open="messagePopupData.open"
@@ -94,8 +77,7 @@ async function fetchRating() {
                 <StarComponent v-if="cq"
                                :rating="cq.data.rating"
                                :question_id="cq.data.id"
-                               :question_version="cq.data.version"
-                               @afterRating="fetchCompetencyQuestion(); fetchRating();"/>
+                               @afterRating="fetchCompetencyQuestion();"/>
             <br>
             <Popover class="relative inline-block ml-6" v-slot="{open}">
               <PopoverButton>Show Ratings</PopoverButton>
@@ -109,14 +91,14 @@ async function fetchRating() {
                   <PopoverPanel static
                                 class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
                     <div
-                        class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                        class="w-screen max-w-sm flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                       <div class="p-4">
                         <div
-                            v-for="item in ratings.data"
-                            :key="item.name"
+                            v-for="item in cq.data.ratings"
+                            :key="item.id"
                             class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                          <span class="mr-5 w-2/3 text-ellipsis text-gray-600">{{ item.user_id }}</span>
-                          <div class="-mt-1 inline w-1/3">
+                          <span class="mr-5 w-1/2 text-ellipsis text-gray-600">{{ item.user_name }}</span>
+                          <div class="-mt-1 inline w-1/2">
                             <StarComponent :rating="item.rating"/>
                           </div>
                         </div>
@@ -129,10 +111,10 @@ async function fetchRating() {
           </span>
 
         </div>
-        <span class="inline-flex items-center rounded-md dark:bg-blue-400/10 px-2 py-1 text-xs font-medium dark:text-blue-400 ring-1 ring-inset dark:ring-blue-400/30
-                    bg-blue-50 text-blue-700 ring-blue-700/10">
-          Version: {{ cq.data.version }}
-        </span>
+<!--        <span class="inline-flex items-center rounded-md dark:bg-blue-400/10 px-2 py-1 text-xs font-medium dark:text-blue-400 ring-1 ring-inset dark:ring-blue-400/30-->
+<!--                    bg-blue-50 text-blue-700 ring-blue-700/10">-->
+<!--          Version: {{ cq.data.version }}-->
+<!--        </span>-->
       </div>
       <label for="question"
              class="block text-sm font-medium leading-6 dark:text-gray-200 text-gray-900">Question</label>

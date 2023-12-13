@@ -16,10 +16,6 @@ export default defineComponent({
       type: String,
       required: false
     },
-    question_version: {
-      type: Number,
-      required: false
-    }
   },
 
   emits: ['afterRating'],
@@ -40,7 +36,7 @@ export default defineComponent({
 
   computed: {
     isNotClickable() {
-      return typeof this.question_id === "undefined" || typeof this.question_version === "undefined"
+      return typeof this.question_id === "undefined"
     }
   },
 
@@ -55,7 +51,7 @@ export default defineComponent({
 
       // the undefined is checked with this.isNotClickable above.
       // noinspection TypeScriptValidateTypes
-      const response = await RatingDataService.rate(stars, this.question_id, this.question_version)
+      const response = await RatingDataService.rate(stars, this.question_id)
 
       if ("messageType" in response) {
         this.messagePopupData.uxresponse = {
