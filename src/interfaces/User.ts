@@ -1,4 +1,5 @@
 type UserT = {
+    id: string, // uuid
     email: string,
     name: string,
     loggedInAt: Date | null,
