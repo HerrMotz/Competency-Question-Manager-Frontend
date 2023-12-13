@@ -77,18 +77,23 @@ export default defineComponent({
 </script>
 
 <template>
-  <MessagePopup :uxresponse="messagePopupData.uxresponse"
-                :open="messagePopupData.open"
-                @close="messagePopupData.open = false;"/>
-  <div>
-    <StarIcon v-for="i in rating"
-              :class="['h-5 w-5 text-yellow-500 inline', !isNotClickable ? 'hover:text-yellow-400 cursor-pointer' : '']"
-              aria-hidden="true"
-              @click="rateWrapper(i)"/>
-    <StarIcon v-for="i in (5 - rating)"
-              :class="['h-5 w-5 text-gray-500 inline', !isNotClickable ? 'hover:text-gray-400 cursor-pointer' : '']"
-              aria-hidden="true"
-              @click="rateWrapper(i+rating)"/>
+  <div v-if="rating === 0 && isNotClickable">
+    No rating.
+  </div>
+  <div v-else>
+    <MessagePopup :uxresponse="messagePopupData.uxresponse"
+                  :open="messagePopupData.open"
+                  @close="messagePopupData.open = false;"/>
+    <div>
+      <StarIcon v-for="i in rating"
+                :class="['h-5 w-5 text-yellow-500 inline', !isNotClickable ? 'hover:text-yellow-400 cursor-pointer' : '']"
+                aria-hidden="true"
+                @click="rateWrapper(i)"/>
+      <StarIcon v-for="i in (5 - rating)"
+                :class="['h-5 w-5 text-gray-500 inline', !isNotClickable ? 'hover:text-gray-400 cursor-pointer' : '']"
+                aria-hidden="true"
+                @click="rateWrapper(i+rating)"/>
+    </div>
   </div>
 </template>
 
