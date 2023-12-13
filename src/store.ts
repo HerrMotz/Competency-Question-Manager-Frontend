@@ -9,6 +9,7 @@ export const useStore = defineStore('cq-manager', {
 
     state: (): StateT => ({
         user: {
+            id: "",
             email: "",
             name: "",
             loggedInAt: null,
@@ -30,6 +31,7 @@ export const useStore = defineStore('cq-manager', {
         login(email: string, password: string): Promise<boolean | UXResponse> {
             return LoginDataService.login(email, password).then(response => {
                 this.user = {
+                    id: response.data.id,
                     email: response.data.email,
                     name: response.data.name,
                     loggedInAt: new Date(),
