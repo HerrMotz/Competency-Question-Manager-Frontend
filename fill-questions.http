@@ -7,9 +7,13 @@ Content-Type: application/json
   "password": "{{password}}"
 }
 
-> {% client.global.set("token", response.body.token) %}
+> {%
+    client.global.set("token", response.body.token);
+    client.global.set("user_id", response.body.id)
+%}
 
 ####
+
 POST {{host}}/questions
 Accept: application/json
 Authorization: {{token}}
@@ -23,14 +27,14 @@ Authorization: {{token}}
 > {% client.global.set("question_id", response.body.id) %}
 
 ####
-POST {{host}}/questions
+POST {{host}}/ratings
 Accept: application/json
 Authorization: {{token}}
 
 {
   "id": null,
-  "rating": 0,
-  "question_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "user_id": null,
+  "rating": 3,
+  "question_id": "{{question_id}}",
+  "user_id": "{{user_id}}",
   "version": 0
 }
