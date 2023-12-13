@@ -4,7 +4,7 @@ import { UserT } from "./interfaces/User.ts";
 import LoginDataService from "./services/LoginDataService.ts";
 import {UXResponse} from "./interfaces/UXResponse.ts";
 
-export const useStore = defineStore('customers', {
+export const useStore = defineStore('cq-manager', {
     persist: true,
 
     state: (): StateT => ({
