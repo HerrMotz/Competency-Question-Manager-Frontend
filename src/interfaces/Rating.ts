@@ -3,5 +3,5 @@ type RatingT = {
     rating: Number
     question_id: String
     user_id: String
-    version: Number
+    user_name: string
 }
