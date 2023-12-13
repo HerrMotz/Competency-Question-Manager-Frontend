@@ -15,6 +15,7 @@ import {
   ListBulletIcon
 } from '@heroicons/vue/24/outline'
 import Logo from "./Logo.vue";
+import {ArrowsPointingInIcon} from "@heroicons/vue/20/solid";
 
 export default defineComponent({
   name: "Navbar",
@@ -44,16 +45,17 @@ export default defineComponent({
       store: useStore(),
 
       teams: [
-        { id: 1, name: 'Group 1', href: '#', initial: 'H', current: false },
-        { id: 2, name: 'Group 2', href: '#', initial: 'T', current: false },
-        { id: 3, name: 'Group 3', href: '#', initial: 'W', current: false },
+        { id: 1, name: 'Group 1', href: '#', initial: 'H' },
+        { id: 2, name: 'Group 2', href: '#', initial: 'T' },
+        { id: 3, name: 'Group 3', href: '#', initial: 'W' },
       ],
 
       navigation: [
-        { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon, current: false },
-        { name: 'Team', href: '/team', icon: UsersIcon, current: false },
-        { name: 'Projects', href: '/projects', icon: FolderIcon, current: false },
-        { name: 'Reports', href: '/reports', icon: ChartPieIcon, current: false },
+        { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon },
+        { name: 'Consolidation', href: '/consolidation', icon: ArrowsPointingInIcon },
+        { name: 'Team', href: '/team', icon: UsersIcon },
+        { name: 'Projects', href: '/projects', icon: FolderIcon },
+        { name: 'Reports', href: '/reports', icon: ChartPieIcon },
       ],
     }
   }

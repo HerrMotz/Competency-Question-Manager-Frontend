@@ -11,7 +11,7 @@ export default defineComponent({
       required: true
     },
     timestamp: {
-      type: Date,
+      type: Number,
       required: true
     },
     text: {
