@@ -115,11 +115,9 @@ async function fetchRating() {
                             v-for="item in ratings.data"
                             :key="item.name"
                             class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                          <div>
-                            <span class="mr-5 w-1/2 text-ellipsis text-gray-600">{{ item.user_id }}</span>
-                            <div class="-mt-1 inline w-1/2">
-                              <StarComponent :rating="item.rating"/>
-                            </div>
+                          <span class="mr-5 w-2/3 text-ellipsis text-gray-600">{{ item.user_id }}</span>
+                          <div class="-mt-1 inline w-1/3">
+                            <StarComponent :rating="item.rating"/>
                           </div>
                         </div>
                       </div>
