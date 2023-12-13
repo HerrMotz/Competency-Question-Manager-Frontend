@@ -9,7 +9,13 @@ class LoginDataService {
         is_system_admin: boolean,
         is_verified: boolean
     }>> {
-        return await http.post<CompetencyQuestionT[]>("/users/login", {
+        return await http.post<{
+            id: string,
+            email: string,
+            name: string,
+            is_system_admin: boolean,
+            is_verified: boolean
+        }>("/users/login", {
             email: email,
             password: password
         });
