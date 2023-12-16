@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import { useStore } from "./store.ts";
 
+
 const routes =  [
     {
         path: "/",
@@ -47,7 +48,13 @@ const routes =  [
         name: "question-detail",
         component: () => import("./views/CompetencyQuestionDetailView.vue"),
         props: true
+    },
+    {
+        path: "/AddProject",
+        name: "AddProject",
+        component: () => import("./views/AddProject.vue")
     }
+
 ];
 
 const router = createRouter({
