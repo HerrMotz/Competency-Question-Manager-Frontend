@@ -7,8 +7,8 @@ import {UXResponse} from "../interfaces/UXResponse.ts";
 
 /// API aus Backend steht noch nicht
 class AddProjectDataService {
-    async getAll(): Promise<AxiosResponse<any, AddProjectX[]> | UXResponse>  {
-        return http.get<AddProjectX[]>("/projects", { headers: authHeader() }).then(response => {
+    async getAll(): Promise<AxiosResponse<any, AddProjectT[]> | UXResponse>  {
+        return http.get<AddProjectT[]>("/addproject", { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
             return {
@@ -19,8 +19,8 @@ class AddProjectDataService {
             }
         });
     }
-    async getOne(project_id: string): Promise<AxiosResponse<any, AddProjectX> | UXResponse> {
-        return http.get<AddProjectX[]>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
+    async getOne(project_id: string): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
+        return http.get<AddProjectT[]>(`/addproject/${project_id}`, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
             return {
@@ -32,10 +32,10 @@ class AddProjectDataService {
         });
     }
 
-    async add(project: string): Promise<AxiosResponse<any, AddProjectX> | UXResponse> {
-        return http.post<AddProjectX[]>(`/projects/`, {
+    async add(add:{project: string}): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
+        return http.post<AddProjectT[]>(`/addproject/`, {
             // TODO change this when the backend is ready
-            project:
+            project: add.project,
         }, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
@@ -49,7 +49,7 @@ class AddProjectDataService {
     }
 
     async delete(project_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
-        return http.delete<DeleteResponse>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
+        return http.delete<DeleteResponse>(`/addproject/${project_id}`, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
             return {

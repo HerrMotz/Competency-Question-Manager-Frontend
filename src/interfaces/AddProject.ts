@@ -1,4 +1,4 @@
-type AddProjectX = {
-    project_id: string,
-    project: string,
+type AddProjectT = {
+    project_id: String,
+    project: String,
 }

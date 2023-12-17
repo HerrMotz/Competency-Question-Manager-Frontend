@@ -50,8 +50,8 @@ const routes =  [
         props: true
     },
     {
-        path: "/AddProject",
-        name: "AddProject",
+        path: "/addproject",
+        name: "addproject",
         component: () => import("./views/AddProject.vue")
     }
 
