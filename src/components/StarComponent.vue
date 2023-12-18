@@ -61,13 +61,16 @@ export default defineComponent({
         this.messagePopupData.open = true;
 
       } else {
-        this.messagePopupData.uxresponse = {
-          title: "Rating successful",
-          messageType: "success",
-          text: "Your rating was submitted successfully!",
-          detail: ""
-        };
-        this.messagePopupData.open = true;
+        // TODO do something else
+        //  a popup is not wished
+
+        // this.messagePopupData.uxresponse = {
+        //   title: "Rating successful",
+        //   messageType: "success",
+        //   text: "Your rating was submitted successfully!",
+        //   detail: ""
+        // };
+        // this.messagePopupData.open = true;
         console.log(response.data)
         this.$emit('afterRating');
       }
