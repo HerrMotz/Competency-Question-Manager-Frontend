@@ -23,19 +23,22 @@ const messagePopupData = ref({
 })
 
 const cqs = ref();
+console.log(cqs.value)
 
-const response = await CompetencyQuestionDataService.getAll();
-if ("messageType" in response) {
-  messagePopupData.value.uxresponse = {
-    ...messagePopupData.value.uxresponse,
-    ...response
-  };
-  messagePopupData.value.open = true;
+CompetencyQuestionDataService.getAll().then(response => {
+  if ("messageType" in response) {
+    messagePopupData.value.uxresponse = {
+      ...messagePopupData.value.uxresponse,
+      ...response
+    };
+    messagePopupData.value.open = true;
 
-} else {
-  cqs.value = response;
-  console.log(cqs.value.data)
-}
+  } else {
+    cqs.value = response;
+    console.log()
+    console.log(cqs.value.data)
+  }
+});
 </script>
 
 <template>
@@ -52,6 +55,9 @@ if ("messageType" in response) {
       </RouterLink>
     </h1>
     <div v-if="cqs">
+      <div v-if="cqs.data.length === 0" class="mt-10">
+        There are no CQs yet!
+      </div>
       <CompetencyQuestionListItem v-for="cq in cqs.data"
                                   class="max-w-xl"
                                   :text="cq.question"
@@ -60,8 +66,7 @@ if ("messageType" in response) {
                                   :rating="cq.rating"/>
     </div>
     <div v-else>
-      <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700
-          dark:text-gray-200 bg-gray-100 mt-10">
+      <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10">
         <div class="animate-pulse flex space-x-4">
           <div class="flex-1 space-y-6 py-1">
             <div class="h-2 bg-slate-500 rounded"></div>

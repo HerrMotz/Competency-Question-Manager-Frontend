@@ -16,6 +16,10 @@ export default defineComponent({
       type: String,
       required: false
     },
+    ignore_zero_rating: {
+      type: Boolean,
+      required: false
+    }
   },
 
   emits: ['afterRating'],
@@ -80,7 +84,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-if="rating === 0 && isNotClickable">
+  <div v-if="rating === 0 && isNotClickable && !ignore_zero_rating">
     No rating.
   </div>
   <div v-else>

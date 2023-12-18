@@ -3,11 +3,10 @@ import CompetencyQuestionDataService from "../services/CompetencyQuestionDataSer
 import MessagePopup from "../components/MessagePopup.vue";
 import Comment from "../components/CommentComponent.vue";
 import {ref, watch} from "vue";
-import {StarIcon, TrashIcon, ArrowDownOnSquareIcon, PaperAirplaneIcon} from "@heroicons/vue/24/solid";
+import {TrashIcon, ArrowDownOnSquareIcon, PaperAirplaneIcon} from "@heroicons/vue/24/solid";
 import {DialogPanel, Popover, PopoverButton, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import StarComponent from "../components/StarComponent.vue";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
-import RatingDataService from "../services/RatingDataService.ts";
 
 const props = defineProps(['id'])
 
@@ -41,19 +40,19 @@ watch(starsAreHovered, (newValue, _) => {
 
 fetchCompetencyQuestion();
 async function fetchCompetencyQuestion() {
-  const response = await CompetencyQuestionDataService.getOne(props.id);
+  CompetencyQuestionDataService.getOne(props.id).then(response => {
+    if ("messageType" in response) {
+      messagePopupData.value.uxresponse = {
+        ...messagePopupData.value.uxresponse,
+        ...response
+      };
+      messagePopupData.value.open = true;
 
-  if ("messageType" in response) {
-    messagePopupData.value.uxresponse = {
-      ...messagePopupData.value.uxresponse,
-      ...response
-    };
-    messagePopupData.value.open = true;
-
-  } else {
-    cq.value = response;
-    console.log(cq.value.data)
-  }
+    } else {
+      cq.value = response;
+      console.log(cq.value.data)
+    }
+  });
 }
 </script>
 
@@ -162,12 +161,15 @@ async function fetchCompetencyQuestion() {
       </div>
     </div>
   </div>
-  <div v-else class="w-1/2 mx-auto">
-    <div class="h-8 border-1 shadow rounded-md p-4 w-1/2 dark:bg-gray-700
+  <div v-else class="w-1/2 mx-auto animate-pulse">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="h-8 border-1 shadow rounded-md p-4 dark:bg-gray-700
                 dark:text-gray-200 bg-gray-100"></div>
+    </div>
+    <StarComponent :rating="0" :ignore_zero_rating="true" class="float-right mt-4" />
     <div class="h-80
                 border-1 shadow rounded-md p-4 max-w-xl dark:bg-gray-700
-                dark:text-gray-200 bg-gray-100 mt-10"></div>
+                dark:text-gray-200 bg-gray-100 mt-16"></div>
   </div>
 </template>
 
