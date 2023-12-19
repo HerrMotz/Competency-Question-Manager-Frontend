@@ -1,6 +1,19 @@
 version: '2'
 
 services:
-  cq-frontend:
-    build: .
-    image: cq-frontend:v1
+  cq-frontend-build:
+    container_name: cq-frontend-build
+    build:
+      context: .
+      dockerfile: build.Dockerfile
+    image: cq-frontend-build:v1
+
+  cq-frontend-dev:
+    container_name: cq-frontend-dev
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    expose:
+      - 5173
+    volumes:
+      - ./:/app
