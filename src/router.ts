@@ -1,6 +1,13 @@
 import { createWebHistory, createRouter } from "vue-router";
 import { useStore } from "./store.ts";
 
+/**
+ * naming conventions:
+ *   - for a dashboard aka list view write /<modelName in plural>
+ *   - detail view: /<modelName in plural>/:id
+ *   - for a "add new" view: /<modelName in plural>/add
+ */
+
 const routes =  [
     {
         path: "/",
