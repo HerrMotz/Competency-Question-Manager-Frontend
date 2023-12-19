@@ -1,44 +1,99 @@
+<!--
+  * Shows all comments concerning a question
+  * allows the user to write a new comment
+-->
+
 <script lang="ts">
-import {defineComponent} from 'vue'
-import moment from "moment";
+import {defineComponent, PropType} from 'vue'
+import {PaperAirplaneIcon, TrashIcon} from "@heroicons/vue/24/solid";
+import CommentListItem from "./CommentListItem.vue";
+import SubmitButtonWithCallback from "./SubmitButtonWithCallback.vue";
+import CommentDataService from "../services/CommentDataService.ts";
 
 export default defineComponent({
-  name: "Comment",
+  name: "CommentComponent",
+  emits: ['refresh'],
+  methods: {
+    comment(commentText: string, questionId: string) {
+      CommentDataService.comment(commentText, questionId).then(response => {
+        if ("messageType" in response) {
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response
+          };
+          this.messagePopupData.open = true;
 
-  props: {
-    user: {
-      type: String,
-      required: true
-    },
-    timestamp: {
-      type: Number,
-      required: true
-    },
-    text: {
-      type: String,
-      required: true
-    },
-    systemMessage: {
-      type: Boolean,
+        } else {
+          // refetch the competency question to display the new comment
+          this.displaySuccess = true
+
+          if (this.timeout !== -100) {
+            clearTimeout(this.timeout);
+          }
+
+          this.timeout = setTimeout(() => {
+            this.displaySuccess = false;
+          }, 1000);
+          this.$emit('refresh');
+        }
+      });
     }
   },
-
-  methods: {
-    moment(date: Date) {
-      return moment(date).format("DD.MM.YYYY HH:mm:ss")
+  components: {SubmitButtonWithCallback, TrashIcon, CommentListItem, PaperAirplaneIcon},
+  props: {
+    questionId: {
+      type: String,
+      required: true
     },
+    comments: {
+      type: Object as PropType<CommentT[]>,
+      required: true
+    }
   },
+  computed: {
+    commentsSorted() {
+      return this.comments.sort((a:CommentT,b:CommentT)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime())
+    }
+  },
+  data() {
+    return {
+      commentText: "",
+      displaySuccess: false,
+      timeout: -100,
+      messagePopupData: {
+        uxresponse: {
+          title: "",
+          messageType: "",
+          text: "",
+          detail: "",
+        },
+        open: false
+      }
+    }
+  }
 })
 </script>
 
 <template>
-  <div class="border-b dark:border-gray-100 border-gray-800 mt-5 p-2 pb-8">
-    <span v-if="!systemMessage" class="font-bold block">{{ user }}</span>
-    <p :class="[systemMessage ? 'dark:text-gray-500 text-gray-500' : 'dark:text-gray-200 text-gray-800 mt-2']">
-      {{ text }}
-    </p>
-    <span class="text-xs font-light dark:text-gray-100 text-gray-800">{{ moment(timestamp) }}</span>
-  </div>
+  <section aria-labelledby="reviews-heading" class="mt-16 sm:mt-24">
+    <h2 id="reviews-heading" class="text-lg font-medium text-gray-900 dark:text-gray-200">Recent comments</h2>
+
+    <div class="mt-2 mb-20">
+      <textarea rows="3" name="comment" placeholder="Add new comment..." id="comment" v-model="commentText"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+      <button type="button"
+              @click="comment(commentText, questionId); commentText=''"
+              class="float-right inline-flex items-center gap-x-2 rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
+              :class="displaySuccess ? 'bg-green-600' : 'bg-indigo-600'">
+        <PaperAirplaneIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
+        Comment
+      </button>
+    </div>
+
+    <div class="flex flex-col space-y-10 divide-y divide-gray-200 dark:divide-gray-600">
+      <CommentListItem v-for="comment in commentsSorted" :key="comment.id" :comment="comment" />
+    </div>
+  </section>
 </template>
 
 <style scoped>

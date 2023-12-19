@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
-import Comment from "../components/CommentComponent.vue";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {TrashIcon, ArrowDownOnSquareIcon, PaperAirplaneIcon} from "@heroicons/vue/24/solid";
 import {DialogPanel, Popover, PopoverButton, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import StarComponent from "../components/StarComponent.vue";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
+import CommentComponent from "../components/CommentComponent.vue";
 
 const props = defineProps(['id'])
 
@@ -25,7 +25,6 @@ const starsAreHovered = ref(false);
 const timeout = ref();
 const open = ref(false);
 const cq = ref();
-const ratings = ref();
 
 watch(starsAreHovered, (newValue, _) => {
   if (newValue) {
@@ -141,25 +140,10 @@ async function fetchCompetencyQuestion() {
           </SubmitButtonWithCallback>
         </div>
       </div>
+      <CommentComponent :question-id="cq.data.id" :comments="cq.data.comments" @refresh="fetchCompetencyQuestion()" />
     </div>
 
-    <div class="mt-10">
-      <h1 class="text-xl">Comments</h1>
-      <div>
-        <div class="mt-2">
-          <textarea rows="3" name="comment" placeholder="Add new comment..." id="comment"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-          <button type="button"
-                  class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5">
-            <PaperAirplaneIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
-            Comment
-          </button>
-        </div>
 
-        <Comment text="Diese Frage ist irgendwie trivial." user="Daniel Motz" :timestamp="Date.now()"/>
-        <Comment text="Removed message." user="Daniel Motz" :timestamp="Date.now()" :system-message="true"/>
-      </div>
-    </div>
   </div>
   <div v-else class="w-1/2 mx-auto animate-pulse">
     <div class="grid grid-cols-2 gap-4">

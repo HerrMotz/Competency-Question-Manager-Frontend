@@ -1,10 +1,10 @@
 type CommentT = {
-    questionId: String,
-    authorId: String,
+    questionId: string,
+    authorId: string,
     author: {
-        name: String,
+        name: string,
     },
-    id: String,
-    createdAt: String,
-    comment: String,
+    id: string,
+    createdAt: string,
+    comment: string,
 }
