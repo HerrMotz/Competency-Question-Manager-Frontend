@@ -28,34 +28,20 @@ export const useStore = defineStore('cq-manager', {
         logout() {
             this.user.loggedInAt = null;
         },
-        login(email: string, password: string): Promise<boolean | UXResponse> {
+        async login(email: string, password: string): Promise<boolean | UXResponse> {
             return LoginDataService.login(email, password).then(response => {
-                this.user = {
-                    id: response.data.id,
-                    email: response.data.email,
-                    name: response.data.name,
-                    loggedInAt: new Date(),
-                    accessToken: response.data.token,
-                    sessionValidUntil: new Date(new Date().getDate() + 1)
-                }
-                return true
-            }).catch(reason => {
-                console.log("Debug info for error:");
-                console.log(reason);
-                if (reason.response.status === 401) {
-                    return {
-                        title: "Oops! These credentials seem to be invalid...",
-                        text: "You may contact your system administrator for a password reset.",
-                        detail: reason,
-                        messageType: "warning"
-                    }
+                if ("messageType" in response) {
+                    return response
                 } else {
-                    return {
-                        title: "Oops! An error occurred...",
-                        text: "... logging in. Debugging info can be found in the console.",
-                        detail: reason,
-                        messageType: "error"
+                    this.user = {
+                        id: response.data.id,
+                        email: response.data.email,
+                        name: response.data.name,
+                        loggedInAt: new Date(),
+                        accessToken: response.data.token,
+                        sessionValidUntil: new Date(new Date().getDate() + 1)
                     }
+                    return true
                 }
             })
         }

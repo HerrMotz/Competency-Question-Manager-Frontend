@@ -1,5 +1,6 @@
 import http from "./httpCommon";
 import {AxiosResponse} from "axios";
+import {UXResponse} from "../interfaces/UXResponse.ts";
 
 class LoginDataService {
     async login(email: string, password: string): Promise<AxiosResponse<any, {
@@ -9,8 +10,8 @@ class LoginDataService {
         is_system_admin: boolean,
         is_verified: boolean,
         token: string
-    }>> {
-        return await http.post<{
+    }> | UXResponse> {
+        return http.post<{
             id: string,
             email: string,
             name: string,
@@ -20,7 +21,27 @@ class LoginDataService {
         }>("/users/login", {
             email: email,
             password: password
-        });
+        }).then(response => {
+            return response
+        }).catch(reason => {
+            console.log("Debug info for error:");
+            console.log(reason);
+            if (reason.status === 401) {
+                return {
+                    title: "Oops! These credentials seem to be invalid...",
+                    text: "You may contact your system administrator for a password reset.",
+                    detail: reason,
+                    messageType: "warning"
+                }
+            } else {
+                return {
+                    title: "Oops! An error occurred...",
+                    text: "... while logging in. Debugging info can be found in the console.",
+                    detail: reason,
+                    messageType: "error"
+                }
+            }
+        });;
     }
 }
 
