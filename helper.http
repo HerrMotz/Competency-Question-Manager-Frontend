@@ -1,0 +1,46 @@
+POST {{host}}/users/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "{{username}}",
+  "password": "{{password}}"
+}
+
+> {%
+    client.global.set("token", response.body.token);
+    client.global.set("user_id", response.body.id)
+%}
+
+####
+
+GET {{host}}/questions
+Accept: application/json
+Authorization: {{token}}
+
+####
+
+POST {{host}}/questions
+Accept: application/json
+Authorization: {{token}}
+
+{
+  "id": null,
+  "question": "What is the topping of a Hawaii pizza?",
+  "version": 0
+}
+
+> {% client.global.set("question_id", response.body.id) %}
+
+####
+POST {{host}}/ratings
+Accept: application/json
+Authorization: {{token}}
+
+{
+  "id": null,
+  "rating": 3,
+  "question_id": "{{question_id}}",
+  "user_id": "{{user_id}}",
+  "version": 0
+}
