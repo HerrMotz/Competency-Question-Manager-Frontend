@@ -2,6 +2,14 @@
 
 The main repository containing the backend can be found here: https://git.uni-jena.de/fusion/teaching/project/2023wise/swep/competency-questions-management-for-ontology-development/cq-manager
 
+## Git Practices in this repository
+We rely on backend compatibility. Therefore, we structure our branches in folders, where
+the first layer is the name of the backend branch our branches are compatible with.
+
+**For example:**
+Our branch `feature-detail-view` which is compatible with the backend branch `add-comments`
+will be named `backend-add-comments/feature-detail-view`. 
+
 ## Recommended Environment Setup
 
 ### Building
