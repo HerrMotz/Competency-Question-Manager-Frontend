@@ -102,6 +102,20 @@ export default{
 </template>
 
 <style lang= css scoped>
+
+
+.tag-input {
+    border: 1px solid #ccc; 
+    background-color: #f0f0f0; 
+    padding: 5px; 
+    border-radius: 5px; 
+    margin-right: 5px; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 5px; 
+}
+
+
 .content-container {
     display: flex;
     flex-direction: column;
