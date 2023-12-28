@@ -50,9 +50,9 @@ const routes =  [
         props: true
     },
     {
-        path: "/addproject",
-        name: "addproject",
-        component: () => import("./views/AddProject.vue")
+        path: "/projects/add",
+        name: "projects-add",
+        component: () => import("./views/ProjectCreateView.vue")
     }
 
 ];
