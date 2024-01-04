@@ -1,4 +1,5 @@
 type AddProjectT = {
     project_id: String,
-    project: String,
-}
+    projectName: String,
+    projectManager: String[], 
+};

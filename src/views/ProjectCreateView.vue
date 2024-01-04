@@ -1,6 +1,6 @@
 <script lang="ts">
 import MessagePopup from "../components/MessagePopup.vue";
-import AddProjectDataService from "../services/AddProjectDataService.ts";
+import AddProjectDataService from "../services/ProjectDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 
@@ -31,8 +31,8 @@ export default{
   methods: {
     addTag() {
       if (this.tagValue !== '') 
-        this.tags.push(this.tagValue);
-      this.tagValue = '';
+        this.tags.push(this.tagValue)
+        this.tagValue = '';
     },
     removeTag(index: number) {
       this.tags.splice(index, 1);
