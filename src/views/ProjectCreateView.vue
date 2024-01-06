@@ -25,7 +25,7 @@ export default{
         project:"", 
       },
     tagValue: '',
-    tags: []
+    tags: [] as string[],
     }
   },
   methods: {
@@ -40,7 +40,8 @@ export default{
 
     async save (){
       const response = await AddProjectDataService.add({
-        project: this.add.project,
+        projectName: this.add.project,
+        projectManager: this.tags,
     });
     
     if ("messageType" in response) {

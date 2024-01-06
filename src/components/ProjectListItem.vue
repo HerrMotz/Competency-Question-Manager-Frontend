@@ -27,7 +27,7 @@ export default defineComponent({
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ projectName }}</h3>
         <div class="inline-block text-right">
-          <span>Manager(s): {{ projectManager.join(', ') }}</span>
+          <span>Project Manager(s): {{ projectManager.join(', ') }}</span>
         </div>
       </div>
 
