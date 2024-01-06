@@ -1,0 +1,41 @@
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: "GroupListItem",
+
+  props: {
+    groupName: {
+      type: String,
+      required: true
+    },
+    groupMember: {
+      type: Array,
+      required: true
+    },
+    identifier: {
+      type: String,
+      required: true
+    }
+  },
+})
+</script>
+
+<template>
+  <RouterLink :to="'/groups/' + identifier">
+    <div class="dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10 rounded p-4 text-left">
+      <div class="grid grid-cols-2">
+        <h3 class="font-bold dark:text-white">{{ groupName }}</h3>
+        <div class="inline-block text-right">
+          <span>Group Members: {{ groupMember.join(', ') }}</span>
+        </div>
+      </div>
+
+      <code>Group ID: {{ identifier }}</code>
+    </div>
+  </RouterLink>
+</template>
+
+<style scoped>
+
+</style>
