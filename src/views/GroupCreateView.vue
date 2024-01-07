@@ -1,10 +1,11 @@
 <script lang="ts">
+import { defineComponent } from "vue";
 import MessagePopup from "../components/MessagePopup.vue";
 import AddGroupDataService from "../services/GroupDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 
-export default{
+export default defineComponent({
   name: "GroupCreateView",
   components: {ArrowDownOnSquareIcon, SaveButtonWithCallback},
   props: {
@@ -54,11 +55,11 @@ export default{
       } else {
         // successful
         this.add.group = response.data.group;
-        this.$router.push('/groups/add/');
+        this.$router.push("/groups");
       }
     }  
   }
-};
+});
 </script>
 
 <template>
