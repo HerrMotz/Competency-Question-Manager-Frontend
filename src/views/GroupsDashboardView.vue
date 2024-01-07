@@ -48,8 +48,8 @@ if ("messageType" in response) {
       <GroupListItem v-for="group in groups.value.data"
                        :key="group.group_id"
                        class="max-w-xl"
-                       :groupName="group.groupName"
-                       :groupMember="group.groupMember"
+                       :name="group.name"
+                       :members="group.members"
                        :identifier="group.group_id" />
     </div>
     <div v-else>

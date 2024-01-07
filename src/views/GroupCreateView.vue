@@ -40,8 +40,8 @@ export default{
 
     async save (){
       const response = await AddGroupDataService.add({
-        groupName: this.add.group,
-        groupMember: this.tags,
+        name: this.add.group,
+        members: this.tags,
     });
     
     if ("messageType" in response) {
