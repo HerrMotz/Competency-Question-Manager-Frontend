@@ -6,10 +6,13 @@ import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon} from "@heroicons/vue/20/s
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
+import CompetencyQuestionQueryBuilder from "../components/CompetencyQuestionQueryBuilder.vue";
 
 export default defineComponent({
   name: "CompetencyQuestionCreateView",
-  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
+  components: {
+    CompetencyQuestionQueryBuilder,
+    ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
 
   data() {
     return {
@@ -99,6 +102,7 @@ export default defineComponent({
       <div class="mt-2">
         <textarea v-model="cq.question" rows="4" name="comment" id="question" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
       </div>
+      <CompetencyQuestionQueryBuilder />
     </div>
 
     <SaveButtonWithCallback agree-button-text="Save this question?"
