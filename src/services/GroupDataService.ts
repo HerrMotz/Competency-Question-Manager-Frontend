@@ -4,8 +4,55 @@ import { AxiosResponse } from "axios";
 import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class GroupDataService {
+
+    async update(group_id: string, updateData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
+        return http.put<AddGroupT>(`/groups/${group_id}`, updateData, { headers: authHeader() })
+            .then(response => {
+                return response;
+            }).catch(reason => {
+                return {
+                    title: "Oops! An error occurred...",
+                    text: "... while updating the group. Debugging info can be found in the console.",
+                    detail: reason,
+                    messageType: "error"
+                };
+            });
+    }
+    
+    async addMembers(group_id: string, members: string[]): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
+        return http.put<AddGroupT>(`/groups/${group_id}/members/add`, { emails: members }, { headers: authHeader() })
+            .then(response => {
+                return response;
+            }).catch(reason => {
+                return {
+                    title: "Oops! An error occurred...",
+                    text: "... while adding members to the group. Debugging info can be found in the console.",
+                    detail: reason,
+                    messageType: "error"
+                };
+            });
+    }
+    
+    async removeMembers(group_id: string, memberIds: string[]): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
+        return http.put<AddGroupT>(`/groups/${group_id}/members/remove`, { ids: memberIds }, { headers: authHeader() })
+            .then(response => {
+                return response;
+            }).catch(reason => {
+                return {
+                    title: "Oops! An error occurred...",
+                    text: "... while removing members from the group. Debugging info can be found in the console.",
+                    detail: reason,
+                    messageType: "error"
+                };
+            });
+    }
+    
+
+
+
+
     async getAll(): Promise<AxiosResponse<any, AddGroupT[]> | UXResponse>  {
-        return http.get<AddGroupT[]>("/groups", { headers: authHeader() }).then(response => {
+        return http.get<AddGroupT[]>(`/groups/`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {

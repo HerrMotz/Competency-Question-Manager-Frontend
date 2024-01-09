@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink :to="'/groups' + identifier">
+  <RouterLink :to="'/groups/' + identifier">
     <div class="dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10 rounded p-4 text-left">
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ name }}</h3>

@@ -55,7 +55,7 @@ export default defineComponent({
       } else {
         // successful
         this.add.group = response.data.group;
-        this.$router.push("/groups");
+        this.$router.push("/groups/");
       }
     }  
   }

@@ -34,7 +34,7 @@ const routes =  [
         component: () => import("./views/TeamDashboardView.vue")
     },
     {
-        path: "/projects",
+        path: "/projects/",
         name: "projects",
         component: () => import("./views/ProjectsDashboardView.vue")
     },
@@ -54,7 +54,7 @@ const routes =  [
         props: true
     },
     {
-        path: "/groups",
+        path: "/groups/",
         name: "groups",
         component: () => import("./views/GroupsDashboardView.vue")
     },
