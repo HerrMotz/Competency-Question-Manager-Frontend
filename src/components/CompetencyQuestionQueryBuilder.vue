@@ -3,17 +3,18 @@ import {Ref, ref, UnwrapRef} from "vue";
 import draggable from 'vuedraggable'
 
 type WordT = {
+  index: Number,
   text: String,
   isNew: Boolean
 }
 
 const words: Ref<UnwrapRef<(WordT)[]>> = ref([
-  {text: "This", isNew: true},
-  {text: "is", isNew: true},
-  {text: "an", isNew: true},
-  {text: "example", isNew: true},
-  {text: "sentence", isNew: true},
-  {text: ".", isNew: true}
+  {index: 1, text: "This", isNew: true},
+  {index: 2, text: "is", isNew: true},
+  {index: 3, text: "an", isNew: true},
+  {index: 4, text: "example", isNew: true},
+  {index: 5, text: "sentence", isNew: true},
+  {index: 6, text: ".", isNew: true}
 ]);
 
 const drag = ref(false);
@@ -35,7 +36,7 @@ const drag = ref(false);
           <button type="button"
                   class="group relative -mr-1 h-3.5 w-3.5 rounded-sm"
                   :class="word.isNew ? 'hover:bg-green-500/20' : 'hover:bg-gray-500/20'"
-                  @click="words.splice(index, 1)">
+                  @click="words.splice(words.findIndex(e => e.index === word.index), 1)">
             <span class="sr-only">Remove</span>
             <svg viewBox="0 0 14 14"
                  class="h-3.5 w-3.5"
