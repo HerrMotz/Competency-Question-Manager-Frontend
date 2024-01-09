@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {Ref, ref, UnwrapRef} from "vue";
+import {ref} from "vue";
 import draggable from 'vuedraggable'
 import {CheckCircleIcon} from "@heroicons/vue/24/solid";
 
 type WordT = {
-  index: Number,
+  initialIndex: Number,
   text: String,
   isNew: Boolean
 }
