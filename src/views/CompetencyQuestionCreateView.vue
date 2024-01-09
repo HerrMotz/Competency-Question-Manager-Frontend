@@ -72,7 +72,7 @@ export default defineComponent({
     </h1>
 
     <Listbox as="div" v-model="selected">
-      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900">Assigned to</ListboxLabel>
+      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Assigned to</ListboxLabel>
       <div class="relative mt-2">
         <ListboxButton class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <span class="block truncate">{{ selected.name }}</span>
@@ -98,10 +98,10 @@ export default defineComponent({
     </Listbox>
 
     <div class="my-5">
-      <label for="question" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Question text</label>
-      <div class="mt-2">
-        <textarea v-model="cq.question" rows="4" name="comment" id="question" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-      </div>
+<!--      <label for="question" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Question text</label>-->
+<!--      <div class="mt-2">-->
+<!--        <textarea v-model="cq.question" rows="4" name="comment" id="question" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />-->
+<!--      </div>-->
       <CompetencyQuestionQueryBuilder />
     </div>
 
@@ -110,7 +110,7 @@ export default defineComponent({
                             detail="Check for typos."
                             @modalsuccessclose="save()">
       <ArrowDownOnSquareIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
-      Add
+      Save Competency Question
     </SaveButtonWithCallback>
   </div>
 </template>
