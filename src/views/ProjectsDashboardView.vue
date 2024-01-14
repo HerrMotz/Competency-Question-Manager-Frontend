@@ -25,8 +25,9 @@ if ("messageType" in response) {
     ...response
   };
   messagePopupData.value.open = true;
+
 } else {
-  projects.value = response;
+  projects.value = ref(response);
   console.log(projects.value.data);
 }
 </script>
@@ -46,11 +47,11 @@ if ("messageType" in response) {
     </h1>
     <div v-if="projects">
       <ProjectListItem v-for="project in projects.value.data"
-                       :key="project.project_id"
-                       class="max-w-xl"
-                       :projectName="project.projectName"
-                       :projectManager="project.projectManager"
-                       :identifier="project.project_id" />
+                 :key="projects.identifier"
+                 :name="project.name"
+                 :managers="project.managers"
+                 :engineers="project.engineers"
+                 :identifier="project.identifier" />
     </div>
     <div v-else>
       <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700

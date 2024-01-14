@@ -40,8 +40,9 @@ export default{
 
     async save (){
       const response = await AddProjectDataService.add({
-        projectName: this.add.project,
-        projectManager: this.tags,
+        name: this.add.project,
+        managers: this.tags,
+        engineers: this.tags
     });
     
     if ("messageType" in response) {
@@ -74,7 +75,7 @@ export default{
     <div class="my-5">
       <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Type in project title:</label>
       <div class="mt-2">
-        <textarea v-model="add.project" rows="1" name="project_name" id="project" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+        <textarea v-model="add.project" rows="1" name="project_name" id="project" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
       </div>
     </div>
    
