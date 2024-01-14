@@ -6,3 +6,9 @@ type CompetencyQuestionT = {
     author_id: String,
     author_name: String
 }
+
+type CompetencyQuestionReducedT = {
+    id: String,
+    question: String,
+    author_id: String,
+}
