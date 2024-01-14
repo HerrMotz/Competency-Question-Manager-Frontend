@@ -31,7 +31,7 @@ class ConsolidationDataService {
     }
 
     async add(name: string, question_uuids: string): Promise<AxiosResponse<any, ConsolidationT> | UXResponse> {
-        return http.post<ConsolidationT>(`/consolidations/${question_uuids}`,  {
+        return http.post<ConsolidationT>(`/consolidations`,  {
                 name: name,
                 ids: question_uuids,
             }, {headers: authHeader()}).then(response => {

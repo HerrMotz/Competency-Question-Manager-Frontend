@@ -30,8 +30,8 @@ const routes =  [
         component: () => import("./views/CompetencyQuestionCreateView.vue")
     },
     {
-        path: "/consolidation/",
-        name: "consolidation",
+        path: "/consolidations/",
+        name: "consolidations",
         component: () => import("./views/ConsolidationDashboardView.vue")
     },
     {
@@ -54,6 +54,11 @@ const routes =  [
         name: "question-detail",
         component: () => import("./views/CompetencyQuestionDetailView.vue"),
         props: true
+    },
+    {
+        path: "/consolidations/add",
+        name: "consolidations-add",
+        component: () => import("./views/ConsolidationCreateView.vue")
     }
 ];
 
