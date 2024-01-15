@@ -35,6 +35,12 @@ const routes =  [
         component: () => import("./views/ConsolidationDashboardView.vue")
     },
     {
+        path: "/consolidations/:id",
+        name: "consolidation",
+        component: () => import("./views/ConsolidationDetailView.vue"),
+        props: true
+    },
+    {
         path: "/team",
         name: "team",
         component: () => import("./views/TeamDashboardView.vue")
