@@ -118,7 +118,7 @@ export default defineComponent({
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Consolidation Name</label>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Consolidated Question</label>
         <div class="relative mt-2 rounded-md shadow-sm">
           <input type="text" v-model="consolidationName" class="block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" :class="nameError ? 'ring-red-300 placeholder:text-red-300 focus:ring-red-500' : ''" aria-invalid="true" aria-describedby="email-error" />
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
