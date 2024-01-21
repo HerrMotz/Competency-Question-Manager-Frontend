@@ -78,9 +78,9 @@ export default defineComponent({
                       {{ uxresponse.text }}
                     </p>
                     <br>
-                    <p class="text-sm text-gray-500">
-                      {{ typeof uxresponse.detail === "string" ? uxresponse.detail.trim() : '' }}
-                    </p>
+                    <pre class="text-sm text-gray-500 overflow-auto">
+                      {{ uxresponse.detail.response.data }}
+                    </pre>
                   </div>
                 </div>
               </div>
