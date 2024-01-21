@@ -5,6 +5,8 @@ import {ref, watch} from "vue";
 import {TrashIcon, ArrowDownOnSquareIcon, XMarkIcon} from "@heroicons/vue/24/solid";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import CompetencyQuestionListItem from "../components/CompetencyQuestionListItem.vue";
+import QuestionSelectorComponent from "../components/QuestionSelectorComponent.vue";
+import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 
 const props = defineProps(['id'])
 
@@ -24,6 +26,7 @@ const timeout = ref();
 const open = ref(false);
 const consolidation = ref();
 const ratings = ref();
+const cqs = ref();
 
 watch(starsAreHovered, (newValue, _) => {
   if (newValue) {
@@ -37,6 +40,7 @@ watch(starsAreHovered, (newValue, _) => {
 })
 
 fetchConsolidation();
+
 async function fetchConsolidation() {
   ConsolidationDataService.getOne(props.id).then(response => {
     if ("messageType" in response) {
@@ -53,6 +57,21 @@ async function fetchConsolidation() {
   });
 }
 
+CompetencyQuestionDataService.getAll().then(response => {
+  if ("messageType" in response) {
+    messagePopupData.value.uxresponse = {
+      ...messagePopupData.value.uxresponse,
+      ...response
+    };
+    messagePopupData.value.open = true;
+
+  } else {
+    cqs.value = response;
+    console.log()
+    console.log(cqs.value.data)
+  }
+});
+
 async function addQuestions(consolidationId: string, questionsIds: string[]) {
   ConsolidationDataService.addQuestions(consolidationId, questionsIds).then(response => {
     if ("messageType" in response) {
@@ -61,7 +80,6 @@ async function addQuestions(consolidationId: string, questionsIds: string[]) {
         ...response
       };
       messagePopupData.value.open = true;
-
     } else {
       consolidation.value = response;
       console.log(consolidation.value.data)
@@ -87,11 +105,11 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
 </script>
 
 <template>
-  <div v-if="consolidation && messagePopupData.open===false"
+  <MessagePopup :uxresponse="messagePopupData.uxresponse"
+                :open="messagePopupData.open"
+                @close="messagePopupData.open = false;"/>
+  <div v-if="consolidation"
        class="w-1/2 mx-auto">
-    <MessagePopup :uxresponse="messagePopupData.uxresponse"
-                  :open="messagePopupData.open"
-                  @close="messagePopupData.open = false;"/>
     <h1 class="text-2xl">
       Consolidation Detail View
     </h1>
@@ -125,7 +143,7 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
       <div class="mt-10">
         <span class="text-xl">Associated Questions</span>
         <div v-for="cq in consolidation.data.questions" class="flex items-center mt-5">
-          <div class="bg-gray-700 p-4 rounded">
+          <div class="bg-gray-700 p-4 rounded w-full mr-3">
             <CompetencyQuestionListItem class="max-w-xl"
                                         :text="cq.question"
                                         :identifier="cq.id"/>
@@ -133,10 +151,13 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
           <div class="mx-auto">
             <button @click="removeQuestions(consolidation.data.id, [cq.id])"
                     class="hover:dark:bg-gray-700 hover:bg-gray-100 hover:text-red-400 p-2 rounded">
-              <XMarkIcon class="h-10 w-10" />
+              <XMarkIcon class="h-10 w-10"/>
             </button>
           </div>
         </div>
+        <QuestionSelectorComponent v-if="cqs" :cqs="cqs.data" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, ids)}">
+          Add to existing CQ
+        </QuestionSelectorComponent>
       </div>
     </div>
   </div>

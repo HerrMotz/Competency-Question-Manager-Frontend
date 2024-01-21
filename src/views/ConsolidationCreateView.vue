@@ -70,6 +70,7 @@ export default defineComponent({
           title: "Not enough questions selected",
           messageType: "warning",
           text: "Only two or more questions can be consolidated.",
+          detail: "",
         };
         this.messagePopupData.open = true;
         return

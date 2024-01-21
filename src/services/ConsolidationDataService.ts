@@ -52,7 +52,7 @@ class ConsolidationDataService {
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while deleting the competency question. Debugging info can be found in the console.",
+                text: "... while deleting the consolidation. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             }
@@ -65,7 +65,7 @@ class ConsolidationDataService {
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while deleting the competency question. Debugging info can be found in the console.",
+                text: "... while adding a question to this consolidation. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             }
@@ -78,7 +78,7 @@ class ConsolidationDataService {
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while deleting the competency question. Debugging info can be found in the console.",
+                text: "... while removing a question from this consolidation. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             }
