@@ -2,6 +2,7 @@
 import {defineComponent, PropType} from 'vue'
 import UserCardSmall from "./UserCardSmall.vue";
 import CompetencyQuestionListItem from "./CompetencyQuestionListItem.vue";
+import {PlusIcon} from "@heroicons/vue/20/solid";
 
 export default defineComponent({
   name: "ConsolidationListItem",
@@ -13,7 +14,7 @@ export default defineComponent({
     },
   },
 
-  components: {CompetencyQuestionListItem, UserCardSmall}
+  components: {CompetencyQuestionListItem, UserCardSmall, PlusIcon}
 })
 </script>
 
@@ -25,11 +26,14 @@ export default defineComponent({
       <h3 class="font-bold dark:text-white">{{ consolidation.name ? consolidation.name : 'No name given' }}</h3>
       <h4 class="mt-5">Questions</h4>
       <div class="mb-10">
-        <div class="mt-3 hover:dark:bg-gray-600 p-1 pl-3 rounded hover:bg-gray-200" v-for="cq in consolidation.questions">
+        <div class="mt-3 dark:bg-gray-600 hover:dark:bg-gray-600 p-1 pl-3 rounded hover:bg-gray-200" v-for="cq in consolidation.questions">
           <CompetencyQuestionListItem class="max-w-xl"
                                       :text="cq.question"
                                       :identifier="cq.id"/>
         </div>
+        <button class="mt-3 w-full flex items-center justify-center dark:bg-gray-600 hover:dark:bg-gray-500 p-1 pl-3 rounded hover:bg-gray-200">
+            <PlusIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
+        </button>
       </div>
 
 
