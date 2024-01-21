@@ -50,7 +50,7 @@ if ("messageType" in response) {
                        class="max-w-xl"
                        :name="group.name"
                        :members="group.members"
-                       :identifier="group.group_id" />
+                       :group_id="group.group_id" />
     </div>
     <div v-else>
       <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700

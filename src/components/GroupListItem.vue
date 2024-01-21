@@ -13,7 +13,7 @@ export default defineComponent({
       type: Array,
       required: true
     },
-    identifier: {
+    group_id: {
       type: String,
       required: true
     }
@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink :to="'/groups/' + identifier">
+  <RouterLink :to="'/groups/' + group_id">
     <div class="dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10 rounded p-4 text-left">
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ name }}</h3>
@@ -31,7 +31,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <code>Group ID: {{ identifier }}</code>
+      <code>Group ID: {{ group_id }}</code>
 
     </div>
   </RouterLink>
