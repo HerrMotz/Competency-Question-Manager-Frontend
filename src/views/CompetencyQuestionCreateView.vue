@@ -6,10 +6,12 @@ import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon} from "@heroicons/vue/20/s
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
+import CompetencyQuestionQueryBuilder from "../components/CompetencyQuestionQueryBuilder.vue";
 
 export default defineComponent({
   name: "CompetencyQuestionCreateView",
-  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
+  components: {
+    CompetencyQuestionQueryBuilder, ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
 
   data() {
     return {
@@ -69,7 +71,7 @@ export default defineComponent({
     </h1>
 
     <Listbox as="div" v-model="selected">
-      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900">Assigned to</ListboxLabel>
+      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Assigned to</ListboxLabel>
       <div class="relative mt-2">
         <ListboxButton class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <span class="block truncate">{{ selected.name }}</span>
