@@ -5,8 +5,8 @@ import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class ProjectDataService {
 
-    async updateManagers(project_id: string, emails: string[]): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.put<AddProjectT>(`/projects/${project_id}/managers`, {
+    async updateManagers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/managers`, {
             emails: emails
         }, { headers: authHeader() }).then(response => {
             return response;
@@ -20,8 +20,8 @@ class ProjectDataService {
         });
     }
     
-    async updateEngineers(project_id: string, emails: string[]): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.put<AddProjectT>(`/projects/${project_id}/engineers`, {
+    async updateEngineers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/engineers`, {
             emails: emails
         }, { headers: authHeader() }).then(response => {
             return response;
@@ -35,8 +35,8 @@ class ProjectDataService {
         });
     }
     
-    async removeManagers(project_id: string, ids: string[]): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.put<AddProjectT>(`/projects/${project_id}/remove_managers`, {
+    async removeManagers(project_id: string, ids: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/remove_managers`, {
             ids: ids
         }, { headers: authHeader() }).then(response => {
             return response;
@@ -50,8 +50,8 @@ class ProjectDataService {
         });
     }
     
-    async removeEngineers(project_id: string, ids: string[]): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.put<AddProjectT>(`/projects/${project_id}/remove_engineers`, {
+    async removeEngineers(project_id: string, ids: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/remove_engineers`, {
             ids: ids
         }, { headers: authHeader() }).then(response => {
             return response;
@@ -65,8 +65,8 @@ class ProjectDataService {
         });
     }
       
-    async getAll(): Promise<AxiosResponse<any, AddProjectT[]> | UXResponse>  {
-        return http.get<AddProjectT[]>("/projects/", { headers: authHeader() }).then(response => {
+    async getAll(): Promise<AxiosResponse<any, ProjectReducedT[]> | UXResponse>  {
+        return http.get<ProjectReducedT[]>("/projects/", { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
@@ -78,8 +78,8 @@ class ProjectDataService {
         });
     }
 
-    async getOne(project_id: string): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.get<AddProjectT>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
+    async getOne(project_id: string): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.get<ProjectReducedT>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
@@ -91,8 +91,8 @@ class ProjectDataService {
         });
     }
 
-    async add(add: { name: string, managers: string[], engineers: string[] }): Promise<AxiosResponse<any, AddProjectT> | UXResponse> {
-        return http.post<AddProjectT>(`/projects/`, {
+    async add(add: { name: string, managers: string[], engineers: string[] }): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.post<ProjectReducedT>(`/projects/`, {
             name: add.name,
             managers: add.managers,
             engineers: add.engineers

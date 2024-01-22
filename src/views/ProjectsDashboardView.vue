@@ -47,11 +47,11 @@ if ("messageType" in response) {
     </h1>
     <div v-if="projects">
       <ProjectListItem v-for="project in projects.value.data"
-                 :key="projects.project_id"
+                 :key="projects.id"
                  :name="project.name"
                  :managers="project.managers"
                  :engineers="project.engineers"
-                 :project_id="project.project_id" />
+                 :project_id="project.id" />
     </div>
     <div v-else>
       <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700
