@@ -85,7 +85,7 @@ export default {
 
   Add new project
   <div class="my-5">
-    <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Type in project
+    <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-3">Type in project
       title:</label>
     <div class="mt-2">
       <textarea v-model="add.project" rows="1" name="project_name" id="project"
@@ -103,12 +103,12 @@ export default {
       </div>
       <div class="mt-2">
         <textarea v-model="projectManagerInputField" @keydown.enter="addProjectManager"
-                  placeholder="Enter e-mail address" rows="5" name="project_add" id="project"
+                  placeholder="Enter e-mail address" rows="1" name="project_add" id="project"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
       </div>
     </div>
     <div class="tags-input-container">
-      <label for="project-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">
+      <label for="project-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-2">
         Assign engineer:
       </label>
       <div class="tag-input" v-for="(tag, index) in engineer" :key="'tag'+ index">
@@ -117,7 +117,7 @@ export default {
       </div>
       <div class="mt-2">
         <textarea v-model="engineerInputField" @keydown.enter="addEngineer"
-                  placeholder="Enter e-mail address" rows="5" name="project_add" id="project"
+                  placeholder="Enter e-mail address" rows="1" name="project_add" id="project"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
       </div>
     </div>
