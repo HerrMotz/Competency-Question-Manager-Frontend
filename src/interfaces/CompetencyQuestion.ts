@@ -1,8 +1,8 @@
 type CompetencyQuestionT = {
-    id: String,
-    question: String,
-    rating: Number,
+    id: string,
+    question: string,
+    rating: number,
     ratings?: Array<RatingT>,
-    author_id: String,
-    author_name: String
+    author_id: string,
+    author_name: string
 }
