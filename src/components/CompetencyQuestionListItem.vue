@@ -3,6 +3,7 @@ import {defineComponent} from 'vue'
 
 import { StarIcon } from '@heroicons/vue/24/solid'
 import StarComponent from "./StarComponent.vue";
+import UserCardSmall from "./UserCardSmall.vue";
 
 export default defineComponent({
   name: "CompetencyQuestionListItem",
@@ -14,7 +15,6 @@ export default defineComponent({
     },
     creator: {
       type: String,
-      required: true
     },
     identifier: {
       type: String,
@@ -22,22 +22,25 @@ export default defineComponent({
     },
     rating: {
       type: Number,
-      required: true
+    },
+    cardStyle: {
+      type: Boolean,
+      required: false
     }
   },
 
-  components: {StarComponent, StarIcon}
+  components: {UserCardSmall, StarComponent, StarIcon}
 })
 </script>
 
 <template>
 
   <RouterLink :to="'/questions/' + identifier">
-    <div class="dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10 rounded p-4 text-left">
+    <div class="text-left" :class="cardStyle ? 'bg-gray-100 rounded p-4 dark:bg-gray-700 dark:text-gray-200 mt-10' : ''">
 
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ text }}</h3>
-        <div class="inline-block text-right">
+        <div v-if="rating" class="inline-block text-right">
           <StarComponent :rating="rating" />
         </div>
       </div>
@@ -45,9 +48,7 @@ export default defineComponent({
 
       <code>identifier: {{ identifier }}</code>
 
-  <!--    <p>-->
-  <!--      {{ creator }}-->
-  <!--    </p>-->
+      <UserCardSmall v-if="creator" :name="creator" />
 
     </div>
   </RouterLink>

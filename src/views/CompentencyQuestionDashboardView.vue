@@ -59,6 +59,7 @@ CompetencyQuestionDataService.getAll().then(response => {
         There are no CQs yet!
       </div>
       <CompetencyQuestionListItem v-for="cq in cqs.data"
+                                  card-style="true"
                                   class="max-w-xl"
                                   :text="cq.question"
                                   :creator="cq.creator"
