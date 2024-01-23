@@ -5,6 +5,23 @@ import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class ProjectDataService {
 
+    async update(project_id: string, updatedData: { name: string, managers: string[], engineers: string[] }): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}`, updatedData, { headers: authHeader() })
+            .then(response => {
+                return response;
+            })
+            .catch(reason => {
+                return {
+                    title: "Oops! An error occurred...",
+                    text: "... while updating the project. Debugging info can be found in the console.",
+                    detail: reason,
+                    messageType: "error"
+                };
+            });
+    }
+    
+    
+
     async updateManagers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
         return http.put<ProjectReducedT>(`/projects/${project_id}/managers`, {
             emails: emails
