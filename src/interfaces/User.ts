@@ -7,4 +7,8 @@ type UserT = {
     sessionValidUntil: Date | null,
 }
 
-export type { UserT }
+type UserReducedT = {
+    id: string,
+    email: string,
+    name: string
+}

@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import { StateT } from './interfaces/State.ts'
-import { UserT } from "./interfaces/User.ts";
 import LoginDataService from "./services/LoginDataService.ts";
 import {UXResponse} from "./interfaces/UXResponse.ts";
 

@@ -14,3 +14,8 @@ type CompetencyQuestionReducedT = {
     author_name: String,
     rating: Number
 }
+
+type CompetencyQuestionConsolidationT = {
+    id: string,
+    author: UserReducedT
+}
