@@ -5,10 +5,10 @@ import { ArrowDownOnSquareIcon } from "@heroicons/vue/24/solid";
 import ProjectDataService from "../services/ProjectDataService.ts";
 
 export default {
-    name: "ProjectEditView",
+    name: "ProjectDetailView",
     components: { MessagePopup, ArrowDownOnSquareIcon, SaveButtonWithCallback },
     props: {
-      projectId: { type: String, required: true },
+      projects: { type: String, required: true },
     },
     data() {
       return {
@@ -34,14 +34,14 @@ export default {
     },
   methods: {
     async saveEdit() {
-      const projectId = this.projectId; // Assuming 'projectId' is a prop passed to this component
+      const projects = this.projects; 
 
-      const updateManagersResponse = await ProjectDataService.updateManagers(projectId, this.edit.project.managers);
-      const updateEngineersResponse = await ProjectDataService.updateEngineers(projectId, this.edit.project.engineers);
+      const updateManagersResponse = await ProjectDataService.updateManagers(projects, this.edit.project.managers);
+      const updateEngineersResponse = await ProjectDataService.updateEngineers(projects, this.edit.project.engineers);
 
-      // Check responses and handle accordingly
+     
       if ("messageType" in updateManagersResponse || "messageType" in updateEngineersResponse) {
-        // Handle error responses
+        
         const errorMessage = updateManagersResponse.message || updateEngineersResponse.message || "An error occurred while updating project details.";
         this.messagePopupData.uxresponse = {
           title: "Oops! An error occurred...",
@@ -51,7 +51,7 @@ export default {
         };
         this.messagePopupData.open = true;
       } else {
-        // Successful
+        
         this.$router.push("/projects/");
       }
     },
@@ -73,10 +73,7 @@ export default {
     },
   },
   created() {
-    // Fetch project data by ID and set it to the 'edit' data property
-    // You may need to implement a service for fetching project data by ID
-    // Example: const projectData = await ProjectDataService.getById(this.projectId);
-    // this.edit.project = projectData;
+
   },
 };
 </script>
