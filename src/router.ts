@@ -50,6 +50,10 @@ const routes =  [
         name: "projects",
         component: () => import("./views/ProjectsDashboardView.vue")
     },
+    {   path: "/projects/add",
+        name: "projects-add",
+        component: () => import("./views/ProjectCreateView.vue")
+    },
     {
         path: "/reports",
         name: "reports",
@@ -65,6 +69,16 @@ const routes =  [
         path: "/consolidations/add",
         name: "consolidations-add",
         component: () => import("./views/ConsolidationCreateView.vue")
+    },
+    {
+        path: "/groups/",
+        name: "groups",
+        component: () => import("./views/GroupsDashboardView.vue")
+    },
+    {
+        path: "/groups/add",
+        name: "groups-add",
+        component: () => import("./views/GroupCreateView.vue")
     }
 ];
 
