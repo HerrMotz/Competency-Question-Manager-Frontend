@@ -26,6 +26,10 @@ export default defineComponent({
     cardStyle: {
       type: Boolean,
       required: false
+    },
+    groupIdentifier: {
+      type: String,
+      required: true,
     }
   },
 
@@ -35,7 +39,7 @@ export default defineComponent({
 
 <template>
 
-  <RouterLink :to="'/questions/' + identifier">
+  <RouterLink :to="'/questions/' + groupIdentifier +  '/' + identifier">
     <div class="text-left" :class="cardStyle ? 'bg-gray-100 rounded p-4 dark:bg-gray-700 dark:text-gray-200 mt-10' : ''">
 
       <div class="grid grid-cols-2">

@@ -146,6 +146,7 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
           <div class="bg-gray-700 p-4 rounded w-full mr-3">
             <CompetencyQuestionListItem class="max-w-xl"
                                         :text="cq.question"
+                                        :groupIdentifier="cq.group_id"
                                         :identifier="cq.id"/>
           </div>
           <div class="mx-auto">

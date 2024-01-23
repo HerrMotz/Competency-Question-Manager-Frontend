@@ -8,7 +8,7 @@ import StarComponent from "../components/StarComponent.vue";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import CommentComponent from "../components/CommentComponent.vue";
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'groupid'])
 
 const messagePopupData = ref({
   uxresponse: {
@@ -39,7 +39,7 @@ watch(starsAreHovered, (newValue, _) => {
 
 fetchCompetencyQuestion();
 async function fetchCompetencyQuestion() {
-  CompetencyQuestionDataService.getOne(props.id).then(response => {
+  CompetencyQuestionDataService.getOne(props.id, props.groupid).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
         ...messagePopupData.value.uxresponse,

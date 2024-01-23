@@ -1,5 +1,6 @@
 type CompetencyQuestionT = {
     id: String,
+    group_id: String,
     question: String,
     rating: Number,
     ratings?: Array<RatingT>,
@@ -9,6 +10,7 @@ type CompetencyQuestionT = {
 
 type CompetencyQuestionReducedT = {
     id: String,
+    group_id: String,
     question: String,
     author_id: String,
     author_name: String,
@@ -16,6 +18,6 @@ type CompetencyQuestionReducedT = {
 }
 
 type CompetencyQuestionConsolidationT = {
-    id: string,
+    id: String,
     author: UserReducedT
 }
