@@ -1,20 +1,18 @@
 type CompetencyQuestionT = {
     id: String,
-    group_id: String,
+    groupId: String,
     question: String,
-    rating: Number,
+    aggregatedRating: Number,
     ratings?: Array<RatingT>,
-    author_id: String,
-    author_name: String
+    author: UserT
 }
 
 type CompetencyQuestionReducedT = {
     id: String,
-    group_id: String,
+    groupId: String,
     question: String,
-    author_id: String,
-    author_name: String,
-    rating: Number
+    author: UserReducedT,
+    aggregatedRating: Number
 }
 
 type CompetencyQuestionConsolidationT = {

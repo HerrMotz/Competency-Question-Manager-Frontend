@@ -52,7 +52,7 @@ export default defineComponent({
   },
   computed: {
     commentsSorted() {
-      return this.comments.sort((a:CommentT,b:CommentT)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime())
+      return this.comments ? this.comments.sort((a:CommentT,b:CommentT)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime()) : []
     }
   },
   data() {
@@ -79,8 +79,9 @@ export default defineComponent({
     <h2 id="reviews-heading" class="text-lg font-medium text-gray-900 dark:text-gray-200">Recent comments</h2>
 
     <div class="mt-2 mb-20">
-      <textarea rows="3" name="comment" placeholder="Add new comment..." id="comment" v-model="commentText"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+      <p class="text-red-500">Comments are currently unavailable.</p>
+      <textarea disabled rows="3" name="comment" placeholder="Add new comment..." id="comment" v-model="commentText"
+                    class="bg-gray-700 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
       <button type="button"
               @click="comment(commentText, questionId); commentText=''"
               class="float-right inline-flex items-center gap-x-2 rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
@@ -90,7 +91,7 @@ export default defineComponent({
       </button>
     </div>
 
-    <div class="flex flex-col space-y-10 divide-y divide-gray-200 dark:divide-gray-600">
+    <div v-if="comments" class="flex flex-col space-y-10 divide-y divide-gray-200 dark:divide-gray-600">
       <CommentListItem v-for="comment in commentsSorted" :key="comment.id" :comment="comment" />
     </div>
   </section>

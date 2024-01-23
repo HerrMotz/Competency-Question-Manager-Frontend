@@ -17,7 +17,7 @@ class CompetencyQuestionDataService {
         });
     }
 
-    async getAllOfGroup(group_uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT[]> | UXResponse>  {
+    async getAllForOneGroup(group_uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT[]> | UXResponse>  {
         return http.get<CompetencyQuestionT[]>(`/questions/${group_uuid}`, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
