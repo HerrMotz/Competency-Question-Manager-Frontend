@@ -58,7 +58,11 @@ export default defineComponent({
         { name: 'Reports', href: '/reports', icon: ChartPieIcon },
       ],
     }
-  }
+  },
+
+  mounted() {
+
+  },
 })
 </script>
 
@@ -98,7 +102,7 @@ export default defineComponent({
                     </ul>
                   </li>
                   <li>
-                    <div class="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
+                    <div class="text-xs font-semibold leading-6 text-indigo-200">Your projects</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                       <li v-for="team in teams" :key="team.name">
                         <RouterLink :to="team.href" :class="[team.current ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:text-white hover:bg-indigo-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
