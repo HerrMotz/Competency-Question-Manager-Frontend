@@ -6,8 +6,8 @@ import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class GroupDataService {
 
-    async update(group_id: string, updateData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
-        return http.put<AddGroupT>(`/groups/${group_id}`, updateData, { headers: authHeader() })
+    async update(group_id: string, updateData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${group_id}`, updateData, { headers: authHeader() })
             .then(response => {
                 return response;
             }).catch(reason => {
@@ -20,8 +20,8 @@ class GroupDataService {
             });
     }
     
-    async addMembers(group_id: string, members: string[]): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
-        return http.put<AddGroupT>(`/groups/${group_id}/members/add`, { emails: members }, { headers: authHeader() })
+    async addMembers(group_id: string, members: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${group_id}/members/add`, { emails: members }, { headers: authHeader() })
             .then(response => {
                 return response;
             }).catch(reason => {
@@ -34,8 +34,8 @@ class GroupDataService {
             });
     }
     
-    async removeMembers(group_id: string, memberIds: string[]): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
-        return http.put<AddGroupT>(`/groups/${group_id}/members/remove`, { ids: memberIds }, { headers: authHeader() })
+    async removeMembers(group_id: string, memberIds: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${group_id}/members/remove`, { ids: memberIds }, { headers: authHeader() })
             .then(response => {
                 return response;
             }).catch(reason => {
@@ -47,13 +47,9 @@ class GroupDataService {
                 };
             });
     }
-    
 
-
-
-
-    async getAll(): Promise<AxiosResponse<any, AddGroupT[]> | UXResponse>  {
-        return http.get<AddGroupT[]>(`/groups/`, { headers: authHeader() }).then(response => {
+    async getAll(): Promise<AxiosResponse<any, GroupT[]> | UXResponse>  {
+        return http.get<GroupT[]>(`/groups/`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
@@ -65,8 +61,8 @@ class GroupDataService {
         });
     }
 
-    async getOne(group_id: string): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
-        return http.get<AddGroupT>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {
+    async getOne(group_id: string): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.get<GroupT>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
@@ -78,8 +74,8 @@ class GroupDataService {
         });
     }
 
-    async add(add: { name: string, members: string[] }): Promise<AxiosResponse<any, AddGroupT> | UXResponse> {
-        return http.post<AddGroupT>(`/groups/`, {
+    async add(add: { name: string, members: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.post<GroupT>(`/groups/`, {
             name: add.name,
             members: add.members
         }, { headers: authHeader() }).then(response => {

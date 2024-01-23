@@ -1,5 +1,5 @@
 type GroupT = {
-    id: number,
+    id: string,
     name: string,
     project: ProjectT,
     noMembers: number,

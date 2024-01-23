@@ -2,11 +2,7 @@ type ConsolidationT = {
     id: string,
     name: string,
     project: ProjectReducedT,
-    engineer: {
-        email: string,
-        name: string,
-        id: string
-    },
+    engineer: UserReducedT,
     questions: CompetencyQuestionReducedT[],
     noQuestions: 0
 }

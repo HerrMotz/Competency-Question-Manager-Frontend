@@ -8,7 +8,7 @@ import CompetencyQuestionListItem from "../components/CompetencyQuestionListItem
 import QuestionSelectorComponent from "../components/QuestionSelectorComponent.vue";
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'projectid'])
 
 const messagePopupData = ref({
   uxresponse: {
@@ -20,12 +20,14 @@ const messagePopupData = ref({
   open: false
 })
 
+console.log("props")
+console.log(props)
+
 const timeoutDuration = 1000
 const starsAreHovered = ref(false);
 const timeout = ref();
 const open = ref(false);
 const consolidation = ref();
-const ratings = ref();
 const cqs = ref();
 
 watch(starsAreHovered, (newValue, _) => {
@@ -42,7 +44,7 @@ watch(starsAreHovered, (newValue, _) => {
 fetchConsolidation();
 
 async function fetchConsolidation() {
-  ConsolidationDataService.getOne(props.id).then(response => {
+  ConsolidationDataService.getOne(props.id, props.projectid).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
         ...messagePopupData.value.uxresponse,
@@ -146,7 +148,7 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
           <div class="bg-gray-700 p-4 rounded w-full mr-3">
             <CompetencyQuestionListItem class="max-w-xl"
                                         :text="cq.question"
-                                        :groupIdentifier="cq.group_id"
+                                        :groupIdentifier="cq.groupId"
                                         :identifier="cq.id"/>
           </div>
           <div class="mx-auto">

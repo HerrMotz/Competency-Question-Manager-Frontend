@@ -35,7 +35,7 @@ const routes =  [
         component: () => import("./views/ConsolidationDashboardView.vue")
     },
     {
-        path: "/consolidations/:id",
+        path: "/consolidations/:projectid/:id",
         name: "consolidation",
         component: () => import("./views/ConsolidationDetailView.vue"),
         props: true
