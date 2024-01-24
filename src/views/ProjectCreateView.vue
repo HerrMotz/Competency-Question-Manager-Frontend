@@ -4,7 +4,7 @@ import AddProjectDataService from "../services/ProjectDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 
-export default {
+export default{
   name: "ProjectCreateView",
   components: {MessagePopup, ArrowDownOnSquareIcon, SaveButtonWithCallback},
   props: {

@@ -95,8 +95,8 @@ class ProjectDataService {
         });
     }
 
-    async getOne(project_id: string): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
-        return http.get<ProjectReducedT>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
+    async getOne(project_id: string): Promise<AxiosResponse<any, ProjectFullT> | UXResponse> {
+        return http.get<ProjectFullT>(`/projects/${project_id}`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
