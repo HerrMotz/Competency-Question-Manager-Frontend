@@ -22,9 +22,8 @@ export default {
         },
         open: false,
       },
-      project_id: '',
       add: {
-        project: "",
+        name: "",
         projectManagerInputField: '',
         projectManager: [] as string[],
 
@@ -46,29 +45,38 @@ export default {
         this.messagePopupData.open = true;
       } else {
         const { name, managers, engineers } = response.data;
-          this.add.project = name;
+          this.add.name = name;
           this.add.projectManager = managers.map((manager: any) => manager.email);
           this.add.engineer = engineers.map((engineer: any) => engineer.email);
-          console.log('Project Title:', this.add.project);
+          console.log('Project Title:', this.add.name);
         }
     },
     async saveProject() {
-      const response = await ProjectDataService.update(this.id, {
-        name: this.add.project,
-        managers: this.add.projectManager,
-        engineers: this.add.engineer
-      });
+      console.log("saveProject method called");
+      
+      try {
+        const response = await ProjectDataService.update(this.id, {
+          name: this.add.name,
+          managers: this.add.projectManager,
+          engineers: this.add.engineer
+        });
 
-      if ("messageType" in response) {
-        this.messagePopupData.uxresponse = {
-          ...this.messagePopupData.uxresponse,
-          ...response
-        };
-        this.messagePopupData.open = true;
-      } else {
-       
-        this.add.project = response.data.name;
-        this.$router.push('/projects/');
+        console.log("API Response:", response);
+
+        if ("messageType" in response) {
+          console.log("Error response:", response);
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response
+          };
+          this.messagePopupData.open = true;
+        } else {
+          console.log("Successful response:", response);
+          this.add.name = response.data.name;
+          this.$router.push('/projects/');
+        }
+      } catch (error) {
+        console.error("Error in saveProject:", error);
       }
     },
     deleteProject() {
@@ -102,21 +110,13 @@ export default {
 </script>
 
 <template>
-  <div v-if="add.project && messagePopupData.open===false"
-       class="w-1/2 mx-auto">
-    <MessagePopup :uxresponse="messagePopupData.uxresponse"
-                  :open="messagePopupData.open"
-                  @close="messagePopupData.open = false;"/>
-    
-    
+  <div v-if="add.name && messagePopupData.open === false" class="w-1/2 mx-auto">
+    <MessagePopup :uxresponse="messagePopupData.uxresponse" :open="messagePopupData.open" @close="messagePopupData.open = false;" />
+
     <h1 class="text-2xl">Project Edit View</h1>
     <div>
-  </div>
       <div class="my-5">
-        <label
-          for="project"
-          class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-3"
-        >
+        <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-3">
           Project Title:
         </label>
         <div class="mt-2">
@@ -125,11 +125,14 @@ export default {
             name="project_name"
             id="project"
             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            v-model ="add.project"
+            v-model="add.name"
           />
         </div>
       </div>
     </div>
+  </div>
+
+    <div class="content-container">
    
     <div class="content-container">
       <div class="tags-input-container">
@@ -157,7 +160,7 @@ export default {
           ></textarea>
         </div>
       </div>
-
+    
       <div class="tags-input-container">
         <label
           for="engineer-edit"
@@ -184,7 +187,7 @@ export default {
         </div>
       </div>
     </div>
-
+  
     <div class="button-container">
       <button
         type="button"
@@ -206,5 +209,5 @@ export default {
         </SubmitButtonWithCallback>
       </div>
     </div>
-  
+  </div>
 </template>
