@@ -26,15 +26,16 @@ export default {
       add: {
         project: "",
         projectManagerInputField: '',
-      projectManager: [] as string[],
+        projectManager: [] as string[],
 
-      engineerInputField: '',
-      engineer: [] as string[],
+        engineerInputField: '',
+        engineer: [] as string[],
       },      
     }
   },
   methods: {
     async fetchProject() {
+      console.log("fetching project")
       const response = await ProjectDataService.getOne(this.id);
 
       if ("messageType" in response) {
@@ -75,10 +76,9 @@ export default {
       this.$router.push('/projects/');
     },
     addEditProjectManager() {
-      if (this.add.projectManagerInputField.trim() !== '') {
-        this.add.projectManager.push(this.add.projectManagerInputField.trim());
-        this.add.projectManagerInputField = ''; 
-      }
+      if (this.add.projectManagerInputField !== '') 
+        this.add.projectManager.push(this.add.projectManagerInputField)
+        this.add.projectManagerInputField = '';     
     },
 
     removeEditProjectManager(index: number) {
@@ -86,21 +86,19 @@ export default {
     },
 
     addEditEngineer() {
-      if (this.add.engineerInputField.trim() !== '') {
-        this.add.engineer.push(this.add.engineerInputField.trim());
-        this.add.engineerInputField = ''; 
-      }
+      if (this.add.engineerInputField !== '') 
+        this.add.engineer.push(this.add.engineerInputField);
+      this.add.engineerInputField = ''; 
     },
-
     removeEditEngineer(index: number) {
       this.add.engineer.splice(index, 1);
     },
   },
-
-  created() {
+  mounted() {
     this.fetchProject(); 
-  },
-};
+  }
+}
+
 </script>
 
 <template>
@@ -109,6 +107,8 @@ export default {
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
                   :open="messagePopupData.open"
                   @close="messagePopupData.open = false;"/>
+    
+    
     <h1 class="text-2xl">Project Edit View</h1>
     <div>
   </div>
