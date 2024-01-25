@@ -1,8 +1,7 @@
 import { useStore } from "../store.ts";
-const useStore1 = useStore()
-const { getUser } = useStore1
-
 export default function authHeader() {
+    const useStore1 = useStore()
+    const { getUser } = useStore1
     const user = getUser
 
     // TODO: add a check for token validity

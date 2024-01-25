@@ -11,6 +11,7 @@ type ProjectReducedT = {
 
 
 type ProjectFullT = {
+    "id": String,
     "name": String,
     "description": null,
     "managers": [
@@ -61,7 +62,6 @@ type ProjectFullT = {
     "noGroups": 0,
     "noConsolidations": 0,
     "totalMembers": 0,
-    "id": String,
     "createdAt": String,
     "updatedAt": String
 }

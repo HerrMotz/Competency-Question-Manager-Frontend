@@ -16,6 +16,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import Logo from "./Logo.vue";
 import {ArrowsPointingInIcon} from "@heroicons/vue/20/solid";
+import ProjectDataService from "../services/ProjectDataService.ts";
 
 export default defineComponent({
   name: "Navbar",
@@ -35,6 +36,11 @@ export default defineComponent({
   computed: {
     currentRouteName() {
       return this.$route.path;
+    },
+    currentProject() {
+      console.log("current project")
+      console.log(this.store.project)
+      return this.store.project
     }
   },
 
@@ -44,11 +50,21 @@ export default defineComponent({
 
       store: useStore(),
 
-      teams: [
+      projects: [
         { id: 1, name: 'Group 1', href: '#', initial: 'H' },
         { id: 2, name: 'Group 2', href: '#', initial: 'T' },
         { id: 3, name: 'Group 3', href: '#', initial: 'W' },
       ],
+
+      messagePopupData: {
+        uxresponse: {
+          title: "",
+          messageType: "",
+          text: "",
+          detail: "",
+        },
+        open: false
+      },
 
       navigation: [
         { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon },
@@ -60,8 +76,55 @@ export default defineComponent({
     }
   },
 
-  mounted() {
+  methods: {
+    isDeepEqual(obj1: object, obj2: object) {
+      // Check the object types
+      if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) {
+        return obj1 === obj2;
+      }
 
+      // Compare if they are the same reference
+      if (obj1 === obj2) {
+        return true;
+      }
+
+      // Compare keys length
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+
+      if (keys1.length !== keys2.length) {
+        return false;
+      }
+
+      // Recursively compare each key in the object
+      for (let key of keys1) {
+        if (!keys2.includes(key)) {
+          return false;
+        }
+        if (!this.isDeepEqual(obj1[key], obj2[key])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+  },
+
+  mounted() {
+    ProjectDataService.getAll().then(response => {
+      if ("messageType" in response) {
+        this.messagePopupData.uxresponse = {
+          ...this.messagePopupData.uxresponse,
+          ...response
+        };
+        this.messagePopupData.open = true;
+
+      } else {
+        this.projects = response.data;
+        console.log()
+        console.log(this.projects)
+      }
+    })
   },
 })
 </script>
@@ -104,11 +167,11 @@ export default defineComponent({
                   <li>
                     <div class="text-xs font-semibold leading-6 text-indigo-200">Your projects</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
-                      <li v-for="team in teams" :key="team.name">
-                        <RouterLink :to="team.href" :class="[team.current ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:text-white hover:bg-indigo-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">{{ team.initial }}</span>
-                          <span class="truncate">{{ team.name }}</span>
-                        </RouterLink>
+                      <li v-for="project in projects" :key="project.name" @click="store.project = project">
+                        <button class="w-full" :class="[isDeepEqual(currentProject, project) ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:text-white hover:bg-indigo-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">{{ project.name.charAt(0) }}</span>
+                          <span class="truncate">{{ project.name }}</span>
+                        </button>
                       </li>
                     </ul>
                   </li>
@@ -144,13 +207,13 @@ export default defineComponent({
             </ul>
           </li>
           <li>
-            <div class="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
+            <div class="text-xs font-semibold leading-6 text-indigo-200">Your projects</div>
             <ul role="list" class="-mx-2 mt-2 space-y-1">
-              <li v-for="team in teams" :key="team.name">
-                <a :href="team.href" :class="[team.current ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:text-white hover:bg-indigo-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                  <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">{{ team.initial }}</span>
-                  <span class="truncate">{{ team.name }}</span>
-                </a>
+              <li v-for="project in projects" :key="project.name" @click="store.project = project">
+                <button class="w-full" :class="[isDeepEqual(currentProject, project) ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:text-white hover:bg-indigo-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                  <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">{{ project.name.charAt(0) }}</span>
+                  <span class="truncate">{{ project.name }}</span>
+                </button>
               </li>
             </ul>
           </li>

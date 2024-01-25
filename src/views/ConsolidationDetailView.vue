@@ -74,8 +74,8 @@ CompetencyQuestionDataService.getAll().then(response => {
   }
 });
 
-async function addQuestions(consolidationId: string, questionsIds: string[]) {
-  ConsolidationDataService.addQuestions(consolidationId, questionsIds).then(response => {
+async function addQuestions(consolidationId: string, project_uuid: string, questionsIds: string[]) {
+  ConsolidationDataService.addQuestions(consolidationId, project_uuid, questionsIds).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
         ...messagePopupData.value.uxresponse,
@@ -89,8 +89,8 @@ async function addQuestions(consolidationId: string, questionsIds: string[]) {
   });
 }
 
-async function removeQuestions(consolidationId: string, questionIds: string[]) {
-  ConsolidationDataService.removeQuestions(consolidationId, questionIds).then(response => {
+async function removeQuestions(consolidationId: string, project_uuid: string, questionIds: string[]) {
+  ConsolidationDataService.removeQuestions(consolidationId, project_uuid, questionIds).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
         ...messagePopupData.value.uxresponse,
@@ -135,7 +135,7 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
           <SubmitButtonWithCallback agree-button-text="Delete"
                                     title="Are you sure you want to delete this consolidation?"
                                     detail="This action is permanent. However, the consolidated questions are not deleted."
-                                    @modalsuccessclose="ConsolidationDataService.delete(consolidation.data.id); $router.push('/consolidations/');">
+                                    @modalsuccessclose="ConsolidationDataService.delete(consolidation.data.id, consolidation.data.project.id); $router.push('/consolidations/');">
             <TrashIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
             Delete
           </SubmitButtonWithCallback>
@@ -152,13 +152,13 @@ async function removeQuestions(consolidationId: string, questionIds: string[]) {
                                         :identifier="cq.id"/>
           </div>
           <div class="mx-auto">
-            <button @click="removeQuestions(consolidation.data.id, [cq.id])"
+            <button @click="removeQuestions(consolidation.data.id, consolidation.data.project.id, [cq.id])"
                     class="hover:dark:bg-gray-700 hover:bg-gray-100 hover:text-red-400 p-2 rounded">
               <XMarkIcon class="h-10 w-10"/>
             </button>
           </div>
         </div>
-        <QuestionSelectorComponent v-if="cqs" :cqs="cqs.data" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, ids)}">
+        <QuestionSelectorComponent v-if="cqs" :cqs="cqs.data" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, consolidation.data.project.id, ids)}">
           Add to existing CQ
         </QuestionSelectorComponent>
       </div>

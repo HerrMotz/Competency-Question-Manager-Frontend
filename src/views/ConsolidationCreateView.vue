@@ -5,6 +5,7 @@ import { ExclamationCircleIcon } from '@heroicons/vue/20/solid'
 import ConsolidationDataService from "../services/ConsolidationDataService.ts";
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import QuestionSelectorComponent from "../components/QuestionSelectorComponent.vue";
+import {useStore} from "../store.ts";
 
 export default defineComponent({
   name: "ConsolidationCreateView",
@@ -20,6 +21,8 @@ export default defineComponent({
         },
         open: false,
       },
+
+      store: useStore(),
 
       groups: [
         {name: "Gruppe 1", uuid: "3"},
@@ -82,7 +85,7 @@ export default defineComponent({
         return;
       }
 
-      const response = await ConsolidationDataService.add(this.consolidationName, this.selectedQuestions);
+      const response = await ConsolidationDataService.add(this.consolidationName, this.store.project.id, this.selectedQuestions);
 
       if ("messageType" in response) {
         this.messagePopupData.uxresponse = {
@@ -121,14 +124,21 @@ export default defineComponent({
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Consolidated Question</label>
+        <label for="cq" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Consolidated Question</label>
         <div class="relative mt-2 rounded-md shadow-sm">
-          <input type="text" v-model="consolidationName" class="block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" :class="nameError ? 'ring-red-300 placeholder:text-red-300 focus:ring-red-500' : ''" aria-invalid="true" aria-describedby="email-error" />
+          <input type="text" v-model="consolidationName" class="block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" :class="nameError ? 'ring-red-300 placeholder:text-red-300 focus:ring-red-500' : ''" aria-invalid="true" aria-describedby="cq-error" />
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <ExclamationCircleIcon v-if="nameError" class="h-5 w-5 text-red-500" aria-hidden="true" />
           </div>
         </div>
-        <p class="mt-2 text-sm text-red-600" id="email-error" v-if="nameError">Please enter a name.</p>
+        <p class="mt-2 text-sm text-red-600" id="cq-error" v-if="nameError">Please enter a name.</p>
+      </div>
+
+      <div class="mt-5">
+        <label for="cq" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Project (Because it is selected in the navbar)</label>
+        <RouterLink :to="'/projects/'+store.project.id" class="font-bold underline decoration-blue-500 decoration-2 dark:text-slate-200">
+          {{store.project.name}}
+        </RouterLink>
       </div>
 
       <QuestionSelectorComponent :cqs="cqs" @selection-was-made="storeSelection">

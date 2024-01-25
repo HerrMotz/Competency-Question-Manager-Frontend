@@ -14,12 +14,23 @@ export const useStore = defineStore('cq-manager', {
             accessToken: "",
             sessionValidUntil: null,
         },
+        project: {
+            id: "",
+            "name": "",
+            "description": "",
+            "noManagers": 0,
+            "noEngineers": 0,
+            "noGroups": 0,
+            "noConsolidations": 0,
+            "totalMembers": 0,
+        }
     }),
 
     getters: {
         isLoggedIn(state): boolean { return !!state.user.loggedInAt },
         getemail(state): string { return state.user.email },
         getUser(state): UserT { return state.user },
+        getProject(state): ProjectReducedT { return state.project }
     },
 
     actions: {

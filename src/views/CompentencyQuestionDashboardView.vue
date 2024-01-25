@@ -7,13 +7,6 @@ import {ref} from "vue";
 import GroupDataService from "../services/GroupDataService.ts";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 
-// const cqs = {
-//   data: [
-//     { question: "What is the topping of a Hawaii pizza?", creator: "Daniel", id: "pizza-hawaii", rating: 2 },
-//     { question: "What is the topping of a Diavolo pizza?", creator: "Daniel", id: "pizza-diavolo", rating: 5 },
-//     { question: "What is the topping of a random pizza?", creator: "Daniel", id: "pizza-random", rating: 3 }
-// ]}
-
 const messagePopupData = ref({
   uxresponse: {
     title: "",

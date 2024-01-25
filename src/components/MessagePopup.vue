@@ -79,7 +79,7 @@ export default defineComponent({
                     </p>
                     <br>
                     <pre class="text-sm text-gray-500 overflow-auto">
-                      {{ uxresponse.detail.response.data }}
+                      {{ uxresponse?.detail?.response?.data }}
                     </pre>
                   </div>
                 </div>
