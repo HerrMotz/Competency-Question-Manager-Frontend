@@ -45,7 +45,7 @@ export default defineComponent({
 
   methods: {
     async getCompetencyQuestions()  {
-      const response = await CompetencyQuestionDataService.getAll();
+      const response = await CompetencyQuestionDataService.getAllForOneProject(this.store.project.id);
       console.log(response)
 
       if ("messageType" in response) {

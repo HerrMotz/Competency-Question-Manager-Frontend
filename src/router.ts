@@ -22,7 +22,7 @@ const routes =  [
     {
         path: "/questions",
         name: "questions",
-        component: () => import("./views/CompentencyQuestionDashboardView.vue")
+        component: () => import("./views/CompetencyQuestionDashboardView.vue")
     },
     {
         path: "/questions/add",

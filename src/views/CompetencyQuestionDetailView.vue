@@ -78,7 +78,6 @@ async function fetchCompetencyQuestion() {
     <div>
       <div class="my-3">
         <div class="float-right">
-          Topic: <span class="underline decoration-sky-500 mr-5">Topping</span>
           <span class="inline-block text-right ml-2"
                 @mouseover="starsAreHovered = true"
                 @mouseleave="starsAreHovered = false"> <!-- this hovering mechanism is WIP -->

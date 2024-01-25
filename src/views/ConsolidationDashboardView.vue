@@ -3,7 +3,11 @@ import ConsolidationListItem from "../components/ConsolidationListItem.vue";
 import ConsolidationDataService from "../services/ConsolidationDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/20/solid"
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useStore} from "../store.ts";
+import {storeToRefs} from "pinia";
+const useStore1 = useStore()
+const {getProject} = storeToRefs(useStore1)
 
 const messagePopupData = ref({
   uxresponse: {
@@ -16,22 +20,29 @@ const messagePopupData = ref({
 })
 
 const consolidations = ref();
-console.log(consolidations.value)
 
-ConsolidationDataService.getAll().then(response => {
-  if ("messageType" in response) {
-    messagePopupData.value.uxresponse = {
-      ...messagePopupData.value.uxresponse,
-      ...response
-    };
-    messagePopupData.value.open = true;
+function fetchProjects() {
+  ConsolidationDataService.getAllForOneProject(getProject.value.id).then(response => {
+    if ("messageType" in response) {
+      messagePopupData.value.uxresponse = {
+        ...messagePopupData.value.uxresponse,
+        ...response
+      };
+      messagePopupData.value.open = true;
 
-  } else {
-    consolidations.value = response;
-    console.log()
-    console.log(consolidations.value.data)
-  }
-});
+    } else {
+      consolidations.value = response;
+      console.log()
+      console.log(consolidations.value.data)
+    }
+  });
+}
+
+fetchProjects()
+
+watch(getProject, (_, __) => {
+  fetchProjects()
+})
 </script>
 
 <template>

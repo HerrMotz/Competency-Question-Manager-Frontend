@@ -4,7 +4,8 @@ type CompetencyQuestionT = {
     question: String,
     aggregatedRating: Number,
     ratings?: Array<RatingT>,
-    author: UserT
+    author: UserT,
+    noConsolidations: Number
 }
 
 type CompetencyQuestionReducedT = {

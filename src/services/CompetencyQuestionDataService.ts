@@ -30,6 +30,19 @@ class CompetencyQuestionDataService {
         });
     }
 
+    async getAllForOneProject(project_uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT[]> | UXResponse> {
+        return http.get<CompetencyQuestionT[]>(`/questions/by_project/${project_uuid}`, {headers: authHeader()}).then(response => {
+            return response
+        }).catch(reason => {
+            return {
+                title: "Oops! An error occurred...",
+                text: "... while retrieving competency questions. Debugging info can be found in the console.",
+                detail: reason,
+                messageType: "error"
+            }
+        });
+    }
+
     async getOne(question_uuid: string, group_uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT> | UXResponse> {
         return http.get<CompetencyQuestionT[]>(`/questions/${group_uuid}/${question_uuid}`, { headers: authHeader() }).then(response => {
             return response

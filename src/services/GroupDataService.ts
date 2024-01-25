@@ -61,6 +61,19 @@ class GroupDataService {
         });
     }
 
+    async getAllForOneProject(project_uuid: string): Promise<AxiosResponse<any, GroupT[]> | UXResponse>  {
+        return http.get<GroupT[]>(`/groups/${project_uuid}`, { headers: authHeader() }).then(response => {
+            return response;
+        }).catch(reason => {
+            return {
+                title: "Oops! An error occurred...",
+                text: "... while retrieving groups. Debugging info can be found in the console.",
+                detail: reason,
+                messageType: "error"
+            };
+        });
+    }
+
     async getOne(group_id: string): Promise<AxiosResponse<any, GroupT> | UXResponse> {
         return http.get<GroupT>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {
             return response;

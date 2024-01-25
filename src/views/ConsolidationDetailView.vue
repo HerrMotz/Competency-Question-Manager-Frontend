@@ -59,7 +59,7 @@ async function fetchConsolidation() {
   });
 }
 
-CompetencyQuestionDataService.getAll().then(response => {
+CompetencyQuestionDataService.getAllForOneProject(props.projectid).then(response => {
   if ("messageType" in response) {
     messagePopupData.value.uxresponse = {
       ...messagePopupData.value.uxresponse,
@@ -161,7 +161,8 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
 
         <div class="mt-10">
           <span class="text-xl">Add other CQs</span>
-          <p>Of {{cqs.data.length}} competency questions, there is {{ cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id)).length }} (also displayed below) that is/are not yet consolidated in this CQ.</p>
+          <!-- TODO use by_project -->
+          <p v-if="cqs">Of {{cqs.data.length}} competency questions, there is {{ cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id)).length }} (also displayed below) that is/are not yet consolidated in this CQ.</p>
           <QuestionSelectorComponent v-if="cqs && consolidation.data" :cqs="cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id))" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, consolidation.data.project.id, ids)}">
             Add to existing CQ
           </QuestionSelectorComponent>

@@ -30,6 +30,10 @@ export default defineComponent({
     groupIdentifier: {
       type: String,
       required: true,
+    },
+    numberOfConsolidations: {
+      type: Number,
+      required: false,
     }
   },
 
@@ -40,10 +44,15 @@ export default defineComponent({
 <template>
 
   <RouterLink :to="'/questions/' + groupIdentifier +  '/' + identifier">
-    <div class="text-left" :class="cardStyle ? 'bg-gray-100 rounded p-4 dark:bg-gray-700 dark:text-gray-200 mt-10' : ''">
+    <div class="text-left" :class="[cardStyle ? 'bg-gray-100 rounded p-4 dark:bg-gray-700 dark:text-gray-200 mt-10' : '', numberOfConsolidations ? 'ring' : '']">
 
       <div class="grid grid-cols-2">
-        <h3 class="font-bold dark:text-white">{{ text }}</h3>
+        <h3 class="font-bold dark:text-white">{{ text }}
+          <br>
+          <span v-if="numberOfConsolidations" class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-xs font-medium text-blue-400 ring-1 ring-inset ring-blue-400/30">
+            In {{ numberOfConsolidations }} consolidation(s)
+          </span>
+        </h3>
         <div v-if="rating" class="inline-block text-right">
           <StarComponent :rating="rating" />
         </div>

@@ -34,10 +34,6 @@ if ("messageType" in response) {
 </script>
 
 <template>
-  <div>
-    <p>Topic: {{ cq.data.topic }}</p>
-  </div>
-
   <MessagePopup :uxresponse="messagePopupData.uxresponse"
                 :open="messagePopupData.open"
                 @close="messagePopupData.open = false;"/>
