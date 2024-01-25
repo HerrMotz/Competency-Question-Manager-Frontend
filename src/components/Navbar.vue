@@ -69,7 +69,7 @@ export default defineComponent({
       navigation: [
         { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon },
         { name: 'Consolidation', href: '/consolidations', icon: ArrowsPointingInIcon },
-        { name: 'Team', href: '/team', icon: UsersIcon },
+        { name: 'Group', href: '/groups', icon: UsersIcon },
         { name: 'Projects', href: '/projects', icon: FolderIcon },
         { name: 'Reports', href: '/reports', icon: ChartPieIcon },
       ],

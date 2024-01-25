@@ -3,7 +3,7 @@ import CompetencyQuestionListItem from "../components/CompetencyQuestionListItem
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
 import {PlusIcon,ChevronUpDownIcon,CheckIcon} from "@heroicons/vue/20/solid"
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import GroupDataService from "../services/GroupDataService.ts";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 
@@ -23,21 +23,6 @@ const groups = ref();
 
 const selectedGroup = ref();
 
-CompetencyQuestionDataService.getAll().then(response => {
-  if ("messageType" in response) {
-    messagePopupData.value.uxresponse = {
-      ...messagePopupData.value.uxresponse,
-      ...response
-    };
-    messagePopupData.value.open = true;
-
-  } else {
-    cqs.value = response;
-    console.log()
-    console.log(cqs.value.data)
-  }
-});
-
 GroupDataService.getAll().then(response => {
   if ("messageType" in response) {
     messagePopupData.value.uxresponse = {
@@ -48,12 +33,34 @@ GroupDataService.getAll().then(response => {
 
   } else {
     groups.value = response;
-    groups.value.data.unshift({name: "No filter"});
-    selectedGroup.value = {name: "No filter"};
+    groups.value.data.unshift({name: "No filter", id: ''});
+    selectedGroup.value = {name: "No filter", id: ''};
     console.log()
     console.log(groups.value.data)
+    fetchCompetencyQuestion();
   }
 })
+
+watch(selectedGroup, () => {
+  fetchCompetencyQuestion();
+})
+
+async function fetchCompetencyQuestion() {
+  CompetencyQuestionDataService.getAllForOneGroup(selectedGroup.value.id).then(response => {
+    if ("messageType" in response) {
+      messagePopupData.value.uxresponse = {
+        ...messagePopupData.value.uxresponse,
+        ...response
+      };
+      messagePopupData.value.open = true;
+
+    } else {
+      cqs.value = response;
+      console.log()
+      console.log(cqs.value.data)
+    }
+  });
+}
 </script>
 
 <template>

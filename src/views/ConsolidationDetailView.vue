@@ -158,9 +158,14 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
             </button>
           </div>
         </div>
-        <QuestionSelectorComponent v-if="cqs" :cqs="cqs.data" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, consolidation.data.project.id, ids)}">
-          Add to existing CQ
-        </QuestionSelectorComponent>
+
+        <div class="mt-10">
+          <span class="text-xl">Add other CQs</span>
+          <p>Of {{cqs.data.length}} competency questions, there is {{ cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id)).length }} (also displayed below) that is/are not yet consolidated in this CQ.</p>
+          <QuestionSelectorComponent v-if="cqs && consolidation.data" :cqs="cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id))" @selection-was-made="(ids) => {addQuestions(consolidation.data.id, consolidation.data.project.id, ids)}">
+            Add to existing CQ
+          </QuestionSelectorComponent>
+        </div>
       </div>
     </div>
   </div>
