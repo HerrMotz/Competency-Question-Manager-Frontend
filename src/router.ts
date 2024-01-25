@@ -55,6 +55,12 @@ const routes =  [
         component: () => import("./views/ProjectCreateView.vue")
     },
     {
+        path: "/projects/:id",
+        name: "projects-detail",
+        component: () => import("./views/ProjectDetailView.vue"),
+        props: true
+    },
+    {
         path: "/reports",
         name: "reports",
         component: () => import("./views/ReportsDashboardView.vue")
