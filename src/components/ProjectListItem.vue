@@ -10,11 +10,11 @@ export default defineComponent({
       required: true
     },
     engineers: {
-      type: Array,
+      type: Number,
       required: false
     },
     managers: {
-      type: Array,
+      type: Number,
       required: false
     },
     project_id: {
@@ -32,7 +32,7 @@ export default defineComponent({
         <h3 class="font-bold dark:text-white">{{ name }}</h3>
         {{ managers }}
         <div class="inline-block text-right">
-          <span>Project Manager(s): {{ [...(managers || []), ...(engineers || [])].join(', ') }}</span>
+          <span>Project Manager(s): {{ managers }}</span>
 
         </div>
       </div>

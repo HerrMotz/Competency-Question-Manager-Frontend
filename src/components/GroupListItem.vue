@@ -10,7 +10,7 @@ export default defineComponent({
       required: true
     },
     members: {
-      type: Array,
+      type: Number,
       required: true
     },
     group_id: {
@@ -27,7 +27,7 @@ export default defineComponent({
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ name }}</h3>
         <div class="inline-block text-right">
-          <span>Group Members: {{ members.join(', ') }}</span>
+          <span>Group Members: {{ members }}</span>
         </div>
       </div>
 
