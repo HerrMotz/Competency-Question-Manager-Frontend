@@ -49,8 +49,8 @@ if ("messageType" in response) {
       <ProjectListItem v-for="project in projects.value.data"
                  :key="projects.id"
                  :name="project.name"
-                 :managers="project.managers"
-                 :engineers="project.engineers"
+                 :managers="project.noManagers"
+                 :engineers="project.noEngineers"
                  :project_id="project.id" />
     </div>
     <div v-else>

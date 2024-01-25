@@ -45,11 +45,11 @@ if ("messageType" in response) {
       </RouterLink>
     </h1>
     <div v-if="groups">
-      <GroupListItem v-for="group in groups.value.data"
-                       :key="group.group_id"
+      <GroupListItem v-for="group in groups.data"
+                       :key="group.id"
                        :name="group.name"
-                       :members="group.members"
-                       :group_id="group.group_id" />
+                       :members="group.noMembers"
+                       :group_id="group.id" />
     </div>
     <div v-else>
       <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700
