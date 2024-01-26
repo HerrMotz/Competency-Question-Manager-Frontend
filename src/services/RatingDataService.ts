@@ -33,8 +33,8 @@ class RatingDataService {
 
         return http.post<RatingT>("/ratings/", {
                 rating: stars,
-                question_id: question_id,
-                user_id: store.getUser.id,
+                questionId: question_id,
+                userId: store.getUser.id,
                 version: question_version
             },
         { headers: authHeader() }).then(response => {

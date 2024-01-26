@@ -1,7 +1,7 @@
 type GroupT = {
     id: string,
     name: string,
-    project: ProjectT,
+    project: ProjectFullT,
     noMembers: number,
     noQuestions: number,
     createdAt: string,

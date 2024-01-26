@@ -146,7 +146,7 @@ async function fetchCompetencyQuestion() {
           <SubmitButtonWithCallback agree-button-text="Delete the question"
                                     title="Are you sure you want to delete the question?"
                                     detail="This action is permanent. All comments, ratings and consolidations will be deleted."
-                                    @modalsuccessclose="CompetencyQuestionDataService.delete(cq.data.id); $router.push('/questions/');">
+                                    @modalsuccessclose="CompetencyQuestionDataService.delete(cq.data.id, cq.data.groupId); $router.push('/questions/');">
             <TrashIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
             Delete
           </SubmitButtonWithCallback>
@@ -183,6 +183,8 @@ async function fetchCompetencyQuestion() {
                 dark:text-gray-200 bg-gray-100 mt-16"></div>
   </div>
 </template>
+
+<!-- TODO deleting does not work -->
 
 <style scoped>
 

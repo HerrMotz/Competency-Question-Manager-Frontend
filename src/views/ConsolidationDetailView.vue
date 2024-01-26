@@ -116,8 +116,11 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
       Consolidation Detail View
     </h1>
 
+    <h2 class="mt-10 text-xl">Project: {{consolidation.data.project.name}}</h2>
+
     <div>
       <div class="mt-10">
+        <label for="question">Question</label>
         <input type="text" name="question" id="question"
                placeholder="No question given"
                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -145,7 +148,7 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
       <div class="mt-10">
         <span class="text-xl">Associated Questions</span>
         <div v-for="cq in consolidation.data.questions" class="flex items-center mt-5">
-          <div class="bg-gray-700 p-4 rounded w-full mr-3">
+          <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded w-full mr-3">
             <CompetencyQuestionListItem class="max-w-xl"
                                         :text="cq.question"
                                         :groupIdentifier="cq.groupId"

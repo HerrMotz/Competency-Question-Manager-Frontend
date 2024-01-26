@@ -51,9 +51,6 @@ export default defineComponent({
       store: useStore(),
 
       projects: [
-        { id: 1, name: 'Group 1', href: '#', initial: 'H' },
-        { id: 2, name: 'Group 2', href: '#', initial: 'T' },
-        { id: 3, name: 'Group 3', href: '#', initial: 'W' },
       ],
 
       messagePopupData: {
