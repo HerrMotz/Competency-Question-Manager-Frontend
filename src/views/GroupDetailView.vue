@@ -23,9 +23,9 @@ export default {
       },
       add: {
         name: "", 
-      },
-      membersInputField: '',
-      members: [] as string[],
+        membersInputField: '',
+        members: [] as string[]
+        },
     }   
   },
   methods: {
@@ -53,8 +53,8 @@ export default {
       try {
         const response = await GroupDataService.update(this.id, {
           name: this.add.name,
-          membersInputField: this.membersInputField,
-          members: this.members
+          membersInputField: this.add.membersInputField,
+          members: this.add.members
         });
 
         console.log("API Response:", response);
@@ -80,9 +80,9 @@ export default {
       this.$router.push('/groups/');
     },
     addEditMembers() {
-      if (this.membersInputField !== '') 
-        this.members.push(this.membersInputField);
-        this.membersInputField = '';     
+      if (this.add.membersInputField !== '') 
+        this.add.members.push(this.add.membersInputField);
+        this.add.membersInputField = '';     
     },
 
     removeEditMembers(index: number) {

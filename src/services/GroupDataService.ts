@@ -6,8 +6,8 @@ import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class GroupDataService {
 
-    async update(group_id: string, updatedData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, GroupFullT> | UXResponse> {
-        return http.put<GroupFullT>(`/groups/${group_id}`, updatedData, { headers: authHeader() })
+    async update(group_id: string, updatedData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${group_id}`, updatedData, { headers: authHeader() })
             .then(response => {
                 return response;
             }).catch(reason => {
@@ -86,7 +86,6 @@ class GroupDataService {
             };
         });
     }
-
     async add(add: { name: string, members: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
         return http.post<GroupT>(`/groups/`, {
             name: add.name,
@@ -102,6 +101,7 @@ class GroupDataService {
             };
         });
     }
+    
 
     async delete(group_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
         return http.delete<DeleteResponse>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {

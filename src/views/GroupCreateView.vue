@@ -1,13 +1,12 @@
 <script lang="ts">
-import { defineComponent } from "vue";
 import MessagePopup from "../components/MessagePopup.vue";
 import AddGroupDataService from "../services/GroupDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 
-export default defineComponent({
+export default{
   name: "GroupCreateView",
-  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback},
+  components: {MessagePopup, ArrowDownOnSquareIcon, SaveButtonWithCallback},
   props: {
     index: {type: String}
   },
@@ -25,8 +24,8 @@ export default defineComponent({
       add: {
         group:"", 
       },
-    tagValue: '',
-    tags: [] as string[],
+      tagValue: '',
+      tags: [] as string[],
     }
   },
   methods: {
@@ -59,7 +58,7 @@ export default defineComponent({
       }
     }  
   }
-});
+};
 </script>
 
 <template>
@@ -87,7 +86,9 @@ export default defineComponent({
             <button @click="removeTag(index)" class= "tag-remove" aria-label= "Remove tag">x</button>
         </div>
         <div class="mt-2">
-            <textarea v-model="tagValue" @keydown.enter="addTag" placeholder= "Enter e-mail address" rows="5" name="group" id="group" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+            <textarea v-model="tagValue" @keydown.enter="addTag" 
+                      placeholder= "Enter e-mail address" rows="5" name="group" id="group" 
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
         </div>
     </div>
     <div class="button-container">
