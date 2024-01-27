@@ -85,7 +85,13 @@ const routes =  [
         path: "/groups/add",
         name: "groups-add",
         component: () => import("./views/GroupCreateView.vue")
-    }
+    },
+    {
+        path: "/groups/:id",
+        name: "groups-detail",
+        component: () => import("./views/GroupDetailView.vue"),
+        props: true
+    },
 ];
 
 const router = createRouter({
