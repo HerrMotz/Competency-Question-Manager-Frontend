@@ -108,7 +108,7 @@ export default defineComponent({
         </ListboxButton>
         <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
           <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <ListboxOption as="template" v-for="g in projects" :key="p.id" :value="p" v-slot="{ active, selected }">
+            <ListboxOption as="template" v-for="p in projects" :key="p.id" :value="p" v-slot="{ active, selected }">
               <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                 <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ p.name }} &middot; Project {{p.project.name}}</span>
 
