@@ -11,9 +11,7 @@ import ProjectDataService from "../services/ProjectDataService";
 export default defineComponent({
   name: "GroupCreateView",
   components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
-  props: {
-    index: {type: String}
-  },
+  
   data() {
     return {
       messagePopupData: {
@@ -26,10 +24,16 @@ export default defineComponent({
         open: false,
       },
       selectedProject: {name: '', id: ''},
-      projects: [{name: ''},
+      projects: [{name: '', id: ''},
       ],
       add: {
-        group:'', 
+        id: '',
+        name: '',
+        group:'',
+        project: {
+          name: '',
+          id: ''
+        }, 
       },
       tagValue: '',
       tags: [] as string[],
@@ -69,19 +73,24 @@ export default defineComponent({
     async save (){
       const response = await GroupDataService.add(
         this.add.group,
-        this.selectedProject.id
+        this.add.selectedProject
       );
     
-    if ("messageType" in response) {
-        this.messagePopupData.uxresponse = {
-          ...this.messagePopupData.uxresponse,
-          ...response
-        };
-        this.messagePopupData.open = true;
+      if ("messageType" in response) {
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response
+          };
+          this.messagePopupData.open = true;
 
       } else {
         // successful
-        this.add = response;
+        const {project, id, name} = response;
+        this.add.id = id;
+        this.add.name = name;
+        this.add.project = project;
+        
+        
         this.$router.push('/groups/');
       }
     }  
@@ -97,8 +106,9 @@ export default defineComponent({
     <h1 class="text-2xl">
       Add  group
     </h1>
+
     <Listbox as="div" v-model="selectedProject">
-      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Assigned to</ListboxLabel>
+      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Assigned to project:</ListboxLabel>
       <div class="relative mt-2">
         <ListboxButton class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <span class="block truncate">{{ selectedProject.name }}</span>
@@ -110,7 +120,7 @@ export default defineComponent({
           <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             <ListboxOption as="template" v-for="p in projects" :key="p.id" :value="p" v-slot="{ active, selected }">
               <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
-                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ p.name }} &middot; Project {{p.project.name}}</span>
+                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ p.name }} &middot; Project {{p.id}}</span>
 
                 <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                 <CheckIcon class="h-5 w-5" aria-hidden="true" />

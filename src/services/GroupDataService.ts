@@ -86,10 +86,10 @@ class GroupDataService {
             };
         });
     }
-    async add(add: { name: string, members: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
-        return http.post<GroupT>(`/groups/`, {
+    async add(add: { name: string, project: string[] }): Promise<AxiosResponse<any, GroupFullT> | UXResponse> {
+        return http.post<GroupFullT>(`/groups/`, {
             name: add.name,
-            members: add.members
+            project: add.project
         }, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
