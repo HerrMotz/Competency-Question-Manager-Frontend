@@ -30,7 +30,6 @@ export default defineComponent({
     <div key="project-list-item" class="dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10 rounded p-4 text-left">
       <div class="grid grid-cols-2">
         <h3 class="font-bold dark:text-white">{{ name }}</h3>
-        {{ managers }}
         <div class="inline-block text-right">
           <span>Project Manager(s): {{ managers }}</span>
 

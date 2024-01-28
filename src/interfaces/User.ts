@@ -5,6 +5,7 @@ type UserT = {
     loggedInAt: Date | null,
     accessToken: string | null
     sessionValidUntil: Date | null,
+    isSystemAdmin: boolean
 }
 
 type UserReducedT = {

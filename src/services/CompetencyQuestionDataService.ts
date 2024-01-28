@@ -36,7 +36,7 @@ class CompetencyQuestionDataService {
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while retrieving competency questions. Debugging info can be found in the console.",
+                text: "... while getting the groups for this project. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             }

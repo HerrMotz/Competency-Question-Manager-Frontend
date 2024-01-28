@@ -8,6 +8,7 @@ import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 import CompetencyQuestionQueryBuilder from "../components/CompetencyQuestionQueryBuilder.vue";
 import GroupDataService from "../services/GroupDataService.ts";
+import {useStore} from "../store.ts";
 
 export default defineComponent({
   name: "CompetencyQuestionCreateView",
@@ -25,35 +26,56 @@ export default defineComponent({
         },
         open: false,
       },
-      groups: [
-        {name: "Gruppe 1"},
-      ],
-      selectedGroup: {name: "Loading...", uuid: "42"},
+      groups: [],
+      selectedGroup: {name: "No Group selected", uuid: "42"},
       cq: {
         question: "",
-      }
+      },
+      store: useStore(),
     }
   },
+
+  watch: {
+    "this.store.getProject"() {
+      this.fetchGroups();
+    }
+  },
+
   mounted() {
-    this.selectedGroup = this.groups[0];
-
-    GroupDataService.getAll().then(response => {
-      if ("messageType" in response) {
-        this.messagePopupData.uxresponse = {
-          ...this.messagePopupData.uxresponse,
-          ...response
-        };
-        this.messagePopupData.open = true;
-
-      } else {
-        this.groups = response.data;
-        this.selectedGroup = this.groups[0];
-        console.log(this.groups)
-      }
-    })
-
+    this.fetchGroups()
   },
   methods: {
+    fetchGroups() {
+      GroupDataService.getAllForOneProjectThatIBelongTo(this.store.getProject.id).then(response => {
+        if ("messageType" in response) {
+          console.log("halloo5")
+
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response
+          };
+          this.messagePopupData.open = true;
+
+        } else if (response.data.length === 0) {
+          console.log("halloo2")
+          this.messagePopupData.uxresponse = {
+            title: "No permission to add competency questions :/",
+            messageType: "warning",
+            text: "Unfortunately, you are not assigned to any groups. Please contact the project manager, if you think this is an error.",
+            detail: "",
+          }
+          this.messagePopupData.open = true;
+
+        } else {
+          console.log("hallo")
+          console.log(response.data)
+          this.groups = response.data;
+          this.selectedGroup = this.groups[0];
+          console.log(this.groups)
+        }
+      })
+    },
+
     async save() {
       const response = await CompetencyQuestionDataService.add(
         this.cq.question,

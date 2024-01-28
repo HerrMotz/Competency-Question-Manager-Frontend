@@ -16,10 +16,11 @@ const messagePopupData = ref({
     text: "",
     detail: "",
   },
-  open: false
+  open: false,
 })
 
 const consolidations = ref();
+const isOntologyEngineer = ref(false);
 
 function fetchProjects() {
   ConsolidationDataService.getAllForOneProject(getProject.value.id).then(response => {
@@ -32,6 +33,8 @@ function fetchProjects() {
 
     } else {
       consolidations.value = response;
+      isOntologyEngineer.value = response.data.permissionsProjectEngineer
+
       console.log()
       console.log(consolidations.value.data)
     }
@@ -53,7 +56,7 @@ watch(getProject, (_, __) => {
     <h1 class="text-2xl">
       Consolidations Overview
 
-      <RouterLink to="/consolidations/add/" class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <RouterLink v-if="isOntologyEngineer" to="/consolidations/add/" class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         Consolidate Questions
         <ArrowDownOnSquareIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
       </RouterLink>

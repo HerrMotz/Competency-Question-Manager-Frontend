@@ -67,7 +67,6 @@ export default defineComponent({
         { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon },
         { name: 'Consolidation', href: '/consolidations', icon: ArrowsPointingInIcon },
         { name: 'Group', href: '/groups', icon: UsersIcon },
-        { name: 'Projects', href: '/projects', icon: FolderIcon },
         { name: 'Reports', href: '/reports', icon: ChartPieIcon },
       ],
     }
@@ -121,7 +120,12 @@ export default defineComponent({
         console.log()
         console.log(this.projects)
       }
-    })
+    });
+
+    if (this.store.getUser.isSystemAdmin) {
+      this.navigation.push({ name: 'Projects (SysAdmin)', href: '/projects', icon: FolderIcon })
+    }
+
   },
 })
 </script>

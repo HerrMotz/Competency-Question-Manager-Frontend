@@ -13,6 +13,7 @@ export const useStore = defineStore('cq-manager', {
             loggedInAt: null,
             accessToken: "",
             sessionValidUntil: null,
+            isSystemAdmin: false,
         },
         project: {
             id: "",
@@ -48,7 +49,8 @@ export const useStore = defineStore('cq-manager', {
                         name: response.data.name,
                         loggedInAt: new Date(),
                         accessToken: response.data.token,
-                        sessionValidUntil: new Date(new Date().getDate() + 1)
+                        sessionValidUntil: new Date(new Date().getDate() + 1),
+                        isSystemAdmin: response.data.is_system_admin
                     }
                     return true
                 }
