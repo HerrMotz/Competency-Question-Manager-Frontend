@@ -1,12 +1,16 @@
 <script lang="ts">
+import {defineComponent} from 'vue'
 import MessagePopup from "../components/MessagePopup.vue";
-import AddGroupDataService from "../services/GroupDataService.ts";
+import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid"
+import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
+import GroupDataService from "../services/GroupDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
+import ProjectDataService from "../services/ProjectDataService";
 
-export default{
+export default defineComponent({
   name: "GroupCreateView",
-  components: {MessagePopup, ArrowDownOnSquareIcon, SaveButtonWithCallback},
+  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
   props: {
     index: {type: String}
   },
@@ -21,13 +25,37 @@ export default{
         },
         open: false,
       },
+      selectedProject: {name: '', id: ''},
+      projects: [{name: ''},
+      ],
       add: {
-        group:"", 
+        group:'', 
       },
       tagValue: '',
       tags: [] as string[],
     }
   },
+
+
+  mounted(){
+    this.selectedProject = this.projects[0];
+    
+    ProjectDataService.getAll().then(response => {
+      if("messageType" in response) {
+        this.messagePopupData.uxresponse = {
+          ...this.messagePopupData.uxresponse,
+          ...response
+        };
+
+      } else {
+        this.projects = response.data;
+        this.selectedProject = this.projects[0];
+        console.log(this.projects)
+      }
+    }) 
+  },
+
+
   methods: {
     addTag() {
       if (this.tagValue !== '') 
@@ -39,10 +67,10 @@ export default{
     },
 
     async save (){
-      const response = await AddGroupDataService.add({
-        name: this.add.group,
-        members: this.tags,
-    });
+      const response = await GroupDataService.add(
+        this.add.group,
+        this.selectedProject.id
+      );
     
     if ("messageType" in response) {
         this.messagePopupData.uxresponse = {
@@ -53,12 +81,12 @@ export default{
 
       } else {
         // successful
-        this.add.group = response.data.group;
-        this.$router.push("/groups/");
+        this.add = response;
+        this.$router.push('/groups/');
       }
     }  
   }
-};
+});
 </script>
 
 <template>
@@ -67,10 +95,33 @@ export default{
                   :open="messagePopupData.open"
                   @close="messagePopupData.open = false;"/>
     <h1 class="text-2xl">
+      Add  group
     </h1>
-  </div>  
+    <Listbox as="div" v-model="selectedProject">
+      <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Assigned to</ListboxLabel>
+      <div class="relative mt-2">
+        <ListboxButton class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <span class="block truncate">{{ selectedProject.name }}</span>
+          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </span>
+        </ListboxButton>
+        <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+          <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ListboxOption as="template" v-for="g in projects" :key="p.id" :value="p" v-slot="{ active, selected }">
+              <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
+                <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ p.name }} &middot; Project {{p.project.name}}</span>
+
+                <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+              </span>
+              </li>
+            </ListboxOption>
+          </ListboxOptions>
+        </transition>
+      </div>
+    </Listbox>
     
-    Add  group
     <div class="my-5">
       <label for="group" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Type in group name:</label>
       <div class="mt-2">
@@ -101,6 +152,7 @@ export default{
             Save
         </SaveButtonWithCallback>
     </div>
+  </div> 
 </div>   
 </template>
 
