@@ -1,7 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import MessagePopup from "../components/MessagePopup.vue";
-import {CheckIcon, ChevronDownIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid"
+import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/20/solid"
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import GroupDataService from "../services/GroupDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
@@ -10,94 +10,75 @@ import ProjectDataService from "../services/ProjectDataService";
 
 export default defineComponent({
   name: "GroupCreateView",
-  components: {ArrowDownOnSquareIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon, ChevronUpDownIcon},
+  components: {ArrowDownOnSquareIcon, ChevronUpIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon},
   
   data() {
     return {
       messagePopupData: {
         uxresponse: {
-          title: "",
-          messageType: "",
-          text: "",
-          detail: "",
+          title: '',
+          messageType: '',
+          text: '',
+          detail: '',
         },
         open: false,
       },
-      selectedProject: {name: '', id: ''},
-      projects: [{name: '', id: ''},
-      ],
       add: {
-        id: '',
-        name: '',
-        group:'',
-        project: {
-          name: '',
-          id: ''
-        }, 
+        group: '',
       },
-      tagValue: '',
-      tags: [] as string[],
-    }
+      membersInputField: '',
+      members: [] as string[],
+      selectedProject: { name: '', id: '' }, 
+      projects: [], 
+    };
   },
-
-
-  mounted(){
-    this.selectedProject = this.projects[0];
-    
-    ProjectDataService.getAll().then(response => {
-      if("messageType" in response) {
+  mounted() {
+    ProjectDataService.getAll().then((response) => {
+      if ('messageType' in response) {
         this.messagePopupData.uxresponse = {
           ...this.messagePopupData.uxresponse,
-          ...response
+          ...response,
         };
-
       } else {
-        this.projects = response.data;
-        this.selectedProject = this.projects[0];
-        console.log(this.projects)
+        this.projects = response.data; 
+        this.selectedProject = this.projects[0]; 
+        console.log(this.projects);
       }
-    }) 
+    });
   },
-
-
   methods: {
-    addTag() {
-      if (this.tagValue !== '') 
-        this.tags.push(this.tagValue)
-        this.tagValue = '';
+    addMembers() {
+      if (this.membersInputField !== '') {
+        this.members.push(this.membersInputField); 
+        this.membersInputField = '';
+      }
     },
-    removeTag(index: number) {
-      this.tags.splice(index, 1);
+    removeMembers(index: number) {
+      this.members.splice(index, 1);
     },
+    async save() {
+      const response = await GroupDataService.add({
+        name: this.add.group,
+        members: this.members,
+      });
 
-    async save (){
-      const response = await GroupDataService.add(
-        this.add.group,
-        this.add.selectedProject
-      );
-    
-      if ("messageType" in response) {
-          this.messagePopupData.uxresponse = {
-            ...this.messagePopupData.uxresponse,
-            ...response
-          };
-          this.messagePopupData.open = true;
-
+      if ('messageType' in response) {
+        this.messagePopupData.uxresponse = {
+          ...this.messagePopupData.uxresponse,
+          ...response,
+        };
+        this.messagePopupData.open = true;
       } else {
-        // successful
-        const {project, id, name} = response;
-        this.add.id = id;
-        this.add.name = name;
-        this.add.project = project;
-        
-        
+        // Successful
+        this.add.group = response.data.group;
+
+        // Redirect to the groups page
         this.$router.push('/groups/');
       }
-    }  
-  }
+    },
+  },
 });
 </script>
-
 <template>
   <div class="w-1/2 mx-auto">
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
@@ -142,13 +123,13 @@ export default defineComponent({
     <div class="content-container">
     <div class="tags-input-container">
         <label for="group-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Assign group member:</label>
-        <div class="tag-input" v-for="(tag, index) in tags" :key="'tag'+ index">
+        <div class="tag-input" v-for="(tag, index) in members" :key="'tag'+ index">
             <span>{{ tag }}</span>
-            <button @click="removeTag(index)" class= "tag-remove" aria-label= "Remove tag">x</button>
+            <button @click="removeMembers(index)" class= "tag-remove" aria-label= "Remove tag">x</button>
         </div>
         <div class="mt-2">
-            <textarea v-model="tagValue" @keydown.enter="addTag" 
-                      placeholder= "Enter e-mail address" rows="5" name="group" id="group" 
+            <textarea v-model="membersInputField" @keydown.enter="addMembers" 
+                      placeholder= "Enter e-mail address and hit Enter" rows="5" name="group" id="group" 
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
         </div>
     </div>
