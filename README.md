@@ -12,7 +12,13 @@ will be named `backend-add-comments/feature-detail-view`.
 
 ## Recommended Environment Setup
 
-### Building
+Put a `.env`-file in the frontend `src` directory.
+
+```env
+VITE_API_URL="http://localhost:8000"
+```
+
+### Building for production
 - The application can be built using the Docker compose file. The built static website is exported to the host's `dist` 
    directory and can be deployed to a webserver directly.
 
