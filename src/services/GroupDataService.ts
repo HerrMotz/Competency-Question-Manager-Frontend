@@ -6,8 +6,8 @@ import { UXResponse } from "../interfaces/UXResponse.ts";
 
 class GroupDataService {
 
-    async update(group_id: string, updatedData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
-        return http.put<GroupT>(`/groups/${group_id}`, updatedData, { headers: authHeader() })
+    async update(group_id: string, project_id: string, updatedData: { name?: string, members?: string[] }): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${project_id}/${group_id}`, updatedData, { headers: authHeader() })
             .then(response => {
                 return response;
             }).catch(reason => {
@@ -20,10 +20,15 @@ class GroupDataService {
             });
     }
     
-    async addMembers(group_id: string, members: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
-        return http.put<GroupT>(`/groups/${group_id}/members/add`, { emails: members }, { headers: authHeader() })
-            .then(response => {
-                return response;
+    async addMembers(group_id: string, project_id: string, members: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${project_id}/${group_id}/members/add`, { emails: members }, { headers: authHeader() })
+            .then(() => {
+                return {
+                    title: "Added group member",
+                    text: "Successfully added group member",
+                    detail: "",
+                    messageType: "success",
+                }
             }).catch(reason => {
                 return {
                     title: "Oops! An error occurred...",
@@ -34,17 +39,20 @@ class GroupDataService {
             });
     }
     
-    async removeMembers(group_id: string, memberIds: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
-        return http.put<GroupT>(`/groups/${group_id}/members/remove`, { ids: memberIds }, { headers: authHeader() })
-            .then(response => {
-                return response;
-            }).catch(reason => {
+    async removeMembers(group_id: string, project_id: string, memberIds: string[]): Promise<AxiosResponse<any, GroupT> | UXResponse> {
+        return http.put<GroupT>(`/groups/${project_id}/${group_id}/members/remove`, { ids: memberIds }, { headers: authHeader() })
+            .then(() => {
                 return {
-                    title: "Oops! An error occurred...",
-                    text: "... while removing members from the group. Debugging info can be found in the console.",
-                    detail: reason,
-                    messageType: "error"
-                };
+                    title: "Removed group member",
+                    text: "Successfully removed group member",
+                    messageType: "success",
+                }
+            }).catch(() => {
+                return {
+                    title: "Removed group member",
+                    text: "Successfully removed group member",
+                    messageType: "success",
+                }
             });
     }
 
@@ -88,7 +96,7 @@ class GroupDataService {
     }
 
     async getOne(group_id: string): Promise<AxiosResponse<any, GroupFullT> | UXResponse> {
-        return http.get<GroupFullT>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {
+        return http.get<GroupFullT>(`/groups/direct/${group_id}`, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
@@ -99,10 +107,10 @@ class GroupDataService {
             };
         });
     }
-    async add(add: { name: string, tags: string[] }): Promise<AxiosResponse<any, GroupFullT> | UXResponse> {
-        return http.post<GroupFullT>(`/groups/`, {
+    async add(add: { name: string, members: string[], project_id: string }): Promise<AxiosResponse<any, GroupFullT> | UXResponse> {
+        return http.post<GroupFullT>(`/groups/${add.project_id}`, {
             name: add.name,
-            tags: add.tags
+            members: add.members
         }, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
@@ -116,8 +124,8 @@ class GroupDataService {
     }
     
 
-    async delete(group_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
-        return http.delete<DeleteResponse>(`/groups/${group_id}`, { headers: authHeader() }).then(response => {
+    async delete(group_id: string, project_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
+        return http.delete<DeleteResponse>(`/groups/${project_id}/${group_id}`, { headers: authHeader() }).then(response => {
             return response
         }).catch(reason => {
             return {

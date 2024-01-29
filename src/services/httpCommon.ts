@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(response => {
     if (response.headers && response.headers['permissions-project-engineer']) {
+        response.data.permissionGroupMember = response.headers['permissions-group-member'].toLowerCase() === 'true';
         response.data.permissionsProjectManager = response.headers['permissions-project-manager'].toLowerCase() === 'true';
         response.data.permissionsProjectEngineer = response.headers['permissions-project-engineer'].toLowerCase() === 'true';
         response.data.permissionsProjectMember = response.headers['permissions-project-member'].toLowerCase() === 'true';

@@ -19,33 +19,33 @@ class ProjectDataService {
                 };
             });
     }
-    
-    
 
-    async updateManagers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
-        return http.put<ProjectReducedT>(`/projects/${project_id}/managers`, {
+
+
+    async addManagers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/managers/add`, {
             emails: emails
         }, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while updating managers. Debugging info can be found in the console.",
+                text: "... while removing managers. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             };
         });
     }
-    
-    async updateEngineers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
-        return http.put<ProjectReducedT>(`/projects/${project_id}/engineers`, {
+
+    async addEngineers(project_id: string, emails: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/engineers/add`, {
             emails: emails
         }, { headers: authHeader() }).then(response => {
             return response;
         }).catch(reason => {
             return {
                 title: "Oops! An error occurred...",
-                text: "... while updating engineers. Debugging info can be found in the console.",
+                text: "... while removing engineers. Debugging info can be found in the console.",
                 detail: reason,
                 messageType: "error"
             };
@@ -53,7 +53,7 @@ class ProjectDataService {
     }
     
     async removeManagers(project_id: string, ids: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
-        return http.put<ProjectReducedT>(`/projects/${project_id}/remove_managers`, {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/managers/remove`, {
             ids: ids
         }, { headers: authHeader() }).then(response => {
             return response;
@@ -68,7 +68,7 @@ class ProjectDataService {
     }
     
     async removeEngineers(project_id: string, ids: string[]): Promise<AxiosResponse<any, ProjectReducedT> | UXResponse> {
-        return http.put<ProjectReducedT>(`/projects/${project_id}/remove_engineers`, {
+        return http.put<ProjectReducedT>(`/projects/${project_id}/engineers/remove`, {
             ids: ids
         }, { headers: authHeader() }).then(response => {
             return response;

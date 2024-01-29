@@ -103,7 +103,7 @@ export default defineComponent({
   <div class="w-1/2 mx-auto">
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
                   :open="messagePopupData.open"
-                  @close="messagePopupData.open = false;"/>
+                  @close="$router.push('/questions/')"/>
     <h1 class="text-2xl">
       Add a new Competency Question
     </h1>

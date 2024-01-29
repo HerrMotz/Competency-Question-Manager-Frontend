@@ -12,6 +12,10 @@ export default defineComponent({
       type: Object as PropType<ConsolidationT>,
       required: true,
     },
+    isOntologyEngineer: {
+      type: Boolean,
+      required: false
+    }
   },
 
   components: {CompetencyQuestionListItem, UserCardSmall, PlusIcon}
@@ -32,7 +36,7 @@ export default defineComponent({
                                       :groupIdentifier="cq.groupId"
                                       :identifier="cq.id"/>
         </div>
-        <button class="mt-3 w-full flex items-center justify-center dark:bg-gray-600 hover:dark:bg-gray-500 p-1 pl-3 rounded hover:bg-gray-200">
+        <button v-if="isOntologyEngineer" class="mt-3 w-full flex items-center justify-center dark:bg-gray-600 hover:dark:bg-gray-500 p-1 pl-3 rounded hover:bg-gray-200">
             <PlusIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
         </button>
       </div>

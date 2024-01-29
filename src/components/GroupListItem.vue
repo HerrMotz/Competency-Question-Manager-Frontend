@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent, PropType} from 'vue';
 
 export default defineComponent({
   name: "GroupListItem",
@@ -12,6 +12,9 @@ export default defineComponent({
     members: {
       type: Number,
       required: true
+    },
+    project: {
+      type: Object as PropType<ProjectReducedT>
     },
     group_id: {
       type: String,
@@ -30,6 +33,9 @@ export default defineComponent({
           <span>Group Members: {{ members }}</span>
         </div>
       </div>
+      <code class="block">
+        Project: <span class="underline">{{ project.name }}</span>
+      </code>
 
       <code>Group ID: {{ group_id }}</code>
 

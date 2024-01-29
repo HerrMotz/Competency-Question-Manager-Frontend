@@ -9,7 +9,7 @@ export default {
   name: "ProjectDetailView",
   components: { MessagePopup, ArrowDownOnSquareIcon, SubmitButtonWithCallback, TrashIcon },
   props: {
-    id: { type: String, required: true } 
+    id: { type: String, required: true }
   },
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
 
         engineerInputField: '',
         engineer: [] as string[],
-      },      
+      },
     }
   },
   methods: {
@@ -46,14 +46,14 @@ export default {
       } else {
         const { name, managers, engineers } = response.data;
           this.add.name = name;
-          this.add.projectManager = managers.map((manager: any) => manager.email);
-          this.add.engineer = engineers.map((engineer: any) => engineer.email);
+          this.add.projectManager = managers;
+          this.add.engineer = engineers;
           console.log('Project Title:', this.add.name);
         }
     },
     async saveProject() {
       console.log("saveProject method called");
-      
+
       try {
         const response = await ProjectDataService.update(this.id, {
           name: this.add.name,
@@ -84,26 +84,61 @@ export default {
       this.$router.push('/projects/');
     },
     addEditProjectManager() {
-      if (this.add.projectManagerInputField !== '') 
-        this.add.projectManager.push(this.add.projectManagerInputField)
-        this.add.projectManagerInputField = '';     
+      if (this.add.projectManagerInputField !== '') {
+        ProjectDataService.addManagers(this.id, [this.add.projectManagerInputField]).then((response) => {
+          if ('messageType' in response) {
+            this.messagePopupData.uxresponse = {
+              ...this.messagePopupData.uxresponse,
+              ...response,
+            };
+          }
+          this.add.projectManagerInputField = '';
+          this.fetchProject()
+        });
+      }
     },
 
-    removeEditProjectManager(index: number) {
-      this.add.projectManager.splice(index, 1);
+    removeEditProjectManager(member) {
+      console.log(member)
+      ProjectDataService.removeManagers(this.id, [member.id]).then((response) => {
+        if ('messageType' in response) {
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response,
+          };
+        }
+        this.fetchProject()
+      });
     },
 
     addEditEngineer() {
-      if (this.add.engineerInputField !== '') 
-        this.add.engineer.push(this.add.engineerInputField);
-      this.add.engineerInputField = ''; 
+      if (this.add.engineerInputField !== '') {
+        ProjectDataService.addManagers(this.id, [this.add.engineerInputField]).then((response) => {
+          if ('messageType' in response) {
+            this.messagePopupData.uxresponse = {
+              ...this.messagePopupData.uxresponse,
+              ...response,
+            };
+          }
+          this.add.engineerInputField = '';
+          this.fetchProject()
+        });
+      }
     },
-    removeEditEngineer(index: number) {
-      this.add.engineer.splice(index, 1);
+    removeEditEngineer(member) {
+      ProjectDataService.removeEngineers(this.id, [member.id]).then((response) => {
+        if ('messageType' in response) {
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response,
+          };
+        }
+        this.fetchProject()
+      });
     },
   },
   mounted() {
-    this.fetchProject(); 
+    this.fetchProject();
   }
 }
 
@@ -133,7 +168,7 @@ export default {
   </div>
 
     <div class="content-container">
-   
+
     <div class="content-container">
       <div class="tags-input-container">
         <label
@@ -142,12 +177,16 @@ export default {
         >
           Assign Project Manager:
         </label>
-        <div class="tag-input" v-for="(tag, index) in add.projectManager" :key="'tag'+ index">
-          <span>{{ tag }}</span>
-          <button @click="removeEditProjectManager(index)" class="tag-remove" aria-label="Remove tag">
-            x
+        <span v-for="(member, index) in add.projectManager" :key="'tag'+ index" class="inline-flex mr-4 items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+          {{ member.email }}
+          <button @click="removeEditProjectManager(member)" type="button" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20">
+            <span class="sr-only">Remove</span>
+            <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
+              <path d="M4 4l6 6m0-6l-6 6" />
+            </svg>
+            <span class="absolute -inset-1" />
           </button>
-        </div>
+        </span>
         <div class="mt-2">
           <textarea
             v-model="add.projectManagerInputField"
@@ -160,7 +199,7 @@ export default {
           ></textarea>
         </div>
       </div>
-    
+
       <div class="tags-input-container">
         <label
           for="engineer-edit"
@@ -168,12 +207,16 @@ export default {
         >
           Assign Engineer:
         </label>
-        <div class="tag-input" v-for="(tag, index) in add.engineer" :key="'tag'+ index">
-          <span>{{ tag }}</span>
-          <button @click="removeEditEngineer(index)" class="tag-remove" aria-label="Remove tag">
-            x
+        <span v-for="(member, index) in add.engineer" :key="'tag'+ index" class="inline-flex mr-4 items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+          {{ member.email }}
+          <button @click="removeEditEngineer(member)" type="button" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20">
+            <span class="sr-only">Remove</span>
+            <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
+              <path d="M4 4l6 6m0-6l-6 6" />
+            </svg>
+            <span class="absolute -inset-1" />
           </button>
-        </div>
+        </span>
         <div class="mt-2">
           <textarea
             v-model="add.engineerInputField"
@@ -187,7 +230,7 @@ export default {
         </div>
       </div>
     </div>
-  
+
     <div class="button-container">
       <button
         type="button"

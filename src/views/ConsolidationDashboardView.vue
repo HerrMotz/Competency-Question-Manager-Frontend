@@ -65,7 +65,7 @@ watch(getProject, (_, __) => {
       <div v-if="consolidations.data.length === 0" class="mt-10">
         There are no consolidations yet!
       </div>
-      <ConsolidationListItem v-for="cons in consolidations.data" :consolidation="cons" />
+      <ConsolidationListItem v-for="cons in consolidations.data" :is-ontology-engineer="isOntologyEngineer" :consolidation="cons" />
     </div>
     <div v-else>
       <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10">

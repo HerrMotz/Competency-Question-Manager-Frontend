@@ -1,16 +1,17 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import MessagePopup from "../components/MessagePopup.vue";
-import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/20/solid"
+import {ChevronUpDownIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/20/solid"
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import GroupDataService from "../services/GroupDataService.ts";
 import SaveButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import {ArrowDownOnSquareIcon} from "@heroicons/vue/24/solid";
 import ProjectDataService from "../services/ProjectDataService";
+import {useStore} from "../store.ts";
 
 export default defineComponent({
   name: "GroupCreateView",
-  components: {ArrowDownOnSquareIcon, ChevronUpIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon},
+  components: {ChevronUpDownIcon, ArrowDownOnSquareIcon, ChevronUpIcon, SaveButtonWithCallback, ListboxOption, ListboxOptions, ListboxButton, ListboxLabel, Listbox, MessagePopup, CheckIcon, ChevronDownIcon},
   
   data() {
     return {
@@ -26,6 +27,7 @@ export default defineComponent({
       add: {
         group: '',
       },
+      store: useStore(),
       membersInputField: '',
       members: [] as string[],
       selectedProject: { name: '', id: '' }, 
@@ -60,6 +62,7 @@ export default defineComponent({
       const response = await GroupDataService.add({
         name: this.add.group,
         members: this.members,
+        project_id: this.store.getProject.id,
       });
 
       if ('messageType' in response) {
@@ -123,7 +126,7 @@ export default defineComponent({
     <div class="content-container">
     <div class="tags-input-container">
         <label for="group-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Assign group member:</label>
-        <div class="tag-input" v-for="(tag, index) in members" :key="'tag'+ index">
+        <div class="tag-input dark:text-gray-900" v-for="(tag, index) in members" :key="'tag'+ index">
             <span>{{ tag }}</span>
             <button @click="removeMembers(index)" class= "tag-remove" aria-label= "Remove tag">x</button>
         </div>

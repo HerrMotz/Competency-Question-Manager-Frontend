@@ -29,6 +29,7 @@ const timeout = ref();
 const open = ref(false);
 const consolidation = ref();
 const cqs = ref();
+const canEdit = ref();
 
 watch(starsAreHovered, (newValue, _) => {
   if (newValue) {
@@ -54,6 +55,7 @@ async function fetchConsolidation() {
 
     } else {
       consolidation.value = response;
+      canEdit.value = response.data.permissionsProjectEngineer;
       console.log(consolidation.value.data)
     }
   });
@@ -128,7 +130,7 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
         />
       </div>
 
-      <div class="mt-5 flex flex-row-reverse">
+      <div v-if="canEdit" class="mt-5 flex flex-row-reverse">
         <button type="button"
                 class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           <ArrowDownOnSquareIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
@@ -154,7 +156,7 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
                                         :groupIdentifier="cq.groupId"
                                         :identifier="cq.id"/>
           </div>
-          <div class="mx-auto">
+          <div v-if="canEdit" class="mx-auto">
             <button @click="removeQuestions(consolidation.data.id, consolidation.data.project.id, [cq.id])"
                     class="hover:dark:bg-gray-700 hover:bg-gray-100 hover:text-red-400 p-2 rounded">
               <XMarkIcon class="h-10 w-10"/>
@@ -162,7 +164,7 @@ async function removeQuestions(consolidationId: string, project_uuid: string, qu
           </div>
         </div>
 
-        <div class="mt-10">
+        <div v-if="canEdit" class="mt-10">
           <span class="text-xl">Add other CQs</span>
           <!-- TODO use by_project -->
           <p v-if="cqs">Of {{cqs.data.length}} competency questions, there is {{ cqs.data.filter(_cq => !consolidation.data.questions.map(c => c.id).includes(_cq.id)).length }} (also displayed below) that is/are not yet consolidated in this CQ.</p>

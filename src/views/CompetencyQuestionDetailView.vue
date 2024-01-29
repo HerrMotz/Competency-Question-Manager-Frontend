@@ -26,6 +26,7 @@ const timeout = ref();
 const open = ref(false);
 const cq = ref();
 const stats = ref();
+const canEdit = ref();
 
 watch(starsAreHovered, (newValue, _) => {
   if (newValue) {
@@ -52,6 +53,8 @@ async function fetchCompetencyQuestion() {
     } else {
       cq.value = response;
       console.log(cq.value.data)
+
+      canEdit.value = response.data.permissionGroupMember || response.data.permissionsProjectManager;
 
       stats.value = [
         {name: "Author", value: cq.value.data.author.name},
@@ -106,7 +109,7 @@ async function fetchCompetencyQuestion() {
                             v-for="item in cq.data.ratings"
                             :key="item.id"
                             class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                          <span class="mr-5 w-1/2 text-ellipsis text-gray-600">{{ item.user.name }}</span>
+                          <span class="mr-5 w-1/2 text-ellipsis text-gray-600">{{ item.author.name }}</span>
                           <div class="-mt-1 inline w-1/2">
                             <StarComponent :rating="item.rating"/>
                           </div>
@@ -136,7 +139,7 @@ async function fetchCompetencyQuestion() {
         </div>
       </div>
 
-      <div class="mt-5 flex flex-row-reverse">
+      <div v-if="canEdit" class="mt-5 flex flex-row-reverse">
         <button type="button"
                 class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           <ArrowDownOnSquareIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
