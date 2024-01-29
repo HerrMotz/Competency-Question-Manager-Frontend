@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import {ref} from 'vue'
 import {Dialog, DialogPanel} from '@headlessui/vue'
 import {
@@ -10,6 +10,7 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import Logo from "../components/Logo.vue";
+import AppScreenshot from "../assets/app-screenshot.png";
 
 const navigation = [
   {name: 'Product', href: '#'},
@@ -19,36 +20,36 @@ const navigation = [
 
 const features = [
   {
-    name: 'Collaboration with Customers',
+    name: 'Direct Collaboration with Domain Experts',
     description:
-        'Using our annotation tools, versioning and rating even big projects are lucid!',
+        'Our permission handling allows for a company wide collaboration, where everybody is in the loop, while keeping an overview over who has done what.',
     icon: CloudArrowUpIcon,
   },
+  // {
+  //   name: 'Consolidation Suggestions',
+  //   description:
+  //       'Our system finds occurrences of words in CQs and suggests them for consolidation.',
+  //   icon: LockClosedIcon,
+  // },
+  // {
+  //   name: 'Ontology Visualisation',
+  //   description:
+  //       'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
+  //   icon: ArrowPathIcon,
+  // },
   {
-    name: 'Consolidation Suggestions',
+    name: 'Collaboration between Ontology Engineers',
     description:
-        'Our system finds occurrences of words in CQs and suggests them for consolidation.',
-    icon: LockClosedIcon,
-  },
-  {
-    name: 'Ontology Visualisation',
-    description:
-        'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
-    icon: ArrowPathIcon,
-  },
-  {
-    name: 'Report Generation',
-    description:
-        'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
+        'Using our annotation tools, versioning and rating even big projects are lucid!.',
     icon: FingerPrintIcon,
   },
 ]
 
 const footerNavigation = {
   solutions: [
-    {name: 'Ontology Management', href: '#'},
-    {name: 'Synonym & Homonym Analysis', href: '#'},
-    {name: 'Graph Visualisation', href: '#'},
+    {name: 'Competency Question Management', href: '#'},
+    // {name: 'Synonym & Homonym Analysis', href: '#'},
+    // {name: 'Graph Visualisation', href: '#'},
   ],
   support: [
     {name: 'Documentation', href: '#'},
@@ -140,11 +141,12 @@ const mobileMenuOpen = ref(false)
         <div class="py-24 sm:py-32">
           <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">
-              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-100">Manage
-                Competency Questions effectively</h1>
-              <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">Anim aute id magna aliqua ad ad non
-                deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat
-                aliqua.</p>
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-100">
+                Manage <span class="whitespace-nowrap">Competency Questions</span> effectively
+              </h1>
+              <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
+                The CQ-Manager allows for an <span class="underline decoration-sky-500 font-bold">efficient</span> and <span class="underline decoration-sky-500 font-bold">structured</span> collaboration between ontology engineers and users.
+              </p>
               <div class="mt-10 flex items-center justify-center gap-x-6">
                 <a href="#"
                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
@@ -156,8 +158,7 @@ const mobileMenuOpen = ref(false)
             <div class="mt-16 flow-root sm:mt-24">
               <div
                   class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <!-- TODO insert a screenshot here -->
-                <img src="" alt="App screenshot" width="2432" height="1442"
+                <img :src="AppScreenshot" alt="App screenshot" width="2432" height="1442"
                      class="rounded-md shadow-2xl ring-1 ring-gray-900/10"/>
               </div>
             </div>
@@ -178,9 +179,9 @@ const mobileMenuOpen = ref(false)
           <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Focus on what's important</h2>
           <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">Everything you
             need to develop ontologies in big teams</p>
-          <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Quis tellus eget adipiscing convallis sit
-            sit eget aliquet quis. Suspendisse eget egestas a elementum pulvinar et feugiat blandit at. In mi viverra
-            elit nunc.</p>
+          <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            Staying on top of different end users wishes can be a challenging task. We've got something for you!
+          </p>
         </div>
         <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
           <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
