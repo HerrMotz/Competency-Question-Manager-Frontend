@@ -68,17 +68,6 @@ export default defineComponent({
     },
 
     async save() {
-      if (this.selectedQuestions.length < 2) {
-        this.messagePopupData.uxresponse = {
-          title: "Not enough questions selected",
-          messageType: "warning",
-          text: "Only two or more questions can be consolidated.",
-          detail: "",
-        };
-        this.messagePopupData.open = true;
-        return
-      }
-
       if (this.consolidationName.length < 1) {
         this.nameError = true;
         setTimeout(() => this.nameError = false, 10000)
