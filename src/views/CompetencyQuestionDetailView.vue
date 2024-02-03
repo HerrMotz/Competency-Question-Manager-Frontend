@@ -42,6 +42,7 @@ watch(starsAreHovered, (newValue, _) => {
 fetchCompetencyQuestion();
 
 async function fetchCompetencyQuestion() {
+  console.log("fetch")
   CompetencyQuestionDataService.getOne(props.id, props.groupid).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
@@ -71,7 +72,7 @@ async function fetchCompetencyQuestion() {
 // the functionality of posting annotations to this endpoint seems to not be working
 // as of now, so we will pass an empty array here
 // TODO: change the empty brackets to annotations when this is ready.
-function saveCompetencyQuestion(question: string, annotations: AnnotationT[]) {
+function saveCompetencyQuestion(question: string) {
   CompetencyQuestionDataService.change(question, [], props.groupid, props.id).then(() => {
     fetchCompetencyQuestion()
   })
@@ -144,7 +145,7 @@ function saveCompetencyQuestion(question: string, annotations: AnnotationT[]) {
       </div>
 
       <div class="my-10">
-        <CompetencyQuestionQueryBuilder @saveEvent="saveCompetencyQuestion"
+        <CompetencyQuestionQueryBuilder @saveCompetencyQuestion="saveCompetencyQuestion"
                                         @fetchCompetencyQuestion="fetchCompetencyQuestion"
                                         :question="cq.data.question"
                                         :group-id="cq.data.groupId"

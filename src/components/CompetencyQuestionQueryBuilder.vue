@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import {defineProps, ref} from "vue";
+import {defineProps, ref, toRefs} from "vue";
 import {ArrowDownOnSquareIcon, CheckCircleIcon, TrashIcon} from "@heroicons/vue/24/solid";
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SubmitButtonWithCallback from "./SubmitButtonWithCallback.vue";
 import TermDataService from "../services/TermDataService.ts";
 import MessagePopup from "./MessagePopup.vue";
 
-const words = ref<AnnotationT[]>([]);
-
-const newIndex = ref(words.value.length)
 const addWordInput = ref("");
 const addPassageInput = ref("");
 
@@ -23,7 +20,10 @@ const messagePopupData = ref({
 })
 
 function insertTermPassagePair() {
-  TermDataService.add(props.id, words.value).then(response => {
+  TermDataService.add(props.id, [{
+    term: addWordInput.value,
+    passage: addPassageInput.value
+  }]).then(response => {
     if ("messageType" in response) {
       messagePopupData.value.uxresponse = {
         ...messagePopupData.value.uxresponse,
@@ -32,22 +32,16 @@ function insertTermPassagePair() {
       messagePopupData.value.open = true;
 
     } else {
-      words.value.push({
-        term: addWordInput.value,
-        passage: addPassageInput.value,
-      })
-      newIndex.value++;
-      addWordInput.value = "";
-      addPassageInput.value = "";
       emits('fetchCompetencyQuestion');
+      addWordInput.value = '';
+      addPassageInput.value = '';
     }
   })
 }
 
 const props = defineProps(['question', 'annotations', 'canEdit', 'groupId', 'id', 'projectId'])
-const emits = defineEmits(['saveEvent', 'fetchCompetencyQuestion'])
-
-words.value = props.annotations.map(e => ({passage: e.content, term: e.term}));
+const { annotations } = toRefs(props)
+const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
 </script>
 
 <template>
@@ -72,12 +66,13 @@ words.value = props.annotations.map(e => ({passage: e.content, term: e.term}));
       overview.
     </p>
 
-    <div v-for="element in words"
+    <div v-for="element in annotations"
          class="items-center rounded-md my-4 px-2 py-1 mx-auto font-medium ring-1 ring-inset bg-gray-50 text-gray-600 ring-ray-500/10">
-      Term: <RouterLink class="font-bold underline decoration-blue-500 decoration-2 text-blue-500" :to="'/terms/'+props.projectId+'/'+element.term.id">{{ element.term.content }}</RouterLink>, Passage: {{ element.passage }}
+      Term: <RouterLink class="font-bold underline decoration-blue-500 decoration-2 text-blue-500" :to="'/terms/'+props.projectId+'/'+element.term.id">
+      {{ element.term.content }}</RouterLink>, Passage: {{ element.term.content }}
       <button type="button"
               class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20 float-right"
-              @click="words.splice(words.findIndex(e => e.term === element.term && e.passage === element.passage), 1)">
+              @click="TermDataService.remove(element.term.id, element.id, props.id).then(() => {$emit('fetchCompetencyQuestion')})">
         <span class="sr-only">Remove</span>
         <svg viewBox="0 0 14 14"
              class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
@@ -120,7 +115,7 @@ words.value = props.annotations.map(e => ({passage: e.content, term: e.term}));
   </div>
   <div v-if="canEdit" class="mt-5 flex flex-row-reverse">
     <button
-        @click="$emit('saveCompetencyQuestion', props.question, words)"
+        @click="$emit('saveCompetencyQuestion', props.question)"
         type="button"
         class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
       <ArrowDownOnSquareIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>

@@ -59,9 +59,13 @@ class TermDataService {
     }
     
 
-    // TODO
-    async remove(group_id: string, project_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
-        return http.delete<DeleteResponse>(`/terms/${project_id}/${group_id}`, { headers: authHeader() }).then(response => {
+    async remove(term_id: string, passage_id: string, question_id: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
+        return http.put<DeleteResponse>(`/terms/remove/${question_id}`,{
+            termIds: [term_id],
+            passageIds: [passage_id],
+        },{
+            headers: authHeader(),
+        }).then(response => {
             return response
         }).catch(reason => {
             return {
