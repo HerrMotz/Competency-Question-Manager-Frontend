@@ -148,7 +148,7 @@ async function fetchCompetencyQuestion() {
                                   :card-style="true"
                                   class="max-w-xl"
                                   :text="cq.question"
-                                  :numberOfConsolidations="cq.noConsolidations"
+                                  :numberOfConsolidations="cq.noConsolidations ? cq.noConsolidation : cq.consolidations.length"
                                   :creator="cq.creator"
                                   :identifier="cq.id"
                                   :groupIdentifier="cq.groupId"
