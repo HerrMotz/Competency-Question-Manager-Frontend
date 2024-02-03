@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import {defineProps, ref, toRefs} from "vue";
-import {ArrowDownOnSquareIcon, CheckCircleIcon, TrashIcon} from "@heroicons/vue/24/solid";
+import {computed, defineProps, ref, toRefs} from "vue";
+import {ArrowDownOnSquareIcon, CheckCircleIcon, TrashIcon, ChevronUpDownIcon} from "@heroicons/vue/24/solid";
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SubmitButtonWithCallback from "./SubmitButtonWithCallback.vue";
 import TermDataService from "../services/TermDataService.ts";
 import MessagePopup from "./MessagePopup.vue";
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  TransitionRoot
+} from "@headlessui/vue";
 
-const addWordInput = ref("");
 const addPassageInput = ref("");
 
 const messagePopupData = ref({
@@ -19,9 +26,13 @@ const messagePopupData = ref({
   open: false
 })
 
+const props = defineProps(['question', 'annotations', 'canEdit', 'groupId', 'id', 'projectId'])
+const {annotations} = toRefs(props)
+const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
+
 function insertTermPassagePair() {
   TermDataService.add(props.id, [{
-    term: addWordInput.value,
+    term: term.value.content,
     passage: addPassageInput.value
   }]).then(response => {
     if ("messageType" in response) {
@@ -33,15 +44,40 @@ function insertTermPassagePair() {
 
     } else {
       emits('fetchCompetencyQuestion');
-      addWordInput.value = '';
+      term.value = '';
       addPassageInput.value = '';
     }
   })
 }
 
-const props = defineProps(['question', 'annotations', 'canEdit', 'groupId', 'id', 'projectId'])
-const { annotations } = toRefs(props)
-const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
+const terms = ref<TermT[]>();
+const term = ref<TermT>()
+const query = ref('')
+const filteredTerms = computed(() =>
+    terms.value === undefined ? [] :
+        query.value === ''
+            ? terms?.value
+            : terms.value.filter((e) => {
+              return e.content.toLowerCase().includes(query.value.toLowerCase())
+            })
+)
+
+function fetchTerms() {
+  TermDataService.getAllForOneProject(props.projectId).then(response => {
+    if ("messageType" in response) {
+      messagePopupData.value.uxresponse = {
+        ...messagePopupData.value.uxresponse,
+        ...response
+      };
+      messagePopupData.value.open = true;
+
+    } else {
+      terms.value = response.data;
+    }
+  })
+}
+
+fetchTerms()
 </script>
 
 <template>
@@ -68,8 +104,12 @@ const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
 
     <div v-for="element in annotations"
          class="items-center rounded-md my-4 px-2 py-1 mx-auto font-medium ring-1 ring-inset bg-gray-50 text-gray-600 ring-ray-500/10">
-      Term: <RouterLink class="font-bold underline decoration-blue-500 decoration-2 text-blue-500" :to="'/terms/'+props.projectId+'/'+element.term.id">
-      {{ element.term.content }}</RouterLink>, Passage: {{ element.term.content }}
+      Term:
+      <RouterLink class="font-bold underline decoration-blue-500 decoration-2 text-blue-500"
+                  :to="'/terms/'+props.projectId+'/'+element.term.id">
+        {{ element.term.content }}
+      </RouterLink>
+      , Passage: {{ element.term.content }}
       <button type="button"
               class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20 float-right"
               @click="TermDataService.remove(element.term.id, element.id, props.id).then(() => {$emit('fetchCompetencyQuestion')})">
@@ -87,11 +127,93 @@ const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
           Add term to question
         </label>
         <div class="relative mt-2 flex items-center">
-          <input type="text" ref="word"
-                 placeholder="Word"
-                 v-model="addWordInput"
-                 @keyup.enter="$refs.passage.focus()"
-                 class="block w-full mr-5 rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <Combobox v-model="term">
+            <div class="relative mr-5">
+              <div
+                  class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-300 sm:text-sm"
+              >
+                <ComboboxInput
+                    class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    :displayValue="(term) => term.content"
+                    @change="query = $event.target.value"
+                />
+                <ComboboxButton
+                    class="absolute inset-y-0 right-0 flex items-center pr-2"
+                >
+                  <ChevronUpDownIcon
+                      class="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                  />
+                </ComboboxButton>
+              </div>
+              <TransitionRoot
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                  @after-leave="query = ''"
+              >
+                <ComboboxOptions
+                    class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                >
+                  <div
+                      v-if="filteredTerms.length === 0 && query !== ''"
+                      class="relative cursor-default select-none px-4 py-2 text-gray-700"
+                  >
+                    Nothing found.
+                  </div>
+
+                  <ComboboxOption
+                      v-for="term in filteredTerms"
+                      as="template"
+                      :key="term.id"
+                      :value="term"
+                      v-slot="{ selected, active }"
+                  >
+                    <li
+                        class="relative cursor-default select-none py-2 pl-10 pr-4"
+                        :class="{
+                  'bg-indigo-600 text-white': active,
+                  'text-gray-900': !active,
+                }"
+                    >
+                <span
+                    class="block truncate"
+                    :class="{ 'font-medium': selected, 'font-normal': !selected }"
+                >
+                  {{ term.content }}
+                </span>
+                      <span
+                          v-if="selected"
+                          class="absolute inset-y-0 left-0 flex items-center pl-3"
+                          :class="{ 'text-white': active, 'text-indigo-600': !active }"
+                      >
+                  <CheckIcon class="h-5 w-5" aria-hidden="true"/>
+                </span>
+                    </li>
+                  </ComboboxOption>
+                </ComboboxOptions>
+              </TransitionRoot>
+            </div>
+          </Combobox>
+<!--          <Combobox v-model="term">-->
+<!--            <ComboboxInput class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"-->
+<!--                           @change="query = $event.target.value"-->
+<!--                           placeholder="Term"/>-->
+<!--            <ComboboxOptions>-->
+<!--              <ComboboxOption-->
+<!--                  v-for="term in filteredTerms"-->
+<!--                  :key="term.id"-->
+<!--                  :value="term"-->
+<!--              >-->
+<!--                {{ term }}-->
+<!--              </ComboboxOption>-->
+<!--            </ComboboxOptions>-->
+<!--          </Combobox>-->
+          <!--          <input type="text" ref="word"-->
+          <!--                 placeholder="Word"-->
+          <!--                 v-model="addWordInput"-->
+          <!--                 @keyup.enter="$refs.passage.focus()"-->
+          <!--                 class="block w-full mr-5 rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>-->
           <input type="text" ref="passage"
                  placeholder="Passage"
                  v-model="addPassageInput"

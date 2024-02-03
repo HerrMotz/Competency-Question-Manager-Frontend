@@ -6,16 +6,13 @@ import {
   Bars3Icon,
   CloudArrowUpIcon,
   FingerPrintIcon,
-  LockClosedIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import Logo from "../components/Logo.vue";
 import AppScreenshot from "../assets/app-screenshot.png";
 
 const navigation = [
-  {name: 'Product', href: '#'},
-  {name: 'Features', href: '#'},
-  {name: 'Meet the Makers', href: '#'},
+  // {name: 'Product', href: '#'},
 ]
 
 const features = [
@@ -25,12 +22,12 @@ const features = [
         'Our permission handling allows for a company wide collaboration, where everybody is in the loop, while keeping an overview over who has done what.',
     icon: CloudArrowUpIcon,
   },
-  // {
-  //   name: 'Consolidation Suggestions',
-  //   description:
-  //       'Our system finds occurrences of words in CQs and suggests them for consolidation.',
-  //   icon: LockClosedIcon,
-  // },
+  {
+    name: 'Term Annotation',
+    description:
+        'Reoccurring terms can be annotated and connected with other questions that use the same term.',
+    icon: ArrowPathIcon,
+  },
   // {
   //   name: 'Ontology Visualisation',
   //   description:
@@ -53,8 +50,7 @@ const footerNavigation = {
   ],
   support: [
     {name: 'Documentation', href: '#'},
-    {name: 'Guides', href: '#'},
-    {name: 'API Reference', href: '#'},
+    {name: 'API Reference', href: import.meta.env.VITE_API_URL+'/schema/swagger'},
   ],
   creators: [
     {name: 'About', href: '#'},
@@ -76,7 +72,7 @@ const mobileMenuOpen = ref(false)
       <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
           <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">CQ-Managery</span>
+            <span class="sr-only">CQ-Manager</span>
             <Logo class="text-4xl h-12"/>
           </a>
         </div>
@@ -148,10 +144,10 @@ const mobileMenuOpen = ref(false)
                 The CQ-Manager allows for an <span class="underline decoration-sky-500 font-bold">efficient</span> and <span class="underline decoration-sky-500 font-bold">structured</span> collaboration between ontology engineers and users.
               </p>
               <div class="mt-10 flex items-center justify-center gap-x-6">
-                <a href="#"
+                <a href="/login"
                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
                   started</a>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">Learn more <span
+                <a href="#feature-section" class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">Learn more <span
                     aria-hidden="true">→</span></a>
               </div>
             </div>
@@ -174,7 +170,7 @@ const mobileMenuOpen = ref(false)
       </div>
 
       <!-- Feature section -->
-      <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
+      <div id="feature-section" class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
         <div class="mx-auto max-w-2xl lg:text-center">
           <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Focus on what's important</h2>
           <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">Everything you
