@@ -25,6 +25,10 @@ export default defineComponent({
 
 <template>
   <div class="mt-8 flow-root">
+    <h3 class="text-xl">Question Selector</h3>
+    <p class="mt-2 text-sm text-gray-700 dark:text-gray-300 mb-5">
+      Select questions using the checkbox at the front. The <span class="dark:text-blue-300 text-blue-600">blue</span> entries are already consolidated questions.
+    </p>
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
         <div class="relative">
@@ -49,7 +53,7 @@ export default defineComponent({
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-            <tr v-for="cq in cqs" :key="cq.id" :class="[selectedQuestions.includes(cq.id) && 'bg-gray-50']">
+            <tr v-for="cq in cqs" :key="cq.id" :class="[selectedQuestions.includes(cq.id) && 'bg-gray-100', cq.consolidations.length > 0 && 'bg-blue-200']">
               <td class="relative px-7 sm:w-12 sm:px-6">
                 <div v-if="selectedQuestions.includes(cq.id)" class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600"></div>
                 <input type="checkbox" class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" :value="cq.id" v-model="selectedQuestions" />

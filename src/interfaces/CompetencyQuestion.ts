@@ -14,7 +14,8 @@ type CompetencyQuestionT = {
         },
         questionString: string,
         versionNumber: Number
-    }
+    },
+    group: GroupT,
 }
 
 type CompetencyQuestionReducedT = {
