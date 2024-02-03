@@ -50,7 +50,8 @@ function fetchGroups() {
 fetchGroups()
 
 watch(getProject, (_, __) => {
-  fetchGroups()
+  fetchGroups();
+  fetchCompetencyQuestion();
 })
 
 watch(selectedGroup, () => {
