@@ -99,7 +99,12 @@ fetchTerms()
       Questions that contain the same terms can be found via the
       <RouterLink to="/terms" class="font-bold underline decoration-blue-500 decoration-2 dark:text-slate-200">Terms
       </RouterLink>
-      overview.
+    </p>
+    <p class="mt-2 text-sm text-gray-700 dark:text-gray-300 mb-5">
+      <span class="font-bold italic">What are terms and passages?</span>
+      Below you can select a term (select an existing or add a new one) which should be associated to a certain passage
+      or declined form of the term in the question. For example: the plural "pizzas" is the passage where the term "pizza"
+      occurs.
     </p>
 
     <div v-for="element in annotations"
