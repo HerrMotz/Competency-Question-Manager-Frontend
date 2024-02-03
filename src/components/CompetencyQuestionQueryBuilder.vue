@@ -31,6 +31,7 @@ const {annotations} = toRefs(props)
 const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
 
 function insertTermPassagePair() {
+  console.log(addPassageInput.value)
   TermDataService.add(props.id, [{
     term: term.value.content,
     passage: addPassageInput.value
@@ -114,7 +115,7 @@ fetchTerms()
                   :to="'/terms/'+props.projectId+'/'+element.term.id">
         {{ element.term.content }}
       </RouterLink>
-      , Passage: {{ element.term.content }}
+      , Passage: {{ element.content }}
       <button type="button"
               class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20 float-right"
               @click="TermDataService.remove(element.term.id, element.id, props.id).then(() => {$emit('fetchCompetencyQuestion')})">
