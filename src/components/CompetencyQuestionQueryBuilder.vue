@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, defineProps, ref, toRefs} from "vue";
-import {ArrowDownOnSquareIcon, CheckCircleIcon, TrashIcon, ChevronUpDownIcon} from "@heroicons/vue/24/solid";
+import {ArrowDownOnSquareIcon, CheckCircleIcon, TrashIcon, ChevronUpDownIcon, CheckIcon} from "@heroicons/vue/24/solid";
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import SubmitButtonWithCallback from "./SubmitButtonWithCallback.vue";
 import TermDataService from "../services/TermDataService.ts";
@@ -141,7 +141,7 @@ fetchTerms()
                     class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     :displayValue="(term) => term.content"
                     placeholder="Term"
-                    @change="query = $event.target.value"
+                    @change="query = $event.target.value;"
                 />
                 <ComboboxButton
                     class="absolute inset-y-0 right-0 flex items-center pr-2"
@@ -161,13 +161,6 @@ fetchTerms()
                 <ComboboxOptions
                     class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
                 >
-                  <div
-                      v-if="filteredTerms.length === 0 && query !== ''"
-                      class="relative cursor-default select-none px-4 py-2 text-gray-700"
-                  >
-                    Nothing found.
-                  </div>
-
                   <ComboboxOption
                       v-for="term in filteredTerms"
                       as="template"
@@ -195,6 +188,13 @@ fetchTerms()
                       >
                   <CheckIcon class="h-5 w-5" aria-hidden="true"/>
                 </span>
+                    </li>
+                  </ComboboxOption>
+                  <ComboboxOption :value="{content: query}">
+                    <li
+                        class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"
+                    >
+                      Create term "{{ query }}"
                     </li>
                   </ComboboxOption>
                 </ComboboxOptions>

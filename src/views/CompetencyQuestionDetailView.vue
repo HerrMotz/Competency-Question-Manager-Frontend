@@ -90,6 +90,8 @@ function saveCompetencyQuestion(question: string) {
       Competency Question Detail View
     </h1>
 
+    <h3 class="text-xl mt-5">Project: {{cq.data.group.project.name}}</h3>
+
     <div>
       <div class="my-3">
         <div class="float-right">
