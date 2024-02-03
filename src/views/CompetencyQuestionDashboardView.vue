@@ -58,6 +58,7 @@ watch(selectedGroup, () => {
 })
 
 async function fetchCompetencyQuestion() {
+  if (selectedGroup.value.id) {
     CompetencyQuestionDataService.getAllForOneGroup(selectedGroup.value.id).then(response => {
       if ("messageType" in response) {
         messagePopupData.value.uxresponse = {
@@ -72,6 +73,22 @@ async function fetchCompetencyQuestion() {
         console.log(cqs.value.data)
       }
     });
+  } else {
+    CompetencyQuestionDataService.getAllForOneProject(getProject.value.id).then(response => {
+      if ("messageType" in response) {
+        messagePopupData.value.uxresponse = {
+          ...messagePopupData.value.uxresponse,
+          ...response
+        };
+        messagePopupData.value.open = true;
+
+      } else {
+        cqs.value = response;
+        console.log()
+        console.log(cqs.value.data)
+      }
+    });
+  }
 }
 </script>
 
