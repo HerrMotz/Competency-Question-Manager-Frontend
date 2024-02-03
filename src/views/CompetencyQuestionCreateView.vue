@@ -61,7 +61,7 @@ export default defineComponent({
           this.messagePopupData.uxresponse = {
             title: "No permission to add competency questions :/",
             messageType: "warning",
-            text: "Unfortunately, you are not assigned to any groups. Please contact the project manager, if you think this is an error.",
+            term: "Unfortunately, you are not assigned to any groups. Please contact the project manager, if you think this is an error.",
             detail: "",
           }
           this.messagePopupData.open = true;

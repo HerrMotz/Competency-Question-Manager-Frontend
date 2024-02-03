@@ -27,7 +27,7 @@ const showNavbar = computed(() =>  {
       <div class="px-4 sm:px-6 lg:px-8">
         <Suspense>
 
-          <RouterView />
+          <RouterView :key="$route.fullPath" />
         </Suspense>
       </div>
     </main>

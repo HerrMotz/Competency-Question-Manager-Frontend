@@ -42,7 +42,7 @@ export default defineComponent({
       </div>
 
 
-      <UserCardSmall class="mt-3" :name="consolidation.engineer.name" :email="consolidation.engineer.email">
+      <UserCardSmall v-if="consolidation.engineer" class="mt-3" :email="consolidation.engineer.email">
         <div class="mr-5">Consolidated by</div>
       </UserCardSmall>
 

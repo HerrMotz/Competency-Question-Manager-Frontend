@@ -92,6 +92,17 @@ const routes =  [
         component: () => import("./views/GroupDetailView.vue"),
         props: true
     },
+    {
+        path: "/terms",
+        name: "terms",
+        component: () => import("./views/TermDashboardView.vue")
+    },
+    {
+        path: "/terms/:projectid/:id",
+        name: "terms-detail",
+        component: () => import("./views/TermDetailView.vue"),
+        props: true
+    },
 ];
 
 const router = createRouter({

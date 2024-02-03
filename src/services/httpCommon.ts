@@ -8,11 +8,12 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(response => {
-    if (response.headers && response.headers['permissions-project-engineer']) {
-        response.data.permissionGroupMember = response.headers['permissions-group-member'].toLowerCase() === 'true';
-        response.data.permissionsProjectManager = response.headers['permissions-project-manager'].toLowerCase() === 'true';
-        response.data.permissionsProjectEngineer = response.headers['permissions-project-engineer'].toLowerCase() === 'true';
-        response.data.permissionsProjectMember = response.headers['permissions-project-member'].toLowerCase() === 'true';
+    if (response.headers) {
+        console.log("headers", response.headers)
+        response.data.permissionsGroupMember = response.headers['permissions-group-member'] === 'True';
+        response.data.permissionsProjectManager = response.headers['permissions-project-manager'] === 'True';
+        response.data.permissionsProjectEngineer = response.headers['permissions-project-engineer'] === 'True';
+        response.data.permissionsProjectMember = response.headers['permissions-project-member'] === 'True';
     }
     return response;
 }, error => {

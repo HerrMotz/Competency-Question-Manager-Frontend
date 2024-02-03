@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import CompetencyQuestionDataService from "../services/CompetencyQuestionDataService.ts";
 import MessagePopup from "../components/MessagePopup.vue";
-import {computed, ref, watch} from "vue";
-import {TrashIcon, ArrowDownOnSquareIcon, PaperAirplaneIcon} from "@heroicons/vue/24/solid";
-import {DialogPanel, Popover, PopoverButton, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
+import {ref, watch} from "vue";
+import {Popover, PopoverButton, PopoverPanel} from "@headlessui/vue";
 import StarComponent from "../components/StarComponent.vue";
-import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import CommentComponent from "../components/CommentComponent.vue";
+import ConsolidationListItem from "../components/ConsolidationListItem.vue";
+import CompetencyQuestionQueryBuilder from "../components/CompetencyQuestionQueryBuilder.vue";
 
 const props = defineProps(['id', 'groupid'])
 
@@ -52,20 +52,31 @@ async function fetchCompetencyQuestion() {
 
     } else {
       cq.value = response;
-      console.log(cq.value.data)
 
-      canEdit.value = response.data.permissionGroupMember || response.data.permissionsProjectManager;
+      canEdit.value = response.data.permissionsGroupMember || response.data.permissionsProjectManager;
+      console.log(canEdit.value)
 
       stats.value = [
         {name: "Author", value: cq.value.data.author.name},
         {name: "№ Cons.", value: cq.value.data.consolidations.length},
         {name: "Project", value: cq.value.data.group.project.name},
-        {name: "Group", value: cq.value.data.group.name}
+        {name: "Group", value: cq.value.data.group.name},
+        {name: "Version", value: cq.value.data.versionNumber}
       ]
 
     }
   });
 }
+
+// the functionality of posting annotations to this endpoint seems to not be working
+// as of now, so we will pass an empty array here
+// TODO: change the empty brackets to annotations when this is ready.
+function saveCompetencyQuestion(question: string, annotations: AnnotationT[]) {
+  CompetencyQuestionDataService.change(question, [], props.groupid, props.id).then(() => {
+    fetchCompetencyQuestion()
+  })
+}
+
 </script>
 
 <template>
@@ -129,36 +140,24 @@ async function fetchCompetencyQuestion() {
         <!--        </span>-->
       </div>
       <div>
-        <label for="question"
-               class="block text-sm font-medium leading-6 dark:text-gray-200 text-gray-900">Question</label>
-        <div class="mt-2">
-          <input type="text" name="question" id="question"
-                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                 :value="cq.data.question"
-          />
-        </div>
+
       </div>
 
-      <div v-if="canEdit" class="mt-5 flex flex-row-reverse">
-        <button type="button"
-                class="float-right inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          <ArrowDownOnSquareIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
-          Save
-        </button>
-        <div class="mr-5">
-          <SubmitButtonWithCallback agree-button-text="Delete the question"
-                                    title="Are you sure you want to delete the question?"
-                                    detail="This action is permanent. All comments, ratings and consolidations will be deleted."
-                                    @modalsuccessclose="CompetencyQuestionDataService.delete(cq.data.id, cq.data.groupId); $router.push('/questions/');">
-            <TrashIcon class="-ml-0.5 h-5 w-5" aria-hidden="true"/>
-            Delete
-          </SubmitButtonWithCallback>
-        </div>
+      <div class="my-10">
+        <CompetencyQuestionQueryBuilder @saveEvent="saveCompetencyQuestion"
+                                        @fetchCompetencyQuestion="fetchCompetencyQuestion"
+                                        :question="cq.data.question"
+                                        :group-id="cq.data.groupId"
+                                        :id="cq.data.id"
+                                        :project-id="cq.data.group.project.id"
+                                        :annotations="cq.data.annotations"
+                                        :canEdit="canEdit" />
       </div>
 
-      <div class="bg-gray-900 mt-5">
+
+      <div class="bg-gray-900 mt-16 mb-10">
         <div class="mx-auto max-w-7xl">
-          <div class="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-5">
             <div v-for="stat in stats" :key="stat.name" class="bg-gray-700 px-4 py-6 sm:px-6 lg:px-8">
               <p class="text-sm font-medium leading-6 text-gray-400">{{ stat.name }}</p>
               <p class="mt-2 flex items-baseline gap-x-2">
@@ -170,6 +169,20 @@ async function fetchCompetencyQuestion() {
         </div>
       </div>
 
+      <h3 v-if="cq.data.consolidations" class="mt-12 text-xl">Consolidations <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ cq.data.consolidations.length }}</span></h3>
+      <div>
+        <ConsolidationListItem v-for="cons in cq.data.consolidations" :consolidation="cons" />
+      </div>
+
+      <h3 v-if="cq.data.versionNumber > 1" class="mt-10 text-xl">Versions</h3>
+      <div>
+        <p v-for="v in cq.data.versions"><span class="font-mono">{{ v.editor.name }}:</span> <span
+            class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">version: {{
+            v.versionNumber
+          }}</span> {{ v.questionString }} </p>
+      </div>
+
+      <h3 class="mt-14 mb-5 text-xl">Recent Comments <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ cq.data.comments.length }}</span></h3>
       <CommentComponent :question-id="cq.data.id" :comments="cq.data.comments" @refresh="fetchCompetencyQuestion()"/>
     </div>
 

@@ -83,6 +83,22 @@ class CompetencyQuestionDataService {
             }
         });
     }
+
+    async change(question: string, annotations: AnnotationT[], group_uuid: string, question_uuid: string): Promise<AxiosResponse<any, DeleteResponse> | UXResponse> {
+        return http.put<DeleteResponse>(`/questions/${group_uuid}/${question_uuid}`, {
+            question: question,
+            annotations: annotations,
+        }, { headers: authHeader() }).then(response => {
+            return response
+        }).catch(reason => {
+            return {
+                title: "Oops! An error occurred...",
+                text: "... while deleting the competency question. Debugging info can be found in the console.",
+                detail: reason,
+                messageType: "error"
+            }
+        });
+    }
 }
 
 export default new CompetencyQuestionDataService();

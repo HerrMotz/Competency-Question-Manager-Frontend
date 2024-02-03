@@ -41,7 +41,7 @@ class LoginDataService {
                     messageType: "error"
                 }
             }
-        });;
+        });
     }
 }
 

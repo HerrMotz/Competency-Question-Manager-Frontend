@@ -5,7 +5,16 @@ type CompetencyQuestionT = {
     aggregatedRating: Number,
     ratings?: Array<RatingT>,
     author: UserT,
-    noConsolidations: Number
+    noConsolidations: Number,
+    annotations: Array<AnnotationT>,
+    versions: {
+        editor: {
+            name: string,
+            id: string,
+        },
+        questionString: string,
+        versionNumber: Number
+    }
 }
 
 type CompetencyQuestionReducedT = {
@@ -16,7 +25,9 @@ type CompetencyQuestionReducedT = {
     aggregatedRating: Number
 }
 
-type CompetencyQuestionConsolidationT = {
-    id: String,
+type CompetencyQuestionReferenceT = {
+    id: string,
     author: UserReducedT
+    groupId: string,
+    question: string
 }

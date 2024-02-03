@@ -12,7 +12,8 @@ import {
   FolderIcon,
   UsersIcon,
   XMarkIcon,
-  ListBulletIcon
+  ListBulletIcon,
+  QueueListIcon
 } from '@heroicons/vue/24/outline'
 import Logo from "./Logo.vue";
 import {ArrowsPointingInIcon} from "@heroicons/vue/20/solid";
@@ -31,6 +32,7 @@ export default defineComponent({
     ListBulletIcon,
     TransitionChild,
     TransitionRoot,
+    QueueListIcon
   },
 
   computed: {
@@ -67,6 +69,7 @@ export default defineComponent({
         { name: 'Competency Questions', href: '/questions', icon: ListBulletIcon },
         { name: 'Consolidation', href: '/consolidations', icon: ArrowsPointingInIcon },
         { name: 'Group', href: '/groups', icon: UsersIcon },
+        { name: 'Terms', href: '/terms', icon: QueueListIcon },
         { name: 'Reports', href: '/reports', icon: ChartPieIcon },
       ],
     }
