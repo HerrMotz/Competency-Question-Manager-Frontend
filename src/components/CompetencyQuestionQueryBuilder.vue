@@ -203,25 +203,6 @@ fetchTerms()
               </TransitionRoot>
             </div>
           </Combobox>
-<!--          <Combobox v-model="term">-->
-<!--            <ComboboxInput class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"-->
-<!--                           @change="query = $event.target.value"-->
-<!--                           placeholder="Term"/>-->
-<!--            <ComboboxOptions>-->
-<!--              <ComboboxOption-->
-<!--                  v-for="term in filteredTerms"-->
-<!--                  :key="term.id"-->
-<!--                  :value="term"-->
-<!--              >-->
-<!--                {{ term }}-->
-<!--              </ComboboxOption>-->
-<!--            </ComboboxOptions>-->
-<!--          </Combobox>-->
-          <!--          <input type="text" ref="word"-->
-          <!--                 placeholder="Word"-->
-          <!--                 v-model="addWordInput"-->
-          <!--                 @keyup.enter="$refs.passage.focus()"-->
-          <!--                 class="block w-full mr-5 rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>-->
           <input type="text" ref="passage"
                  placeholder="Passage"
                  v-model="addPassageInput"
