@@ -77,7 +77,7 @@ fetchTermOccurences();
       <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded w-full mr-3">
         <CompetencyQuestionListItem class="max-w-xl"
                                     :text="cq.question"
-                                    :groupIdentifier="cq.groupId"
+                                    :groupIdentifier="cq.group.id"
                                     :identifier="cq.id"/>
       </div>
     </div>

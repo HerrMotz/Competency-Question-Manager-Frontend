@@ -20,7 +20,10 @@ type CompetencyQuestionT = {
 
 type CompetencyQuestionReducedT = {
     id: String,
-    groupId: String,
+    group: {
+        id: string,
+        name: string
+    },
     question: String,
     author: UserReducedT,
     aggregatedRating: Number
@@ -29,6 +32,9 @@ type CompetencyQuestionReducedT = {
 type CompetencyQuestionReferenceT = {
     id: string,
     author: UserReducedT
-    groupId: string,
+    group: {
+        id: string,
+        name: string
+    },
     question: string
 }

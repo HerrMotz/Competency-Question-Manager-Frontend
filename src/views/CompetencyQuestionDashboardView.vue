@@ -151,7 +151,7 @@ async function fetchCompetencyQuestion() {
                                   :numberOfConsolidations="cq.noConsolidations"
                                   :creator="cq.creator"
                                   :identifier="cq.id"
-                                  :groupIdentifier="cq.groupId"
+                                  :groupIdentifier="cq.group.id"
                                   :rating="cq.rating"/>
     </div>
     <div v-else>
