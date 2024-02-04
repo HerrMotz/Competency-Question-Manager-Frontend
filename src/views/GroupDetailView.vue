@@ -78,8 +78,21 @@ export default {
       }
     },
     deleteGroup() {
-      GroupDataService.delete(this.id, this.data.project.id);
-      this.$router.push('/groups/');
+      console.log("delete group")
+      GroupDataService.delete(this.id, this.data.project.id).then(response => {
+        console.log("group deleted")
+        console.log(response)
+        if ("messageType" in response) {
+          console.log("Error response:", response);
+          this.messagePopupData.uxresponse = {
+            ...this.messagePopupData.uxresponse,
+            ...response
+          };
+          this.messagePopupData.open = true;
+        } else {
+          this.$router.push('/groups/');
+        }
+      });
     },
     addGroupMember() {
       if (this.add.projectManagerInputField !== '') {

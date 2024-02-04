@@ -10,10 +10,15 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(response => {
     if (response.headers) {
         console.log("headers", response.headers)
-        response.data.permissionsGroupMember = response.headers['permissions-group-member'] === 'True';
-        response.data.permissionsProjectManager = response.headers['permissions-project-manager'] === 'True';
-        response.data.permissionsProjectEngineer = response.headers['permissions-project-engineer'] === 'True';
-        response.data.permissionsProjectMember = response.headers['permissions-project-member'] === 'True';
+        try {
+            response.data.permissionsGroupMember = response.headers['permissions-group-member'] === 'True';
+            response.data.permissionsProjectManager = response.headers['permissions-project-manager'] === 'True';
+            response.data.permissionsProjectEngineer = response.headers['permissions-project-engineer'] === 'True';
+            response.data.permissionsProjectMember = response.headers['permissions-project-member'] === 'True';
+        }
+        catch (e) {
+            console.log("Cannot assign permission headers to data.")
+        }
     }
     return response;
 }, error => {

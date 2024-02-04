@@ -30,7 +30,7 @@ export default defineComponent({
       <h3 class="font-bold dark:text-white">{{ consolidation.name ? consolidation.name : 'No name given' }}</h3>
       <h4 class="mt-5">Questions</h4>
       <div class="mb-10">
-        <div class="mt-3 dark:bg-gray-600 hover:dark:bg-gray-600 p-1 pl-3 rounded hover:bg-gray-200" v-for="cq in consolidation.questions">
+        <div class="mt-3 dark:bg-gray-600 bg-gray-200 hover:dark:bg-gray-600 p-1 pl-3 rounded hover:bg-gray-300" v-for="cq in consolidation.questions">
           <CompetencyQuestionListItem class="max-w-xl"
                                       :text="cq.question"
                                       :groupIdentifier="cq.groupId"
