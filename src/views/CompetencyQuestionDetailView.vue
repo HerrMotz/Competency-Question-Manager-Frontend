@@ -158,14 +158,14 @@ function saveCompetencyQuestion(question: string) {
       </div>
 
 
-      <div class="bg-gray-900 mt-16 mb-10">
+      <div class="dark:bg-gray-900 bg-gray-100 mt-16 mb-10">
         <div class="mx-auto max-w-7xl">
-          <div class="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-5">
-            <div v-for="stat in stats" :key="stat.name" class="bg-gray-700 px-4 py-6 sm:px-6 lg:px-8">
-              <p class="text-sm font-medium leading-6 text-gray-400">{{ stat.name }}</p>
+          <div class="grid grid-cols-1 gap-px dark:bg-white/5 bg-gray-300/5 sm:grid-cols-2 lg:grid-cols-5">
+            <div v-for="stat in stats" :key="stat.name" class="dark:bg-gray-700 px-4 py-6 sm:px-6 lg:px-8">
+              <p class="text-sm font-medium leading-6 dark:text-gray-400">{{ stat.name }}</p>
               <p class="mt-2 flex items-baseline gap-x-2">
-                <span class="text-xl font-semibold tracking-tight text-white">{{ stat.value }}</span>
-                <span v-if="stat.unit" class="text-sm text-gray-400">{{ stat.unit }}</span>
+                <span class="text-xl font-semibold tracking-tight dark:text-white">{{ stat.value }}</span>
+                <span v-if="stat.unit" class="text-sm dark:text-gray-400">{{ stat.unit }}</span>
               </p>
             </div>
           </div>
