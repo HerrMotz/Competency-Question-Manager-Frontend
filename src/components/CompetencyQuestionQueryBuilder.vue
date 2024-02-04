@@ -117,6 +117,7 @@ fetchTerms()
       </RouterLink>
       , Passage: {{ element.content }}
       <button type="button"
+              v-if="props.canEdit"
               class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20 float-right"
               @click="TermDataService.remove(element.term.id, element.id, props.id).then(() => {$emit('fetchCompetencyQuestion')})">
         <span class="sr-only">Remove</span>
@@ -127,7 +128,7 @@ fetchTerms()
         <span class="absolute -inset-1"/>
       </button>
     </div>
-    <div class="flex mt-5">
+    <div class="flex mt-5" v-if="props.canEdit">
       <div class="grow mr-5">
         <label for="search" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
           Add term to question
