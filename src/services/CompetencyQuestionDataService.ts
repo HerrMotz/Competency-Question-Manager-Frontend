@@ -31,7 +31,8 @@ class CompetencyQuestionDataService {
     }
 
     async getAllForOneProject(project_uuid: string): Promise<AxiosResponse<any, CompetencyQuestionT[]> | UXResponse> {
-        return http.get<CompetencyQuestionT[]>(`/questions/by_project/${project_uuid}`, {headers: authHeader()}).then(response => {
+        const url = project_uuid !== "" ? `/questions/by_project/${project_uuid}` : `/questions`;
+        return http.get<CompetencyQuestionT[]>(url, {headers: authHeader()}).then(response => {
             return response
         }).catch(reason => {
             return {
