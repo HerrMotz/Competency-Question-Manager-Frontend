@@ -1,6 +1,7 @@
 # CQ-Frontend
 
-The main repository containing the backend can be found here: https://git.uni-jena.de/fusion/teaching/project/2023wise/swep/competency-questions-management-for-ontology-development/cq-manager
+The repository containing the backend can be found here:
+https://github.com/HerrMotz/Competency-Question-Manager-Backend
 
 ## Git Practices in this repository
 We rely on backend compatibility. Therefore, we structure our branches in folders, where
@@ -51,33 +52,3 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-
-## Coding Guidelines
-
-### General Usage Notes
-These notices are an excerpt (with additions) of the Vue.js documentation.
-
-To let TypeScript properly infer types inside component options, we need to define components with `defineComponent()`:
-
-```typescript
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  // type inference enabled
-  props: {
-    name: String,
-    msg: { type: String, required: true }
-  },
-  data() {
-    return {
-      count: 1
-    }
-  },
-  mounted() {
-    this.name // type: string | undefined
-    this.msg // type: string
-    this.count // type: number
-  }
-})
-```
