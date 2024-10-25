@@ -6,6 +6,7 @@ import {useStore} from "../store.ts";
 import {storeToRefs} from "pinia";
 import TermDataService from "../services/TermDataService.ts";
 import TermListItem from "../components/TermListItem.vue";
+
 const useStore1 = useStore()
 const {getProject} = storeToRefs(useStore1)
 
@@ -22,7 +23,15 @@ const messagePopupData = ref({
 const terms = ref();
 
 async function fetchTerms() {
-  console.log("lol")
+
+  if (!getProject.value.id) {
+    messagePopupData.value.uxresponse = {
+      title: "No project selected",
+      messageType: "warning",
+      text: "Please select a project in the navigation bar on the left first.",
+    };
+    messagePopupData.value.open = true;
+  } else {
     TermDataService.getAllForOneProject(getProject.value.id).then(response => {
       if ("messageType" in response) {
         messagePopupData.value.uxresponse = {
@@ -37,6 +46,7 @@ async function fetchTerms() {
         console.log(terms.value.data)
       }
     });
+  }
 }
 
 fetchTerms()
@@ -64,12 +74,13 @@ watch(getProject, (_, __) => {
       </div>
 
       <div class="mt-10" v-for="term in terms.data">
-        <TermListItem :term="term" />
+        <TermListItem :term="term"/>
       </div>
 
     </div>
     <div v-else>
-      <div v-for="_ in 4" class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10">
+      <div v-for="_ in 4"
+           class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10">
         <div class="animate-pulse flex space-x-4">
           <div class="flex-1 space-y-6 py-1">
             <div class="h-2 bg-slate-500 rounded"></div>
