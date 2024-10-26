@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import MessagePopup from "../components/MessagePopup.vue";
-import {PlusIcon} from "@heroicons/vue/20/solid"
 import {ref, watch} from "vue";
 import {useStore} from "../store.ts";
 import {storeToRefs} from "pinia";
@@ -79,7 +78,7 @@ watch(getProject, (_, __) => {
 
     </div>
     <div v-else>
-      <div v-for="_ in 4"
+      <div v-for="_ in 4" :key="_"
            class="border-1 shadow rounded-md p-4 max-w-xl w-full mx-auto dark:bg-gray-700 dark:text-gray-200 bg-gray-100 mt-10">
         <div class="animate-pulse flex space-x-4">
           <div class="flex-1 space-y-6 py-1">

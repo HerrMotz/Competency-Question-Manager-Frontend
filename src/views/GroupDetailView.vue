@@ -3,7 +3,6 @@ import MessagePopup from "../components/MessagePopup.vue";
 import SubmitButtonWithCallback from "../components/SubmitButtonWithCallback.vue";
 import { ArrowDownOnSquareIcon, TrashIcon } from "@heroicons/vue/24/solid";
 import GroupDataService from "../services/GroupDataService.ts";
-import {useStore} from "../store.ts";
 
 
 export default {

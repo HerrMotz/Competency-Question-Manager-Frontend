@@ -44,8 +44,8 @@ if ("messageType" in response) {
       Version: {{cq.data.version}}
     </span>
     <span class="inline-block text-right ml-2">
-      <StarIcon v-for="_ in cq.data.rating" class="h-5 w-5 text-yellow-500 inline" aria-hidden="true" />
-      <StarIcon v-for="_ in (5 - cq.data.rating)" class="h-5 w-5 text-gray-500 inline" aria-hidden="true" />
+      <StarIcon v-for="_ in cq.data.rating" :key="_" class="h-5 w-5 text-yellow-500 inline" aria-hidden="true" />
+      <StarIcon v-for="_ in (5 - cq.data.rating)" :key="_" class="h-5 w-5 text-gray-500 inline" aria-hidden="true" />
     </span>
   </h1>
   <pre class="text-sm">{{cq.data.id}}</pre>
