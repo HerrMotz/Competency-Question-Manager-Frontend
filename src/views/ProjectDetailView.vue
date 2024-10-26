@@ -113,7 +113,7 @@ export default {
 
     addEditEngineer() {
       if (this.add.engineerInputField !== '') {
-        ProjectDataService.addManagers(this.id, [this.add.engineerInputField]).then((response) => {
+        ProjectDataService.addEngineers(this.id, [this.add.engineerInputField]).then((response) => {
           if ('messageType' in response) {
             this.messagePopupData.uxresponse = {
               ...this.messagePopupData.uxresponse,
