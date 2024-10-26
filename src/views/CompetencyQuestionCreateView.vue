@@ -57,9 +57,8 @@ export default defineComponent({
           this.messagePopupData.open = true;
 
         } else if (response.data.length === 0) {
-          console.log("halloo2")
           this.messagePopupData.uxresponse = {
-            title: "No permission to add competency questions :/",
+            title: "Missing group membership",
             messageType: "warning",
             term: "Unfortunately, you are not assigned to any groups. Please contact the project manager, if you think this is an error.",
             detail: "",
