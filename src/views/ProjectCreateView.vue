@@ -75,18 +75,20 @@ export default{
 </script>
 
 <template>
-  <div class="w-1/2 mx-auto">
+  <div class="w-5/6 mx-auto">
     <MessagePopup :uxresponse="messagePopupData.uxresponse"
                   :open="messagePopupData.open"
                   @close="messagePopupData.open = false;"/>
-    <h1 class="text-2xl">
-    </h1>
   </div>
 
-  Add new project
+  <h1 class="text-2xl">
+    Add new project
+  </h1>
+
   <div class="my-5">
-    <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-3">Type in project
-      title:</label>
+    <label for="project" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-3">
+      Type in project title:
+    </label>
     <div class="mt-2">
       <textarea v-model="add.project" rows="1" name="project_name" id="project"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
@@ -95,9 +97,9 @@ export default{
 
   <div class="content-container">
     <div class="tags-input-container">
-      <label for="project-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900">Assign
+      <label for="project-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-400">Assign
         project manager:</label>
-      <div class="tag-input" v-for="(tag, index) in projectManager" :key="'tag'+ index">
+      <div class="tag-input text-gray-800" v-for="(tag, index) in projectManager" :key="'tag'+ index">
         <span>{{ tag }}</span>
         <button @click="removeProjectManager(index)" class="tag-remove" aria-label="Remove tag">x</button>
       </div>
@@ -111,7 +113,7 @@ export default{
       <label for="project-add" class="block text-sm font-medium leading-6 dark:text-gray-100 text-gray-900 mb-2">
         Assign engineer:
       </label>
-      <div class="tag-input" v-for="(tag, index) in engineer" :key="'tag'+ index">
+      <div class="tag-input text-gray-800" v-for="(tag, index) in engineer" :key="'tag'+ index">
         <span>{{ tag }}</span>
         <button @click="removeEngineer(index)" class="tag-remove" aria-label="Remove tag">x</button>
       </div>
