@@ -103,6 +103,11 @@ const routes =  [
         component: () => import("./views/TermDetailView.vue"),
         props: true
     },
+    {
+        path: "/about",
+        name: "about",
+        component: () => import("./views/AboutView.vue")
+    }
 ];
 
 const router = createRouter({
