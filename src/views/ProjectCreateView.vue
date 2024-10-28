@@ -25,6 +25,8 @@ export default{
         project: "",
       },
 
+      projectTitle: "",
+
       projectManagerInputField: '',
       projectManager: [] as string[],
 
@@ -52,7 +54,7 @@ export default{
 
     async save() {
       const response = await AddProjectDataService.add({
-        name: this.add.project,
+        name: this.projectTitle,
         managers: this.projectManager,
         engineers: this.engineer
       });
@@ -90,7 +92,7 @@ export default{
       Type in project title:
     </label>
     <div class="mt-2">
-      <textarea v-model="add.project" rows="1" name="project_name" id="project"
+      <textarea v-model="projectTitle" rows="1" name="project_name" id="project"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
     </div>
   </div>
