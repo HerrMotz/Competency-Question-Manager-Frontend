@@ -140,11 +140,10 @@ fetchTerms()
                   class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-300 sm:text-sm"
               >
                 <ComboboxInput
-                    v-if="term?.content"
                     class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     :displayValue="term.content"
                     placeholder="Term"
-                    @change="query = $event.target.value;"
+                    @input="query = $event.target.value;"
                 />
                 {{query}}
                 {{term}}
@@ -172,6 +171,7 @@ fetchTerms()
                       :key="term.id"
                       :value="term"
                       v-slot="{ selected, active }"
+                      @click="insertTermPassagePair()"
                   >
                     <li
                         class="relative cursor-default select-none py-2 pl-10 pr-4"
@@ -198,6 +198,7 @@ fetchTerms()
                   <ComboboxOption :value="{content: query}">
                     <li
                         class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"
+                        @click="insertTermPassagePair()"
                     >
                       Create term "{{ query }}"
                     </li>
