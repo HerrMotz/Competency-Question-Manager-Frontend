@@ -30,10 +30,22 @@ const props = defineProps(['question', 'annotations', 'canEdit', 'groupId', 'id'
 const {annotations} = toRefs(props)
 const emits = defineEmits(['saveCompetencyQuestion', 'fetchCompetencyQuestion'])
 
+const terms = ref<TermT[]>();
+const term = ref<TermT>()
+const query = ref('')
+const filteredTerms = computed(() =>
+    terms.value === undefined ? [] :
+        query.value === ''
+            ? terms?.value
+            : terms.value.filter((e) => {
+              return e.content.toLowerCase().includes(query.value.toLowerCase())
+            })
+)
+
 function insertTermPassagePair() {
   console.log(addPassageInput.value)
   TermDataService.add(props.id, [{
-    term: term.value.content,
+    term: term.value?.content,
     passage: addPassageInput.value
   }]).then(response => {
     if ("messageType" in response) {
@@ -50,18 +62,6 @@ function insertTermPassagePair() {
     }
   })
 }
-
-const terms = ref<TermT[]>();
-const term = ref<TermT>()
-const query = ref('')
-const filteredTerms = computed(() =>
-    terms.value === undefined ? [] :
-        query.value === ''
-            ? terms?.value
-            : terms.value.filter((e) => {
-              return e.content.toLowerCase().includes(query.value.toLowerCase())
-            })
-)
 
 function fetchTerms() {
   TermDataService.getAllForOneProject(props.projectId).then(response => {
@@ -140,11 +140,14 @@ fetchTerms()
                   class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-300 sm:text-sm"
               >
                 <ComboboxInput
+                    v-if="term?.content"
                     class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     :displayValue="term.content"
                     placeholder="Term"
                     @change="query = $event.target.value;"
                 />
+                {{query}}
+                {{term}}
                 <ComboboxButton
                     class="absolute inset-y-0 right-0 flex items-center pr-2"
                 >
