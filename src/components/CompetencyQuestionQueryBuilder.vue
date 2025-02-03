@@ -195,6 +195,7 @@ fetchTerms()
                   <ComboboxOption :value="{content: query}">
                     <li
                         class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"
+                        @click="insertTermPassagePair()"
                     >
                       Create term "{{ query }}"
                     </li>
